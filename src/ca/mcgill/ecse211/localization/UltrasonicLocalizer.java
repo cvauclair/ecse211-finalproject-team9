@@ -1,5 +1,7 @@
-package ca.mcgill.ecse211.finalproject;
+package ca.mcgill.ecse211.localization;
 
+import ca.mcgill.ecse211.navigation.Driver;
+import ca.mcgill.ecse211.odometry.Odometer;
 import lejos.robotics.SampleProvider;
 
 public class UltrasonicLocalizer {

@@ -1,10 +1,11 @@
-package ca.mcgill.ecse211.finalproject;
+package ca.mcgill.ecse211.navigation;
 
+import ca.mcgill.ecse211.odometry.Odometer;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
-/*
+/**
  * This class is used to move the robot and includes various methods to make controlling the wheel motors easier
- * */
+ */
 
 public class Driver {
   private Odometer odometer;
