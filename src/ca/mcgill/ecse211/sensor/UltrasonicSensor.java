@@ -10,6 +10,12 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 
 
 public class UltrasonicSensor extends Sensor{
+	
+  /**
+   * Constructor that creates a Ultrasonic sensor object 
+   * @param port String
+   * @param mode String 
+   */
   public UltrasonicSensor(String port, String mode) {
     super();
     this.sensor = new EV3UltrasonicSensor(LocalEV3.get().getPort(port));

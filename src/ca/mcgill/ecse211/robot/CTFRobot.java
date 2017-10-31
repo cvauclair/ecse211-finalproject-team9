@@ -13,7 +13,10 @@ public class CTFRobot extends Robot{
   public CTFRobot(){
     super();
   }
-
+  
+  /**
+   * Method that starts the game Capture-the-flag
+   */
   public void run(){
     // Gameplay logic
   }

@@ -14,6 +14,12 @@ public class LineDetector {
   private int numberOfSamples;
   private int counter;
   
+  /**
+   * Constructor for the Line detector object
+   * @param colorSensor LightSensor
+   * @param threshold int
+   * @param n int
+   */
   public LineDetector(LightSensor colorSensor, int threshold, int n){
     this.colorSensor = colorSensor;
     this.threshold = threshold;
@@ -25,9 +31,12 @@ public class LineDetector {
     this.counter = 0;
   }
   
-  // Method that checks if a line was crossed (note that this method will always return false the 
-  // first 'numberOfSamples' times it is called as the method will wait to get this amount of data 
-  // points to calculate the moving average)
+  /**
+   * Method that checks if a line was crossed (note that this method will always return false the
+   * first 'numberOfSamples' times it is called as the method will wait to get this amount of data
+   * points to calculate the moving average)
+   * @return boolean
+   */
   public boolean checkLine(){
     // Get new sample
     float sample = colorSensor.getSample();

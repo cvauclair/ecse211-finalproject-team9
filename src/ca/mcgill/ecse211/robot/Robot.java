@@ -6,7 +6,7 @@ package ca.mcgill.ecse211.robot;
 
 import lejos.hardware.Button;
 
-/*
+/**
  * This class is a template class for all robots, in which the constructor sets up things that are needed for all 
  * robots (for now, it only sets up an escape thread to terminate the robot anytime by pressing escape).
  * All robots should be implemented by extending this class and overriding the run() method.

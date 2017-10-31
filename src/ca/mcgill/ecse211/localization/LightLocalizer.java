@@ -11,6 +11,13 @@ public class LightLocalizer {
   private float[] csData;
   enum LineOrientation {Horizontal, Vertical};
   
+  /**
+   * LightLocalizer is used to correct the odometer's x and y position
+   * @param odometer odometer object
+   * @param driver driver object
+   * @param cs SampleProvider for color sensor
+   * @param csData float array to store values from sensor
+   */
   public LightLocalizer(Odometer odometer, Driver driver, SampleProvider cs, float[] csData){
     this.odometer = odometer;
     this.driver = driver;
@@ -18,8 +25,13 @@ public class LightLocalizer {
     this.csData = csData;
   }
   
-  // Localize the robot to (x0,y0) (in cm) using a "soft-hard-coded" technique
+  /**
+   * This method localizes the robot to (x0,y0) (in cm) using a "soft-hard-coded" technique
+   * @param x0 double for the x-position
+   * @param y0 double for the y-position
+   */
   public void localize(double x0, double y0){
+	 
     // Slow down robot so that it does not miss the line
     this.driver.setForwardSpeed(100);
     
@@ -42,9 +54,12 @@ public class LightLocalizer {
     this.odometer.setY(y0);
   }
   
-  // Method that sets the odometer's Y position by detecting a horizontal line (horizontalLine = true) or
-  // its X position by detecting a vertical line (horizontalLine = false). The odometer's Y value (or 
-  // X value depending on horizaontalLine) is set to initialValue
+  /**
+   * Method that sets the odometer's Y position by detecting a horizontal line (horizontalLine = true) or
+   * its X position by detecting a vertical line (horizontalLine = false). The odometer's Y value (or 
+   * X value depending on horizaontalLine) is set to initialValue
+   * @param lineOrientation Horizontal or Vertical
+   */
   private void lineLocalization(LineOrientation lineOrientation){    
     // Set robot to driver forward 
     this.driver.forward();
@@ -63,7 +78,14 @@ public class LightLocalizer {
     }
   }
   
-  // Helper method that returns when a line is crossed, n indicates number of values to keep for moving average
+  /**
+   * Helper method that returns when a line is crossed
+   * @param cs SampleProvider for color sensor
+   * @param csData float array to store values detected by color sensor
+   * @param samplingFrequency int that represents frequency at which the sensor polls the values
+   * @param threshold int used as limit (if limit is reached, the line is detected)
+   * @param n int that represents values to keep for moving average
+   */
   private static void detectLine(SampleProvider cs, float[] csData, int samplingFrequency, int threshold, int n){
     float[] csValues = new float[n];
     float movingAverage = 0;
