@@ -15,6 +15,11 @@ public class LightSensor extends Sensor{
   float derivative;
   int counter;
   
+  /**
+   * Constructor that creates a light sensor object
+   * @param port String
+   * @param mode String
+   */
   public LightSensor(String port, String mode) {
     super();
     this.sensor = new EV3ColorSensor(LocalEV3.get().getPort(port));

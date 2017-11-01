@@ -13,11 +13,17 @@ public class Sensor {
   float[] sensorData;
   Object lock;
   
+  /**
+   * Constructor for sensor object that needs no parameters
+   */
   public Sensor(){
     lock = new Object();
   }
   
-  // Method to take a single measurement (thread safe)
+  /**
+   * Method to take a single measurement from sensor (thread safe)
+   * @return float
+   */
   public float getSample(){
     float sample;
     synchronized(lock){
@@ -27,7 +33,11 @@ public class Sensor {
     return sample;
   }
 
-  // Method that takes n measurements and returns the average value
+  /**
+   * Method that takes n measurements and returns the average value
+   * @param n int
+   * @return float
+   */
   public float getAverageSample(int n){
     float sum = 0;
     for(int i = 0; i < n; i++){

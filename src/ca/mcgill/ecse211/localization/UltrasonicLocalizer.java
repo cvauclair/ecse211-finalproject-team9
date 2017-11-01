@@ -4,6 +4,7 @@ import ca.mcgill.ecse211.navigation.Driver;
 import ca.mcgill.ecse211.odometry.Odometer;
 import lejos.robotics.SampleProvider;
 
+
 public class UltrasonicLocalizer {
   private Odometer odometer;
   private Driver driver;
@@ -14,6 +15,13 @@ public class UltrasonicLocalizer {
   private static final int EDGE_VALUE = 30;
   private static final int NOISE_MARGIN = 2;
   
+  /**
+   * UlrasonicLocalizer corrects the odometer's angle 
+   * @param odometer odometer
+   * @param driver driver
+   * @param us SampleProvider for ultrasonic sensor
+   * @param usData float array to store the data fetched from the sensor
+   */
   public UltrasonicLocalizer(Odometer odometer, Driver driver, SampleProvider us, float[] usData){
     this.odometer = odometer;
     this.driver = driver;
@@ -21,6 +29,10 @@ public class UltrasonicLocalizer {
     this.usData = usData;
   }
   
+  /**
+   * Localization with falling edge
+   * @param initialOrientation int that represents the initial angle in degrees
+   */
   public void fallingEdge(int initialOrientation){
     double backWallAngle = 0;
     double leftWallAngle = 0;
@@ -54,6 +66,10 @@ public class UltrasonicLocalizer {
     this.odometer.setTheta(initialOrientation);
   }
   
+  /**
+   * Localization with rising edge
+   * @param initialOrientation int that represents the initial angle in degrees
+   */
   public void risingEdge(int initialOrientation){
     double backWallAngle = 0;
     double leftWallAngle = 0;
@@ -87,7 +103,11 @@ public class UltrasonicLocalizer {
     this.odometer.setTheta(initialOrientation);
   }
   
-  //Return the angle at which the falling edge was located
+  /**
+   * Method that returns the angle at which the falling edge was located
+   * @param clockwise boolean (true or false)
+   * @return angle double
+   */
   private double findFallingEdge(boolean clockwise){
     boolean inNoiseMargin = false;  // Flag indicating if data values are in the noise margin
     double enteringAngle = 0;  // Angle at which data values enter the noise margin
@@ -128,7 +148,11 @@ public class UltrasonicLocalizer {
     return (enteringAngle + exitingAngle)/2.0;
   }
   
-  //Return the angle at which the falling edge was located
+  /**
+   * Method that returns the angle at which the falling edge was located
+   * @param clockwise boolean
+   * @return  double
+   */
   private double findRisingEdge(boolean clockwise){
     boolean inNoiseMargin = false;  // Flag indicating if data values are in the noise margin
     double enteringAngle = 0;  // Angle at which data values enter the noise margin
@@ -170,7 +194,13 @@ public class UltrasonicLocalizer {
     return (enteringAngle + exitingAngle)/2.0;
   }
   
-  // Helper method that reads the values of a sensor n times and computes the average
+  /**
+   * Helper method that reads the values of a sensor n times and computes the average
+   * @param sensor SampleProvider
+   * @param data float array for sensor values
+   * @param n integer
+   * @return  float
+   */
   private static float averageSensorValue(SampleProvider sensor, float[] data, int n){
     float total = 0;
     for(int i = 0; i < n; i++){
