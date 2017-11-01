@@ -11,13 +11,19 @@ public class OdometryDisplay extends Thread {
   private Odometer odometer;
   private TextLCD t;
 
-  // constructor
+  /**
+   * This creates a OcometryDisplay instance
+   * @param odometer is the Odometer which is to be displayed
+   * @param t is the text LCD display instance the information is to be displayed to
+   */
   public OdometryDisplay(Odometer odometer, TextLCD t) {
     this.odometer = odometer;
     this.t = t;
   }
 
-  // run method (required for Thread)
+  /**
+   * This method continuously displays the specified odometer's values on the specified LCD display
+   */
   public void run() {
     long displayStart, displayEnd;
     double[] position = new double[3];
@@ -55,6 +61,12 @@ public class OdometryDisplay extends Thread {
     }
   }
 
+  /**
+   * This method formats a value to fit on the LCD display
+   * @param x is the value to be formatted
+   * @param places is the horizontal character location to which the value is to be displayed on the LCD display
+   * @return a string containing the value and the appropriate number of spaces
+   */
   private static String formattedDoubleToString(double x, int places) {
     String result = "";
     String stack = "";
@@ -95,5 +107,4 @@ public class OdometryDisplay extends Thread {
 
     return result;
   }
-
 }

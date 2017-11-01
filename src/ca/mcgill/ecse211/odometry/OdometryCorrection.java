@@ -10,6 +10,11 @@ import ca.mcgill.ecse211.sensor.LineDetector;
 import lejos.robotics.SampleProvider;
 import lejos.utility.TimerListener;
 
+/**
+ * This class is used to correct an Odometer instance
+ * @author allison
+ *
+ */
 public class OdometryCorrection implements TimerListener{
   private static LineDetector lineDetector;
   private static final long CORRECTION_PERIOD = 10;
@@ -19,6 +24,15 @@ public class OdometryCorrection implements TimerListener{
   private double x0, y0; //values returned by the odometer
   private double lineTreshold; //in cm = ~ 4.88 cm
 
+  /**
+   * This class runs in parallel to the system and corrects the robot's odometer every time the robot
+   * crosses a line.
+   * 
+   * @param odometer is the robot's Odometer
+   * @param lineDetector is a LineDetector instance
+   * @param tileS is the size of a wooden tile
+   * @param dist2W is the distance between the wheel axis and the light sensor
+   */
   public OdometryCorrection(Odometer odometer, LineDetector lineDetector, double tileS, double dist2W){
     this.odometer = odometer;
     this.lineDetector = lineDetector;
