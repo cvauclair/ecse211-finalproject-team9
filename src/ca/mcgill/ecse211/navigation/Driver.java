@@ -12,6 +12,7 @@ public class Driver {
   private EV3LargeRegulatedMotor rightMotor;
   private double wheelRadius;
   private double baseWidth;
+  private double sizeOfRobot;
   private int forwardSpeed;
   private int rotateSpeed;
   
@@ -29,6 +30,7 @@ public class Driver {
     this.rightMotor = rightMotor;
     this.wheelRadius = wheelRadius;
     this.baseWidth = baseWidth;
+    this.sizeOfRobot = 12; //12cm default value
     this.forwardSpeed = 250;    // Default value
     this.rotateSpeed = 150;     // Default value
   }
@@ -208,4 +210,12 @@ public class Driver {
     // (ie: each wheel needs to move by arc length of robot rotation)
     return convertDistance(radius, Math.PI * width * angle / 360.0);
   }
+  
+  
+  public void justrotateClockwise(){ // tells the robot to keep rotating
+      leftMotor.setSpeed(rotateSpeed);
+      rightMotor.setSpeed(rotateSpeed);
+      leftMotor.forward();
+      rightMotor.backward();
+	  }
 }
