@@ -76,6 +76,12 @@ public class Relocalization {
 		double ytheta= angles[1]-angles[3]; 
 		double xtheta= angles[0]-angles[2];
 		double extracorrection= excessangle- angles[3];
+		//double Xo= position(xtheta);
+		//double Yo= position(ytheta);
+		double thetaO= (angles[1]-angles[3])/2 -angles[2]+ extracorrection; 
+        double correcttheta = odometer.getTheta()+ thetaO ;
+        double thetaFinal =angleCorrection(correcttheta);
+
 		
 	}
 	
@@ -89,6 +95,21 @@ public class Relocalization {
         return position;
         
     }
+	/**
+	 * This method corrects the theta value of the odometer
+	 * @param angle double
+	 * @return
+	 */
+	private static double angleCorrection(double angle){  
+	    if (angle > 180) {
+	      return angle - 360;
+	    } else if (angle < -180) {
+	      return angle + 360;
+	    } else {
+	      return angle;
+	    }
+	    
+	}
 	
 	/**
 	 * Tells the robot to wait
