@@ -4,6 +4,7 @@ import ca.mcgill.ecse211.navigation.Driver;
 import ca.mcgill.ecse211.objectdetection.ObjectDetection;
 import ca.mcgill.ecse211.odometry.Odometer;
 import ca.mcgill.ecse211.robot.Robot;
+import ca.mcgill.ecse211.sensor.LightSensor;
 import ca.mcgill.ecse211.sensor.UltrasonicSensor;
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
@@ -30,6 +31,7 @@ public class ObjectDetectionCalibration extends Robot{
   private Odometer odometer;
   private Driver driver;
   private UltrasonicSensor usSensor;
+  private LightSensor lightSensor;
   private ObjectDetection objectDetection;
   
   public static void main(String[] args){
@@ -43,8 +45,9 @@ public class ObjectDetectionCalibration extends Robot{
     this.driver = new Driver(odometer,leftMotor,rightMotor,WHEEL_RADIUS, BASE_WIDTH);
     
     this.usSensor = new UltrasonicSensor("S1", "distance");
+    this.lightSensor = new LightSensor("S2", "red");
 
-    this.objectDetection = new ObjectDetection(odometer,usSensor);
+    this.objectDetection = new ObjectDetection(driver,odometer,usSensor,lightSensor);
   }
   
   public void run(){

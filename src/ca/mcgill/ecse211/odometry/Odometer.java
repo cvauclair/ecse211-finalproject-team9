@@ -110,8 +110,8 @@ public class Odometer implements TimerListener {
     }
 
     // Calculate the new values of x and y
-    this.newX = this.getX() + this.deltaD * Math.sin(this.newTheta * (Math.PI/180));
-    this.newY = this.getY() + this.deltaD * Math.cos(this.newTheta * (Math.PI/180));
+    this.newX = this.getX() + this.deltaD * Math.sin(Math.toRadians(this.newTheta));
+    this.newY = this.getY() + this.deltaD * Math.cos(Math.toRadians(this.newTheta));
 
     synchronized (lock) {
       this.theta = this.newTheta;
