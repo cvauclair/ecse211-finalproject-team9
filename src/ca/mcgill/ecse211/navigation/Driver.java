@@ -47,6 +47,15 @@ public class Driver {
     this.rightMotor.forward();
   }
   
+  public void backward(){
+    // Set forward speed
+    this.setSpeed(this.forwardSpeed);
+    
+    // Move forward
+    this.leftMotor.backward();
+    this.rightMotor.backward();
+  }
+  
   /**
    *  Method to stop both motors
    */
@@ -155,6 +164,10 @@ public class Driver {
    */
   public void setForwardSpeed(int forwardSpeed){
     this.forwardSpeed = forwardSpeed;
+  }
+  
+  public int getForwardSpeed(){
+    return this.forwardSpeed;
   }
   
   /**

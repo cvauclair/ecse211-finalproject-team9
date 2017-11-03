@@ -13,6 +13,7 @@ public class LineDetector {
   private float derivative;
   private int numberOfSamples;
   private int counter;
+  private boolean arrayFilled;
   
   /**
    * Constructor for the Line detector object
@@ -29,6 +30,7 @@ public class LineDetector {
     this.derivative = 0;
     this.numberOfSamples = n;
     this.counter = 0;
+    this.arrayFilled = false;
   }
   
   /**
@@ -42,16 +44,20 @@ public class LineDetector {
     float sample = colorSensor.getSample();
     
     // Shift values and add new sample value
-    for(int i = this.numberOfSamples-1; i > 0; i--){
-        this.colorSensorValues[i] = this.colorSensorValues[i-1];
-    }
-    this.colorSensorValues[0] = sample * 1000;
+//    for(int i = this.numberOfSamples-1; i > 0; i--){
+//        this.colorSensorValues[i] = this.colorSensorValues[i-1];
+//    }
+    this.colorSensorValues[this.counter] = sample * 1000;
     
     // Increment counter
     this.counter++;
+    if(this.counter == this.numberOfSamples){
+      this.counter = 0;
+      this.arrayFilled = true;
+    }
     
     // Compute moving average and derivative only if first n values have been measured
-    if(this.counter >= this.numberOfSamples){ 
+    if(this.arrayFilled){ 
       // If first time moving average is computed
       if(this.lastMovingAverage == 0){
           this.lastMovingAverage = this.colorSensorValues[this.numberOfSamples-1];
@@ -68,6 +74,8 @@ public class LineDetector {
         return true;
       }
     }
+    
+    this.lastMovingAverage = this.currentMovingAverage;
     
     return false;
   }
