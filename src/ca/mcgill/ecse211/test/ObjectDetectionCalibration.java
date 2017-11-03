@@ -43,8 +43,8 @@ public class ObjectDetectionCalibration extends Robot{
     this.driver = new Driver(odometer,leftMotor,rightMotor,WHEEL_RADIUS, BASE_WIDTH);
     
     this.usSensor = new UltrasonicSensor("S1", "distance");
-
-    this.objectDetection = new ObjectDetection(odometer,usSensor);
+    
+    //this.objectDetection = new ObjectDetection(driver,odometer,usSensor);
   }
   
   public void run(){
