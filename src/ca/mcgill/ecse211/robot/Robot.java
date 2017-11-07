@@ -14,6 +14,11 @@ import lejos.hardware.Button;
  */
 
 public class Robot {
+  private final static double BASE_WIDTH = 12.5;
+  private final static double WHEEL_RADIUS = 2.1;
+  private final static double SQUARE_WIDTH = 30.48;
+
+  
   public Robot(){
     // Start escape thread
     (new Thread() {
@@ -25,6 +30,7 @@ public class Robot {
   }
   
   public void run(){
-    
+    // Wait for enter button to start
+    while(Button.waitForAnyPress() != Button.ID_ENTER){}
   }
 }
