@@ -24,8 +24,8 @@ public class CollisionAvoidanceTest extends Robot{
   }
   
   public void run(){
-    UltrasonicSensor usSensor = new UltrasonicSensor("S1", "distance");
-    LightSensor lightSensor = new LightSensor("S2", "red");
+    UltrasonicSensor usSensor = new UltrasonicSensor("S1", "Distance");
+    LightSensor lightSensor = new LightSensor("S2", "Red");
     LineDetector lineDetector = new LineDetector(lightSensor, 20, 8);
     
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
