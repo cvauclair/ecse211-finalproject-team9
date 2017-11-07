@@ -76,11 +76,16 @@ public class Odometer implements TimerListener {
    * the last measurements.
    */
   public void timedOut() {
-    leftMotor.resetTachoCount();
-    rightMotor.resetTachoCount();
-    this.lastLeftMotorTachoCount = this.leftMotor.getTachoCount();
-    this.lastRightMotorTachoCount = this.rightMotor.getTachoCount();
-
+    // Initial values
+    if(this.lastLeftMotorTachoCount == 0){
+      leftMotor.resetTachoCount();
+      this.lastLeftMotorTachoCount = this.leftMotor.getTachoCount();
+    }
+    if(this.lastRightMotorTachoCount == 0){
+      rightMotor.resetTachoCount();
+      this.lastRightMotorTachoCount = this.rightMotor.getTachoCount();
+    }
+    
     // Update motor tacho counts
     this.leftMotorTachoCount = this.leftMotor.getTachoCount();
     this.rightMotorTachoCount = this.rightMotor.getTachoCount();
@@ -118,6 +123,9 @@ public class Odometer implements TimerListener {
       this.x = this.newX;
       this.y = this.newY;
     }
+    
+    this.lastLeftMotorTachoCount = this.leftMotorTachoCount;
+    this.lastRightMotorTachoCount = this.rightMotorTachoCount;
   }
 
   /**
