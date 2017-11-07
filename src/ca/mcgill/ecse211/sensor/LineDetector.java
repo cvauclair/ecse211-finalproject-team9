@@ -68,6 +68,7 @@ public class LineDetector {
 
       // Calculate poor man's derivative
       this.derivative = this.currentMovingAverage - this.lastMovingAverage;
+      this.lastMovingAverage = this.currentMovingAverage;
 
       // Return true if line is detected
       if(this.derivative > this.threshold){
@@ -75,7 +76,6 @@ public class LineDetector {
       }
     }
     
-    this.lastMovingAverage = this.currentMovingAverage;
     
     return false;
   }

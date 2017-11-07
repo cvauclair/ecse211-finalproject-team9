@@ -26,13 +26,16 @@ public class Relocalization {
 	// implementing classes
 	private Odometer odometer;
 	private Driver driver;
-
 	
-	public Relocalization(Odometer odo, LineDetector lineDetector, Driver drive){
+	//physical values of gameboard
+	private double tileSize;
+	
+	public Relocalization(Odometer odo, LineDetector lineDetector, Driver drive, double tileS){
 		
 		this.odometer = odo;
 		this.lineDetector = lineDetector;
 		this.driver = drive;
+		this.tileSize = tileS;
 		angles = new double[4];
 		obtainAngle= new double[4];
 		running = false;
@@ -72,29 +75,36 @@ public class Relocalization {
 			}
 		}//end of while running loop
 		
+		//fetch odometer values
+		double xOdo = odometer.getX() / tileSize;
+		double yOdo = odometer.getY() / tileSize;
+		//find line node at which we localized (not 0,0) 
+		double xTile = round(xOdo);
+		double yTile = round(yOdo);
 		// calculating distance to 0,0 and fetching theta and distance value to navigation lab
 		double ytheta= angles[1]-angles[3]; 
 		double xtheta= angles[0]-angles[2];
 		double extracorrection= excessangle- angles[3];
-		//double Xo= position(xtheta);
-		//double Yo= position(ytheta);
-		double thetaO= (angles[1]-angles[3])/2 -angles[2]+ extracorrection; 
+		double Xo= position(xtheta) + (xTile * tileSize);
+		double Yo= position(ytheta) + (yTile * tileSize);
+		double thetaO= (angles[1]-angles[3])/2 -angles[2]+ extracorrection;  //or angle 3 - angle 1
         double correcttheta = odometer.getTheta()+ thetaO ;
         double thetaFinal =angleCorrection(correcttheta);
+        odometer.setTheta(thetaFinal);
+        odometer.setX(Xo);
+        odometer.setY(Yo);
 
 		
 	}
 	
-	/**
-	 * Find the correct position for either x or y 
-	 * @param angle
-	 * @return
-	 */
 	private double position(double angle) {     // mehod to find the position
-        double position = -sizeofRobot *Math.cos((Math.toRadians(angle)/2));
-        return position;
-        
-    }
+		
+		double position = -sizeofRobot *Math.cos((Math.toRadians(angle)/2));
+	    return position;
+	        
+	}
+	
+
 	/**
 	 * This method corrects the theta value of the odometer
 	 * @param angle double
@@ -122,6 +132,19 @@ public class Relocalization {
 	          // TODO Auto-generated catch block
 	          e.printStackTrace();
 	      }
+	}
+	
+	/**
+	 * method that rounds a double n 
+	 * @param n double
+	 * @return
+	 */
+	private static double round(double n){
+		double rounded = 0.0;
+		int roundedAsInt = (int) (n + 0.5);
+		rounded = (double) roundedAsInt;
+		
+		return rounded;
 	}
 	
 	
