@@ -32,6 +32,7 @@ public class CollisionAvoidance implements TimerListener{
   private static final int bandWidth = 3;
   private static final int maxCorrection = 50;
   private static final int propConst = 10;
+
   /**
    * This creates an instance of CollisionAvoidance
    * 
@@ -68,10 +69,16 @@ public class CollisionAvoidance implements TimerListener{
    */
   public void avoidObstacle(){
     // Decide go left or right
+    // For now turn right 
+    driver.turnBy(70, false);
+    usSensorMotor.rotate(-45);
 
     // P-Controller -> follow obstacle
+    double turnAngle = 0;
+    double distError = 0;
+    int correction = 0;
     while(true){
-      double turnAngle = this.oldTheta - odometer.getTheta();
+      turnAngle = this.oldTheta - odometer.getTheta();
       if (turnAngle <= -260 || turnAngle >= 100) { //Assuming the object has now been avoided if the difference of angles is 90 degrees (Using approx 100 degrees)
         Sound.beep();
         //        pStyleMode = false;
@@ -80,22 +87,22 @@ public class CollisionAvoidance implements TimerListener{
         // We reduce the count so they go back to the point you were travelling to
         // before you encountered the obstacle
         navigation.decrementCounter();
+        navigation.setNavigate(true);
         break;
       } else { //Implementation of P-Style Controller
-        double distError = bandCenter - this.currentMovingAverage; //Error = reference control value - measured distance from the wall  
-        int correction;
+        distError = bandCenter - this.currentMovingAverage; //Error = reference control value - measured distance from the wall  
         if(Math.abs(distError) <= bandWidth) {
           driver.setForwardSpeed(200);
           driver.forward();
         }
         else if (distError > 0) { //Too close to the wall
           correction = correction(distError);
-          if(this.getMovingAverage() < 18) { //Mechanism to avoid hitting the wall (If closer than 18cm)
+          if(this.getMovingAverage() < 18) {    //Mechanism to avoid hitting the wall (If closer than 18cm)
             driver.backward();
           }
           driver.getLeftMotor().setSpeed(driver.getForwardSpeed() + correction); 
           driver.getRightMotor().setSpeed(driver.getForwardSpeed() - correction); 
-          driver.getRightMotor().backward(); //Backward motion to turn on the spot / more precise turning
+          driver.getRightMotor().backward();    //Backward motion to turn on the spot / more precise turning
           driver.getLeftMotor().forward();
         }
         else if (distError < 0) { //Too far from the wall
@@ -107,11 +114,13 @@ public class CollisionAvoidance implements TimerListener{
         }
       }
     }
+
+    driver.stop();
   }
 
   private boolean obstacleDetected(){
     // Return true if obstacle is detected
-    if(this.getMovingAverage() > this.threshold && this.arrayFilled){
+    if(this.getMovingAverage() < this.threshold && this.arrayFilled){
       return true;
     }else{
       return false;

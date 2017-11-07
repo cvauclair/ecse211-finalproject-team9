@@ -9,6 +9,7 @@ public class Navigation {
   private static CollisionAvoidance collisionAvoidance;
   private List<Point2D.Double> points;
   private int counter;
+  private boolean navigate = true;
   private Object lock;
   
   public Navigation(Driver driver, CollisionAvoidance collisionAvoidance){
@@ -21,7 +22,7 @@ public class Navigation {
   }
   
   public void navigate(){
-    while(this.getCounter() < this.points.size()){
+    while(this.getCounter() < this.points.size() && this.navigate){
       this.driver.travelTo(points.get(this.getCounter()).getX(),points.get(this.getCounter()).getY());
       this.decrementCounter();
     }
@@ -59,5 +60,9 @@ public class Navigation {
     synchronized(lock){
       this.counter--;
     }
+  }
+  
+  public void setNavigate(boolean navigate){
+    this.navigate = navigate;
   }
 }
