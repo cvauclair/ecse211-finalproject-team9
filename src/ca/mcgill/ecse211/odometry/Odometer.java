@@ -123,9 +123,6 @@ public class Odometer implements TimerListener {
       this.x = this.newX;
       this.y = this.newY;
     }
-    
-    this.lastLeftMotorTachoCount = this.leftMotorTachoCount;
-    this.lastRightMotorTachoCount = this.rightMotorTachoCount;
   }
 
   /**
