@@ -16,8 +16,8 @@ public class UltrasonicSensor extends Sensor{
 	
   /**
    * Constructor that creates a Ultrasonic sensor object 
-   * @param port is a String corresponding to the port used to connect the sensor
-   * @param mode is a string that specifies which mode will be used to read the values fetched from the sensor
+   * @param port 	a String corresponding to the port used to connect the sensor
+   * @param mode 	a string that specifies which mode will be used to read the values fetched from the sensor
    */
   public UltrasonicSensor(String port, String mode) {
     super();
