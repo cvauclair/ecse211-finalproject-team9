@@ -57,8 +57,8 @@ public class ObjectDetection implements TimerListener{
    * @return location	a double[][] which is the approximate location of the object
    */
   public double[][] getObjectsLocation(){
-	double [][] location;
-    return new double[2][];
+	double location[][] = new double[][];
+    return location;
   }
   
   /**
