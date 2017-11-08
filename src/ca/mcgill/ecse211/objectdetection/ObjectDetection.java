@@ -25,10 +25,10 @@ public class ObjectDetection implements TimerListener{
   
   /**
    * Creates an ObjectDetection instance
-   * @param driver is the robot's Driver instance
-   * @param odometer is the robot's Odometer instance
-   * @param usSensor is the robot's UltrasonicSensor instance
-   * @param lightSensor is the robot's horizontal LightSensor instance
+   * @param driver 		a Driver instance that is the robot's driver object
+   * @param usSensor 	a UltrasonicSensor instance
+   * @param odometer 	a Odometer instance is the robot's Odometer
+   * @param lightSensor 	a lightSensor instance is the robot's horizontal LightSensor
    */
   public ObjectDetection(Driver driver, Odometer odometer, UltrasonicSensor usSensor, LightSensor lightSensor){
     this.driver = driver;
@@ -54,17 +54,20 @@ public class ObjectDetection implements TimerListener{
   
   /**
    * Method that calculates the approximate location of surrounding objects based on the measurements in data
-   * @return
+   * @return location	a double[][] which is the approximate location of the object
    */
   public double[][] getObjectsLocation(){
+	double [][] location;
     return new double[2][];
   }
   
   /**
    * This method uses the horizontal light sensor to check if the object in front of the robot is the flag or not.
    * It does not check whether or not an object is present in front of the robot.
+   * @return isObject	a boolean which is true if the object detected is the flag, false otherwise
    */
-  public void testObject(){
-    
+  public boolean testObject(){
+	boolean isObject = false;
+	return boolean;
   }
 }
