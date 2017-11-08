@@ -31,7 +31,7 @@ public class WifiConnection {
 	// thread
 	// so we can rely on a user to kill the program if needed
 	private static final int timeout = 0;
-
+	//
 	// Whether or not to print debug messages
 	private boolean debugPrint;
 	// Team number to transmit to server
