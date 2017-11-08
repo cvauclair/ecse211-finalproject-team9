@@ -67,12 +67,12 @@ public class OdometryCorrection implements TimerListener{
     }
   }
 
-  /* EVERYTHING BELOW THIS LINE IS DEPRECATED */
-
-  // Helper method that returns when a line is crossed, n indicates number of values to keep for moving average
-  //Created by Christophe 
-
-  private static void detectLine(SampleProvider cs, float[] csData, int samplingFrequency, int threshold, int n){
+  /**
+   * @deprecated As of version 2.0, all line detection will be taken care of within the {@link #timedOut()} method
+   * Helper method that returns when a line is crossed, n indicates number of values to keep for moving average
+   *
+   */
+@Deprecated private static void detectLine(SampleProvider cs, float[] csData, int samplingFrequency, int threshold, int n){
     float[] csValues = new float[n];
     float movingAverage = 0;
     float lastMovingAverage = 0;
@@ -131,7 +131,6 @@ public class OdometryCorrection implements TimerListener{
       try {
         Thread.sleep(samplingFrequency);
       } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
