@@ -35,10 +35,10 @@ public class Relocalization {
 	
 	/**
 	 * This creates an instance of Relocalization. It can relocalize no matter where the robot is on the game field
-	 * @param odo is an Odometer instance
-	 * @param lineDetector is a LineDetector instance
-	 * @param drive is a Drive instance
-	 * @param tileS is a double that represents the size of one tile`
+	 * @param odo 			an Odometer instance
+	 * @param lineDetector 	a LineDetector instance
+	 * @param drive 			a Drive instance
+	 * @param tileS 			a double that represents the size of one tile`
 	 */
 	public Relocalization(Odometer odo, LineDetector lineDetector, Driver drive, double tileS){
 		
@@ -111,8 +111,8 @@ public class Relocalization {
 	
 	/**
 	 * Helper function to calculate the correction of the x or y value of the odometer
-	 * @param angle double
-	 * @return the corrected position
+	 * @param angle 			a double that is the current angle
+	 * @return position		a double that is the corrected position
 	 */
 	private double position(double angle) {     // mehod to find the position
 		
@@ -124,8 +124,8 @@ public class Relocalization {
 
 	/**
 	 * This method corrects the theta value of the odometer
-	 * @param angle double
-	 * @return correction that needs to be provided to the angle
+	 * @param angle 			a double that is the current angle
+	 * @return correction 	a double that needs to be provided to the angle to correct it
 	 */
 	private static double angleCorrection(double angle){  
 	    if (angle > 180) {
@@ -140,7 +140,7 @@ public class Relocalization {
 	
 	/**
 	 * Helper function that tells the robot to wait
-	 * @param time
+	 * @param time		an int for time to sleep, measured in milliseconds
 	 */
 	private static void wait(int time){ 
 		    try {
@@ -153,8 +153,8 @@ public class Relocalization {
 	
 	/**
 	 * method that rounds a double n 
-	 * @param n double
-	 * @return rounded number
+	 * @param n 			a double to round the number
+	 * @return rounded 	a double which is the rounded number
 	 */
 	private static double round(double n){
 		double rounded = 0.0;

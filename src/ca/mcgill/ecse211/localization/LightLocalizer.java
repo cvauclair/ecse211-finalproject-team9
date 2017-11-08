@@ -13,10 +13,10 @@ public class LightLocalizer {
   
   /**
    * This creates an instance of LightLocalizer. It is used to correct the odometer's x and y position only when the game starts
-   * @param odometer  is an Odometer instance
-   * @param driver  is a Driver instance
-   * @param cs  is a SampleProvider for color sensor
-   * @param csData  is float array to store values received from sensor
+   * @param odometer 	an Odometer instance
+   * @param driver 		a Driver instance
+   * @param cs  			a SampleProvider for color sensor
+   * @param csData  		a float array to store values received from sensor
    */
   public LightLocalizer(Odometer odometer, Driver driver, SampleProvider cs, float[] csData){
     this.odometer = odometer;
@@ -27,8 +27,8 @@ public class LightLocalizer {
   
   /**
    * This method localizes the robot to (x0,y0) (in cm) using a "soft-hard-coded" technique
-   * @param x0 is a double for the x-position
-   * @param y0 is a double for the y-position
+   * @param x0 		a double for the x-position
+   * @param y0 		a double for the y-position
    */
   public void localize(double x0, double y0){
 	 
@@ -58,7 +58,7 @@ public class LightLocalizer {
    * Method that sets the odometer's Y position by detecting a horizontal line (horizontalLine = true) or
    * its X position by detecting a vertical line (horizontalLine = false). The odometer's Y value (or 
    * X value depending on horizaontalLine) is set to initialValue
-   * @param lineOrientation is either Horizontal or Vertical
+   * @param lineOrientation 		a LineOrientation instance that is either Horizontal or Vertical
    */
   private void lineLocalization(LineOrientation lineOrientation){    
     // Set robot to driver forward 
@@ -80,11 +80,11 @@ public class LightLocalizer {
   
   /**
    * Helper method that returns when a line is crossed
-   * @param cs is SampleProvider for color sensor
-   * @param csData is a float array to store values detected by color sensor
-   * @param samplingFrequency is an int that represents the frequency at which the sensor polls the values
-   * @param threshold is an int used as limit (if limit is reached, the line is detected)
-   * @param n is an int that represents values to keep for moving average
+   * @param cs 					a SampleProvider for color sensor
+   * @param csData 				a float array to store values detected by color sensor
+   * @param samplingFrequency 	an int that represents the frequency at which the sensor polls the values
+   * @param threshold 			an int used as limit (if limit is reached, the line is detected)
+   * @param n 					an int that represents values to keep for moving average
    */
   private static void detectLine(SampleProvider cs, float[] csData, int samplingFrequency, int threshold, int n){
     float[] csValues = new float[n];
@@ -127,7 +127,6 @@ public class LightLocalizer {
       try {
         Thread.sleep(samplingFrequency);
       } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }

@@ -20,10 +20,10 @@ public class UltrasonicLocalizer {
   
   /**
    * UlrasonicLocalizer corrects the odometer's angle 
-   * @param odometer is an Odometer instance
-   * @param driver is a Driver instance
-   * @param us is a SampleProvider for ultrasonic sensor
-   * @param usData is a float array to store the data fetched from the sensor
+   * @param odometer		an Odometer instance
+   * @param driver		a Driver instance
+   * @param us			a SampleProvider for ultrasonic sensor
+   * @param usData		a float array to store the data fetched from the sensor
    */
   public UltrasonicLocalizer(Odometer odometer, Driver driver, SampleProvider us, float[] usData){
     this.odometer = odometer;
@@ -34,7 +34,7 @@ public class UltrasonicLocalizer {
   
   /**
    * Localization with falling edge
-   * @param initialOrientation is an int that represents the initial angle in degrees
+   * @param initialOrientation		an int that represents the initial angle in degrees
    */
   public void fallingEdge(int initialOrientation){
     double backWallAngle = 0;
@@ -71,7 +71,7 @@ public class UltrasonicLocalizer {
   
   /**
    * Localization with rising edge
-   * @param initialOrientation is an int that represents the initial angle in degrees
+   * @param initialOrientation		an int that represents the initial angle in degrees
    */
   public void risingEdge(int initialOrientation){
     double backWallAngle = 0;
@@ -108,8 +108,8 @@ public class UltrasonicLocalizer {
   
   /**
    * Method that returns the angle at which the falling edge was located
-   * @param clockwise boolean (true or false)
-   * @return angle 
+   * @param clockwise 	a boolean describing clockwise or counterclockwise
+   * @return angle 		a float angle which is the average angle
    */
   private double findFallingEdge(boolean clockwise){
     boolean inNoiseMargin = false;  // Flag indicating if data values are in the noise margin
@@ -147,14 +147,14 @@ public class UltrasonicLocalizer {
     
     // Stop rotating
     this.driver.stop();
-    
-    return (enteringAngle + exitingAngle)/2.0;
+    float angle = (enteringAngle + exitingAngle)/2.0;
+    return angle;
   }
   
   /**
    * Method that returns the angle at which the falling edge was located
-   * @param clockwise boolean
-   * @return  double
+   * @param clockwise 	a boolean describing clockwise or counterclockwise
+   * @return angle 		a float angle which is the average angle
    */
   private double findRisingEdge(boolean clockwise){
     boolean inNoiseMargin = false;  // Flag indicating if data values are in the noise margin
@@ -193,16 +193,16 @@ public class UltrasonicLocalizer {
     
     // Stop rotating
     this.driver.stop();
-    
-    return (enteringAngle + exitingAngle)/2.0;
+    float angle = (enteringAngle + exitingAngle)/2.0;
+    return angle;
   }
   
   /**
    * Helper method that reads the values of a sensor n times and computes the average
-   * @param sensor is a SampleProvider
-   * @param data is a float array for sensor values
-   * @param n is an integer
-   * @return  average sensor value as float
+   * @param sensor 	a SampleProvider
+   * @param data 	a float array for sensor values
+   * @param n 		an integer
+   * @return total 	a float which is the average sensor value
    */
   private static float averageSensorValue(SampleProvider sensor, float[] data, int n){
     float total = 0;
@@ -211,6 +211,7 @@ public class UltrasonicLocalizer {
       // Cap the values at 200 to not get ridiculously large values
       total += (data[0]*100 > 200 ? 200 : data[0]*100);
     }
-    return total/n;
+    total = total/n;
+    return total;
   }
 }
