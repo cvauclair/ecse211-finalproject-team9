@@ -13,8 +13,8 @@ public class OdometryDisplay extends Thread {
 
   /**
    * This creates a OcometryDisplay instance
-   * @param odometer is the Odometer which is to be displayed
-   * @param t is the text LCD display instance the information is to be displayed to
+   * @param odometer 	an Odometer instance which is the robot's odometer
+   * @param t 			a TextLCD instance which is where the information should be displayed
    */
   public OdometryDisplay(Odometer odometer, TextLCD t) {
     this.odometer = odometer;
@@ -63,9 +63,9 @@ public class OdometryDisplay extends Thread {
 
   /**
    * This method formats a value to fit on the LCD display
-   * @param x is the value to be formatted
-   * @param places is the horizontal character location to which the value is to be displayed on the LCD display
-   * @return a string containing the value and the appropriate number of spaces
+   * @param x		a double which is the value to be formatted
+   * @param places 	an int which is the horizontal character location to which the value is to be displayed on the LCD display
+   * @return result	a String containing the value and the appropriate number of spaces
    */
   private static String formattedDoubleToString(double x, int places) {
     String result = "";

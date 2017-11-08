@@ -27,10 +27,10 @@ public class OdometryCorrection implements TimerListener{
    * This class runs in parallel to the system and corrects the robot's odometer instance every time the robot
    * crosses a line.
    * 
-   * @param odometer is the robot's Odometer
-   * @param lineDetector is a LineDetector instance
-   * @param tileS is the size of a wooden tile
-   * @param dist2W is the distance between the wheel axis and the light sensor
+   * @param odometer 	an Odometer instance which is the robot's odometer
+   * @param lineDetector	a LineDetector instance
+   * @param tileS		a double that is the size of a wooden tile
+   * @param dist2wheel 	a double that is the distance between the wheel axis and the light sensor
    */
   public OdometryCorrection(Odometer odometer, LineDetector lineDetector, double tileS, double dist2W){
     this.odometer = odometer;
