@@ -59,7 +59,7 @@ public class RelocalizationTest extends Robot{
 	          // TODO Auto-generated catch block
 	          e.printStackTrace();
 	      }
-		 relocalize.doRandomLocalization();
+		 relocalize.doReLocalization();
 		 driver.travelTo(0 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);    
 	}
 

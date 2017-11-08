@@ -47,6 +47,9 @@ public class Driver {
     this.rightMotor.forward();
   }
   
+  /**
+   * Method that makes the robot move backwad
+   */
   public void backward(){
     // Set forward speed
     this.setSpeed(this.forwardSpeed);
@@ -211,7 +214,9 @@ public class Driver {
     return convertDistance(radius, Math.PI * width * angle / 360.0);
   }
   
-  
+  /**
+   * Method that makes the robot to rotate Clockwise for an indefinite amount of time
+   */
   public void justrotateClockwise(){ // tells the robot to keep rotating
       leftMotor.setSpeed(rotateSpeed);
       rightMotor.setSpeed(rotateSpeed);

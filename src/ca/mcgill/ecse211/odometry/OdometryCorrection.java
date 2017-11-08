@@ -12,7 +12,6 @@ import lejos.utility.TimerListener;
 
 /**
  * This class is used to correct an Odometer instance
- * @author allison
  *
  */
 public class OdometryCorrection implements TimerListener{
@@ -25,7 +24,7 @@ public class OdometryCorrection implements TimerListener{
   private double lineTreshold; //in cm = ~ 4.88 cm
 
   /**
-   * This class runs in parallel to the system and corrects the robot's odometer every time the robot
+   * This class runs in parallel to the system and corrects the robot's odometer instance every time the robot
    * crosses a line.
    * 
    * @param odometer is the robot's Odometer
@@ -42,7 +41,10 @@ public class OdometryCorrection implements TimerListener{
     this.y0 = 0;
     this.lineTreshold = (double) 5/this.tileSize;
   }
-
+  
+  /**
+   * This method implements the necessary logic to correct the value of an odometer instance every time a line is crossed
+   */
   public void timedOut(){
     // Correct Odometer value if line is detected
     if(lineDetector.checkLine()){

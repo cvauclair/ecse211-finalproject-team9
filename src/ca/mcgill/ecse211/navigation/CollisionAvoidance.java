@@ -117,7 +117,11 @@ public class CollisionAvoidance implements TimerListener{
 
     driver.stop();
   }
-
+  
+  /**
+   * Helper method that detects an Obstacle by computing the moving average and derivative of the sensors values. 
+   * @return returns True when object is detected
+   */
   private boolean obstacleDetected(){
     // Return true if obstacle is detected
     if(this.getMovingAverage() < this.threshold && this.arrayFilled){
@@ -126,7 +130,10 @@ public class CollisionAvoidance implements TimerListener{
       return false;
     }
   }
-
+  /**
+   * Helper method to calculate the moving average
+   * @return float
+   */
   private float getMovingAverage(){
     this.distances[this.counter] = Math.min(usSensor.getSample() * 100, 100);
 
@@ -162,11 +169,20 @@ public class CollisionAvoidance implements TimerListener{
   public void setEnable(boolean enable){
     this.enabled = enable;
   }
-
+  
+  /**
+   * Helper method that sets the reference to the Navigation class 
+   * @param navigation
+   */
   public void setNavigation(Navigation navigation){
     this.navigation = navigation;
   }
-
+  
+  /**
+   * Helper method that returns the proportional correction that needs to be provided to the speed 
+   * @param error double
+   * @return integer
+   */
   private int correction(double error) {     
     int correction = (int) (propConst * (double)Math.abs(error)); //Corrected delta speed
     if (correction > maxCorrection) { //If correction too high, set a bound

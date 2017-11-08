@@ -1,9 +1,11 @@
 package ca.mcgill.ecse211.sensor;
 
-/**
+/*
  * Created by Christophe Vauclair on 27/10/2017
  */
-
+/**
+ * The line detector class is used to detect lines with the light sensor
+ */
 public class LineDetector {
   private LightSensor colorSensor;
   private int threshold;
@@ -17,9 +19,9 @@ public class LineDetector {
   
   /**
    * Constructor for the Line detector object
-   * @param colorSensor LightSensor
-   * @param threshold int
-   * @param n int
+   * @param colorSensor is an instance of LightSensor
+   * @param threshold is an int that specifies the threshold that needs to be obtained in order to consider  particlar data
+   * @param n is an int that specifies the number of samples collected from the sensor
    */
   public LineDetector(LightSensor colorSensor, int threshold, int n){
     this.colorSensor = colorSensor;

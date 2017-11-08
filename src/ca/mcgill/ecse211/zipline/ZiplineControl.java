@@ -1,5 +1,9 @@
 package ca.mcgill.ecse211.zipline;
 
+/**
+ * This is a class that is able to make the Robot cross a zipline
+ * 
+ */
 public class ZiplineControl {
 	
   /**

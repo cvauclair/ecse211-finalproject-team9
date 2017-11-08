@@ -3,10 +3,12 @@ package ca.mcgill.ecse211.sensor;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
 
-/**
+/*
  * Created by Christophe Vauclair on 27/10/2017
  */
-
+/**
+ * This class creates an instance of a Lejos Sensor
+ */
 public class Sensor {
   SensorModes sensor;
   SampleProvider sampleProvider;

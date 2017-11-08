@@ -12,13 +12,15 @@ import lejos.hardware.Button;
  * All robots should be implemented by extending this class and overriding the run() method.
  * See ObjectDetectionCalibration for example.
  */
-
 public class Robot {
   private final static double BASE_WIDTH = 12.5;
   private final static double WHEEL_RADIUS = 2.1;
   private final static double SQUARE_WIDTH = 30.48;
 
-  
+  /**
+   * Creates an instance of Robot. The Robot class has a special feature that allows the program to terminate when
+   * the escape button is pressed.
+   */
   public Robot(){
     // Start escape thread
     (new Thread() {
@@ -28,7 +30,9 @@ public class Robot {
       }
     }).start();
   }
-  
+  /**
+   * Method to start the Robot. The method waits for the user to press a button to start.
+   */
   public void run(){
     // Wait for enter button to start
     while(Button.waitForAnyPress() != Button.ID_ENTER){}

@@ -3,13 +3,13 @@ package ca.mcgill.ecse211.odometry;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.utility.TimerListener;
 
-/**
+/*
  *  Edited by Christophe Vauclair on 27/10/2017 
  */
 
 /**
  * This class represents an Odometer that keeps track of the position of a robot
- * @author christophe
+ *
  */
 public class Odometer implements TimerListener {
   // Static attributes

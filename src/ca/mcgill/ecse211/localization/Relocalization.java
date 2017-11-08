@@ -5,7 +5,10 @@ import ca.mcgill.ecse211.odometry.Odometer;
 import ca.mcgill.ecse211.sensor.LineDetector;
 import lejos.hardware.Sound;
 
-
+/**
+ * This class Relocalizes a Robot 
+ * 
+ */
 public class Relocalization {
 	
 	// implementing color sensor
@@ -30,6 +33,13 @@ public class Relocalization {
 	//physical values of gameboard
 	private double tileSize;
 	
+	/**
+	 * This creates an instance of Relocalization. It can relocalize no matter where the robot is on the game field
+	 * @param odo is an Odometer instance
+	 * @param lineDetector is a LineDetector instance
+	 * @param drive is a Drive instance
+	 * @param tileS is a double that represents the size of one tile`
+	 */
 	public Relocalization(Odometer odo, LineDetector lineDetector, Driver drive, double tileS){
 		
 		this.odometer = odo;
@@ -47,11 +57,13 @@ public class Relocalization {
 	   * 1) Determine by how much to move to go to node
 	   * 2) Rotate robot to 45 degrees
 	   * 3) fetch theta values to an array and use them to calculate the distance to 0,0
-	   * 4) navigate to 0,0 and turn to 0 degrees
 	   * 
 	   * */
 	
-	public void doRandomLocalization(){
+	/**
+	 * Method that relocalizes the robot independently on the current point of the robot 
+	 */
+	public void doReLocalization(){
 		int initialAngle = 45;
 		int angle_index = 0;
 		
@@ -97,6 +109,11 @@ public class Relocalization {
 		
 	}
 	
+	/**
+	 * Helper function to calculate the correction of the x or y value of the odometer
+	 * @param angle double
+	 * @return the corrected position
+	 */
 	private double position(double angle) {     // mehod to find the position
 		
 		double position = -sizeofRobot *Math.cos((Math.toRadians(angle)/2));
@@ -108,7 +125,7 @@ public class Relocalization {
 	/**
 	 * This method corrects the theta value of the odometer
 	 * @param angle double
-	 * @return
+	 * @return correction that needs to be provided to the angle
 	 */
 	private static double angleCorrection(double angle){  
 	    if (angle > 180) {
@@ -122,7 +139,7 @@ public class Relocalization {
 	}
 	
 	/**
-	 * Tells the robot to wait
+	 * Helper function that tells the robot to wait
 	 * @param time
 	 */
 	private static void wait(int time){ 
@@ -137,7 +154,7 @@ public class Relocalization {
 	/**
 	 * method that rounds a double n 
 	 * @param n double
-	 * @return
+	 * @return rounded number
 	 */
 	private static double round(double n){
 		double rounded = 0.0;
