@@ -147,7 +147,7 @@ public class UltrasonicLocalizer {
     
     // Stop rotating
     this.driver.stop();
-    float angle = (enteringAngle + exitingAngle)/2.0;
+    double angle = (enteringAngle + exitingAngle)/2.0;
     return angle;
   }
   
