@@ -1,5 +1,4 @@
-
-package ca.mcgill.ecse211.WiFiClient;
+package mcgill.ecse211.lib;
 
 import java.io.BufferedReader;
 import java.io.IOException;
