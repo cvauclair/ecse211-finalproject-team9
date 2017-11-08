@@ -14,8 +14,8 @@ public class Navigation {
   
   /**
    * This creates and instance of Navigation class. 
-   * @param driver Driver object
-   * @param collisionAvoidance CollisionAvoidance object
+   * @param driver 				a Driver instance that is the robot's driver object
+   * @param collisionAvoidance 	a CollisionAvoidance instance
    */
   public Navigation(Driver driver, CollisionAvoidance collisionAvoidance){
     this.driver = driver;
@@ -37,15 +37,15 @@ public class Navigation {
   
   /**
    * Method that adds a point to the array of points that the robot has to navigate to
-   * @param x float
-   * @param y float
+   * @param x 	a float that is the x-coordinate
+   * @param y 	a float that is the y-coordinate
    */
   public void addPoint(float x, float y){
     this.points.add(new Point2D.Double(x, y));
   }
   /**
    * Method that adds a point to the array of points that the robot has to navigate to
-   * @param point List<Point2D.Double>
+   * @param point 	a Point2D.Double that will be added to the current list of Point2D.Double
    */
   public void addPoint(Point2D.Double point){
     this.points.add(point);
@@ -53,7 +53,7 @@ public class Navigation {
   
   /**
    * Method that set the counter that follows the points that have been navigated 
-   * @param counter int
+   * @param counter		an int that is a counter for points that have been navigated
    */
   public void setCounter(int counter){
     synchronized(lock){
@@ -63,7 +63,7 @@ public class Navigation {
   
   /** 
    * Method that return the counter that follows the points that have been navigated
-   * @return
+   * @return tmp		an int that is a counter for points that have been navigated
    */
   public int getCounter(){
     int tmp;
@@ -89,8 +89,8 @@ public class Navigation {
     }
   }
   /**
-   * Method that sets the Navigate boolean to true or false depending on wether the robot has finished navigating through the list of points
-   * @param navigate boolean
+   * Method that sets the Navigate boolean to true or false depending on whether the robot has finished navigating through the list of points
+   * @param navigate 	a boolean that is true if robot is done navigating, false otherwise
    */
   public void setNavigate(boolean navigate){
     this.navigate = navigate;

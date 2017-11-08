@@ -36,8 +36,8 @@ public class CollisionAvoidance implements TimerListener{
   /**
    * This creates an instance of CollisionAvoidance
    * 
-   * @param driver is the robot's Driver object
-   * @param usSensor is the robot's UltrasonicSensor object
+   * @param driver 		a Driver instance that is the robot's driver object
+   * @param usSensor 	a UltrasonicSensor instance
    */
   public CollisionAvoidance(Driver driver, Odometer odometer, UltrasonicSensor usSensor, EV3MediumRegulatedMotor usSensorMotor, int n, int threshold){
     this.driver = driver;
@@ -120,19 +120,22 @@ public class CollisionAvoidance implements TimerListener{
   
   /**
    * Helper method that detects an Obstacle by computing the moving average and derivative of the sensors values. 
-   * @return returns True when object is detected
+   * @return isObstacle	a boolean that is true when object is detected, false otherwise
    */
   private boolean obstacleDetected(){
     // Return true if obstacle is detected
+	boolean isObstacle;
     if(this.getMovingAverage() < this.threshold && this.arrayFilled){
-      return true;
+    	  isObstacle = true;
+      return isObstacle;
     }else{
-      return false;
+    	  isObstacle = false;
+      return isObstacle;
     }
   }
   /**
    * Helper method to calculate the moving average
-   * @return float
+   * @return currentMovingAverage	a float that is the calculated moving average
    */
   private float getMovingAverage(){
     this.distances[this.counter] = Math.min(usSensor.getSample() * 100, 100);
@@ -164,7 +167,7 @@ public class CollisionAvoidance implements TimerListener{
 
   /**
    * This method is used to enable or disable the collision avoidance instance
-   * @param enable is the enable flag
+   * @param enable	a boolean that is the enable flag
    */
   public void setEnable(boolean enable){
     this.enabled = enable;
@@ -172,7 +175,7 @@ public class CollisionAvoidance implements TimerListener{
   
   /**
    * Helper method that sets the reference to the Navigation class 
-   * @param navigation
+   * @param navigation	a Navigation instance
    */
   public void setNavigation(Navigation navigation){
     this.navigation = navigation;
@@ -180,8 +183,8 @@ public class CollisionAvoidance implements TimerListener{
   
   /**
    * Helper method that returns the proportional correction that needs to be provided to the speed 
-   * @param error double
-   * @return integer
+   * @param error 		a double that is the current error on the distance
+   * @return correction	an int that is the proportional correction that needs to be applied to the speed
    */
   private int correction(double error) {     
     int correction = (int) (propConst * (double)Math.abs(error)); //Corrected delta speed
