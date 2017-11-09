@@ -24,11 +24,11 @@ public class Navigation {
   public void navigate(){
     while(this.getCounter() < this.points.size() && this.navigate){
       this.driver.travelTo(points.get(this.getCounter()).getX(),points.get(this.getCounter()).getY());
-      this.decrementCounter();
+      this.incrementCounter();
     }
   }
   
-  public void addPoint(float x, float y){
+  public void addPoint(double x, double y){
     this.points.add(new Point2D.Double(x, y));
   }
   

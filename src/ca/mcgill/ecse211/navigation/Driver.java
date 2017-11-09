@@ -94,20 +94,20 @@ public class Driver {
     this.turnTo(theta);
     
     // Move forward by deltaD cm
-    this.forward(deltaD);
+    this.forward(deltaD, false);
   }
   
   /**
    * Method to move the robot forward by a set distance
    * @param distance is the distance by which the robot is to be moved forward (in cm)
    */
-  public void forward(double distance){
+  public void forward(double distance, boolean immediateReturn){
     // Set forward speed
     this.setSpeed(this.forwardSpeed);
     
     // Move forward
     this.leftMotor.rotate(convertDistance(this.wheelRadius, distance), true);
-    this.rightMotor.rotate(convertDistance(this.wheelRadius, distance), false);
+    this.rightMotor.rotate(convertDistance(this.wheelRadius, distance), immediateReturn);
   }
   
   /**

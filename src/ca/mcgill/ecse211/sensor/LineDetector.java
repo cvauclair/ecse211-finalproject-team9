@@ -44,30 +44,30 @@ public class LineDetector {
     float sample = colorSensor.getSample();
     
     // Shift values and add new sample value
-//    for(int i = this.numberOfSamples-1; i > 0; i--){
-//        this.colorSensorValues[i] = this.colorSensorValues[i-1];
-//    }
-    this.colorSensorValues[this.counter] = sample * 1000;
+    for(int i = this.numberOfSamples-1; i > 0; i--){
+        this.colorSensorValues[i] = this.colorSensorValues[i-1];
+    }
+    this.colorSensorValues[0] = sample * 1000;
     
     // Increment counter
     this.counter++;
-    if(this.counter == this.numberOfSamples){
-      this.counter = 0;
-      this.arrayFilled = true;
-    }
+//    if(this.counter == this.numberOfSamples){
+//      this.counter = 0;
+//      this.arrayFilled = true;
+//    }
     
     // Compute moving average and derivative only if first n values have been measured
-    if(this.arrayFilled){ 
+    if(this.counter >= this.numberOfSamples){ 
       // If first time moving average is computed
       if(this.lastMovingAverage == 0){
-          this.lastMovingAverage = this.colorSensorValues[this.numberOfSamples-1];
+          this.lastMovingAverage = this.colorSensorValues[0];
       }
 
       // Calculate the moving average
-//      this.currentMovingAverage = this.lastMovingAverage + (this.colorSensorValues[0] - this.colorSensorValues[this.numberOfSamples-1])/this.numberOfSamples;
-      this.currentMovingAverage = this.lastMovingAverage 
-          + (this.colorSensorValues[(this.counter+1 == this.numberOfSamples ? 0 : this.counter+1)] 
-              - this.colorSensorValues[this.counter])/this.numberOfSamples;
+      this.currentMovingAverage = this.lastMovingAverage + (this.colorSensorValues[0] - this.colorSensorValues[this.numberOfSamples-1])/this.numberOfSamples;
+//      this.currentMovingAverage = this.lastMovingAverage 
+//          + (this.colorSensorValues[(this.counter+1 == this.numberOfSamples ? 0 : this.counter+1)] 
+//              - this.colorSensorValues[this.counter])/this.numberOfSamples;
       
       // Calculate poor man's derivative
       this.derivative = this.currentMovingAverage - this.lastMovingAverage;

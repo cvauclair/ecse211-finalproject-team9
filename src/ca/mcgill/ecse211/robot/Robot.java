@@ -14,11 +14,10 @@ import lejos.hardware.Button;
  */
 
 public class Robot {
-  private final static double BASE_WIDTH = 12.5;
-  private final static double WHEEL_RADIUS = 2.1;
-  private final static double SQUARE_WIDTH = 30.48;
+  protected final static double BASE_WIDTH = 12.5;
+  protected final static double WHEEL_RADIUS = 2.1;
+  protected final static double SQUARE_WIDTH = 30.48;
 
-  
   public Robot(){
     // Start escape thread
     (new Thread() {
