@@ -3,13 +3,13 @@ package ca.mcgill.ecse211.odometry;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.utility.TimerListener;
 
-/**
+/*
  *  Edited by Christophe Vauclair on 27/10/2017 
  */
 
 /**
  * This class represents an Odometer that keeps track of the position of a robot
- * @author christophe
+ *
  */
 public class Odometer implements TimerListener {
   // Static attributes
@@ -42,10 +42,10 @@ public class Odometer implements TimerListener {
 
   /**
    * This creates an Odometer object configured for a particular robot setup
-   * @param leftMotor is the robot's left motor instance
-   * @param rightMotor is the robot's right motor instance
-   * @param wheelRadius is the radius of the robot's wheels
-   * @param wheelBase is the width of the robot's base (i.e.: the distance between both wheels)
+   * @param leftMotor 	a leftMotor instance which is the robot's left motor
+   * @param rightMotor 	a rightMotor instance which is the robot's right motor
+   * @param wheelRadius 	a double which is the radius of the robot's wheel
+   * @param wheelBase 	a double which is the width of the robot's base (i.e.: the distance between its two wheels)
    */
   public Odometer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double wheelBase) {
     this.leftMotor = leftMotor;
@@ -123,15 +123,12 @@ public class Odometer implements TimerListener {
       this.x = this.newX;
       this.y = this.newY;
     }
-    
-    this.lastLeftMotorTachoCount = this.leftMotorTachoCount;
-    this.lastRightMotorTachoCount = this.rightMotorTachoCount;
   }
 
   /**
    * This method fetches the values of the Odometer 
-   * @param position is a double array of size three that will be filled with the x, y and theta values of the odometer
-   * @param update is a boolean array of size three that indicates whether each value of the position array should be updated
+   * @param position		a double array of size three that will be filled with the x, y and theta values of the odometer
+   * @param update 		a boolean array of size three that indicates whether each value of the position array should be updated
    */
   public void getPosition(double[] position, boolean[] update) {
     // ensure that the values don't change while the odometer is running
@@ -147,7 +144,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method gets the Odometer's x value in a thread safe way
-   * @return the Odometer's x value
+   * @return result 		a double that is the Odometer's x value
    */
   public double getX() {
     double result;
@@ -161,7 +158,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method gets the Odometer's y value in a thread safe way
-   * @return the Odometer's y value 
+   * @return result		a double that is the Odometer's y value 
    */
   public double getY() {
     double result;
@@ -175,7 +172,7 @@ public class Odometer implements TimerListener {
   
   /**
    * This method gets the Odometer's theta value in a thread safe way
-   * @return the Odometer's theta value 
+   * @return result		a double that is the Odometer's theta value 
    */
   public double getTheta() {
     double result;
@@ -189,8 +186,8 @@ public class Odometer implements TimerListener {
 
   /**
    * This method sets one or many odometer value
-   * @param position is an array of size three containing the new x, y and theta values of the Odometer
-   * @param update is a boolean array indicating which value of the position array should be set on the Odometer
+   * @param position 		an array of double of size three containing the new x, y and theta values of the Odometer
+   * @param update 			a boolean array indicating which value of the position array should be set on the Odometer
    */
   public void setPosition(double[] position, boolean[] update) {
     // ensure that the values don't change while the odometer is running
@@ -206,7 +203,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method sets the Odometer's x value in a thread safe way
-   * @param x is the Odometer's new x value
+   * @param x 		a double that is the Odometer's new x value
    */
   public void setX(double x) {
     synchronized (lock) {
@@ -216,7 +213,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method sets the Odometer's y value in a thread safe way
-   * @param y is the Odometer's new y value
+   * @param y 		a double that is the Odometer's new y value
    */
   public void setY(double y) {
     synchronized (lock) {
@@ -226,7 +223,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method sets the Odometer's theta value in a thread safe way
-   * @param theta is the Odometer's new theta value
+   * @param theta 	a double that is the Odometer's new theta value
    */
   public void setTheta(double theta) {
     synchronized (lock) {
@@ -236,7 +233,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method returns the left motor's tachometer value
-   * @return the leftMotorTachoCount
+   * @return leftMotorTachoCount		an int that is the left motor's tachometer value
    */
   public int getLeftMotorTachoCount() {
     return leftMotorTachoCount;
@@ -244,7 +241,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method sets the left motor's tachometer value in a thread safe way
-   * @param leftMotorTachoCount the leftMotorTachoCount to set
+   * @param leftMotorTachoCount 		an int that is the left motor's tachometer value
    */
   public void setLeftMotorTachoCount(int leftMotorTachoCount) {
     synchronized (lock) {
@@ -254,7 +251,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method returns the right motor's tachometer value
-   * @return the rightMotorTachoCount
+   * @return rightMotorTachoCount		an int that is the right motor's tachometer value
    */
   public int getRightMotorTachoCount() {
     return rightMotorTachoCount;
@@ -262,7 +259,7 @@ public class Odometer implements TimerListener {
 
   /**
    * This method sets the right motor's tachometer value in a thread safe way
-   * @param rightMotorTachoCount the rightMotorTachoCount to set
+   * @param rightMotorTachoCount 		an int that is the right motor's tachometer value
    */
   public void setRightMotorTachoCount(int rightMotorTachoCount) {
     synchronized (lock) {

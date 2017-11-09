@@ -5,7 +5,10 @@ import ca.mcgill.ecse211.odometry.Odometer;
 import ca.mcgill.ecse211.sensor.LineDetector;
 import lejos.hardware.Sound;
 
-
+/**
+ * This class Relocalizes a Robot 
+ * 
+ */
 public class Relocalization {
 	
 	// implementing color sensor
@@ -26,13 +29,23 @@ public class Relocalization {
 	// implementing classes
 	private Odometer odometer;
 	private Driver driver;
-
 	
-	public Relocalization(Odometer odo, LineDetector lineDetector, Driver drive){
+	//physical values of gameboard
+	private double tileSize;
+	
+	/**
+	 * This creates an instance of Relocalization. It can relocalize no matter where the robot is on the game field
+	 * @param odo 			an Odometer instance
+	 * @param lineDetector 	a LineDetector instance
+	 * @param drive 			a Drive instance
+	 * @param tileS 			a double that represents the size of one tile`
+	 */
+	public Relocalization(Odometer odo, LineDetector lineDetector, Driver drive, double tileS){
 		
 		this.odometer = odo;
 		this.lineDetector = lineDetector;
 		this.driver = drive;
+		this.tileSize = tileS;
 		angles = new double[4];
 		obtainAngle= new double[4];
 		running = false;
@@ -44,11 +57,13 @@ public class Relocalization {
 	   * 1) Determine by how much to move to go to node
 	   * 2) Rotate robot to 45 degrees
 	   * 3) fetch theta values to an array and use them to calculate the distance to 0,0
-	   * 4) navigate to 0,0 and turn to 0 degrees
 	   * 
 	   * */
 	
-	public void doRandomLocalization(){
+	/**
+	 * Method that relocalizes the robot independently on the current point of the robot 
+	 */
+	public void doReLocalization(){
 		int initialAngle = 45;
 		int angle_index = 0;
 		
@@ -72,27 +87,60 @@ public class Relocalization {
 			}
 		}//end of while running loop
 		
+		//fetch odometer values
+		double xOdo = odometer.getX() / tileSize;
+		double yOdo = odometer.getY() / tileSize;
+		//find line node at which we localized (not 0,0) 
+		double xTile = round(xOdo);
+		double yTile = round(yOdo);
 		// calculating distance to 0,0 and fetching theta and distance value to navigation lab
 		double ytheta= angles[1]-angles[3]; 
 		double xtheta= angles[0]-angles[2];
 		double extracorrection= excessangle- angles[3];
+		double Xo= position(xtheta) + (xTile * tileSize);
+		double Yo= position(ytheta) + (yTile * tileSize);
+		double thetaO= (angles[1]-angles[3])/2 -angles[2]+ extracorrection;  //or angle 3 - angle 1
+        double correcttheta = odometer.getTheta()+ thetaO ;
+        double thetaFinal =angleCorrection(correcttheta);
+        odometer.setTheta(thetaFinal);
+        odometer.setX(Xo);
+        odometer.setY(Yo);
+
 		
 	}
 	
 	/**
-	 * Find the correct position for either x or y 
-	 * @param angle
-	 * @return
+	 * Helper function to calculate the correction of the x or y value of the odometer
+	 * @param angle 			a double that is the current angle
+	 * @return position		a double that is the corrected position
 	 */
 	private double position(double angle) {     // mehod to find the position
-        double position = -sizeofRobot *Math.cos((Math.toRadians(angle)/2));
-        return position;
-        
-    }
+		
+		double position = -sizeofRobot *Math.cos((Math.toRadians(angle)/2));
+	    return position;
+	        
+	}
+	
+
+	/**
+	 * This method corrects the theta value of the odometer
+	 * @param angle 			a double that is the current angle
+	 * @return correction 	a double that needs to be provided to the angle to correct it
+	 */
+	private static double angleCorrection(double angle){  
+	    if (angle > 180) {
+	      return angle - 360;
+	    } else if (angle < -180) {
+	      return angle + 360;
+	    } else {
+	      return angle;
+	    }
+	    
+	}
 	
 	/**
-	 * Tells the robot to wait
-	 * @param time
+	 * Helper function that tells the robot to wait
+	 * @param time		an int for time to sleep, measured in milliseconds
 	 */
 	private static void wait(int time){ 
 		    try {
@@ -101,6 +149,19 @@ public class Relocalization {
 	          // TODO Auto-generated catch block
 	          e.printStackTrace();
 	      }
+	}
+	
+	/**
+	 * method that rounds a double n 
+	 * @param n 			a double to round the number
+	 * @return rounded 	a double which is the rounded number
+	 */
+	private static double round(double n){
+		double rounded = 0.0;
+		int roundedAsInt = (int) (n + 0.5);
+		rounded = (double) roundedAsInt;
+		
+		return rounded;
 	}
 	
 	

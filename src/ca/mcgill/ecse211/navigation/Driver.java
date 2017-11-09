@@ -18,11 +18,11 @@ public class Driver {
   
   /**
    * This creates a Driver instance for the robot
-   * @param odometer is the robot's Odometer
-   * @param leftMotor is the robot's left motor
-   * @param rightMotor is the robot's right motor
-   * @param wheelRadius is the radius of the robot's wheel
-   * @param baseWidth is the width of the robot's base (i.e.: the distance between its two wheels)
+   * @param odometer 	an Odometer instance which is the robot's odometer
+   * @param leftMotor 	a leftMotor instance which is the robot's left motor
+   * @param rightMotor 	a rightMotor instance which is the robot's right motor
+   * @param wheelRadius 	a double which is the radius of the robot's wheel
+   * @param baseWidth 	a double which is the width of the robot's base (i.e.: the distance between its two wheels)
    */
   public Driver(Odometer odometer, EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor, double wheelRadius, double baseWidth){
     this.odometer = odometer;
@@ -47,6 +47,9 @@ public class Driver {
     this.rightMotor.forward();
   }
   
+  /**
+   * Method that makes the robot move backwad
+   */
   public void backward(){
     // Set forward speed
     this.setSpeed(this.forwardSpeed);
@@ -67,8 +70,8 @@ public class Driver {
   
   /**
    * Method to move the robot to the desired point (in cm)
-   * @param x is the x axis location (in cm)
-   * @param y is the y axis location (in cm)
+   * @param x 	a double which is the x axis location (in cm)
+   * @param y 	a double which is the y axis location (in cm)
    */
   public void travelTo(double x, double y){
     double deltaX = x - this.odometer.getX();
@@ -99,7 +102,7 @@ public class Driver {
   
   /**
    * Method to move the robot forward by a set distance
-   * @param distance is the distance by which the robot is to be moved forward (in cm)
+   * @param distance		 a double which is the distance by which the robot is to be moved forward (in cm)
    */
   public void forward(double distance, boolean immediateReturn){
     // Set forward speed
@@ -112,7 +115,7 @@ public class Driver {
   
   /**
    * Method to turn the robot to an certain orientation
-   * @param theta is the target orientation
+   * @param theta 	a double which is the target orientation
    */
   public void turnTo(double theta){
     double currentTheta = odometer.getTheta();
@@ -129,8 +132,8 @@ public class Driver {
   
   /**
    * Method to turn the robot by a certain angle
-   * @param theta is the angle by which the robot is to be turned
-   * @param immediateReturn is a flag that indicates if the method should wait for the robot to be done turning
+   * @param theta 			a double which is the angle by which the robot is to be turned
+   * @param immediateReturn	a boolean which is a flag that indicates if the method should wait for the robot to be done turning
    * before returning
    */
   public void turnBy(double theta, boolean immediateReturn){
@@ -144,7 +147,7 @@ public class Driver {
   
   /**
    * Method to get the robot's left motor instance
-   * @return the robot's left motor
+   * @return leftMotor 	a leftMotor instance which is the robot's left motor
    */
   public EV3LargeRegulatedMotor getLeftMotor(){
     return this.leftMotor;
@@ -152,7 +155,7 @@ public class Driver {
   
   /**
    * Method to get the robot's right motor instance
-   * @return the robot's right motor
+   * @return rightMotor	a rightMotor instance which is the robot's right motor
    */
   public EV3LargeRegulatedMotor getRightMotor(){
     return this.rightMotor;
@@ -160,19 +163,23 @@ public class Driver {
   
   /**
    * Method to set the speed used by the robot when moving forward
-   * @param forwardSpeed is the forward speed of the robot
+   * @param forwardSpeed 	an int which is the forward speed of the robot
    */
   public void setForwardSpeed(int forwardSpeed){
     this.forwardSpeed = forwardSpeed;
   }
   
+  /**
+   * Method to get the speed used by the robot when moving forward
+   * @return forwardSpeed 	an int which is the forward speed of the robot
+   */
   public int getForwardSpeed(){
     return this.forwardSpeed;
   }
   
   /**
    * Method to set the speed used by the robot when rotating on its center of rotation
-   * @param rotateSpeed is the rotation speed of the robot
+   * @param rotateSpeed		an int which is the rotation speed of the robot
    */
   public void setRotateSpeed(int rotateSpeed){
     this.rotateSpeed = rotateSpeed;
@@ -180,7 +187,7 @@ public class Driver {
   
   /**
    * Method to directly set the speed of the robot's motors (does not overwrite forwardSpeed or rotateSpeed)
-   * @param speed is the speed of the motors
+   * @param speed 	an int which is the speed of the motors
    */
   public void setSpeed(int speed){
     this.leftMotor.setSpeed(speed);
@@ -189,29 +196,35 @@ public class Driver {
   
   /**
    * Method to convert the distance to travel into wheel rotations
-   * @param radius is the radius of the wheel
-   * @param distance is the distance to be traveled by the wheel (in cm)
-   * @return the amount of rotations (in degrees) the wheel needs to rotate by to move forward by 'distance'
+   * @param radius		a double which is the radius of the wheel
+   * @param distance		a double which is is the distance to be traveled by the wheel (in cm)
+   * @return rotations	an int which is the amount of rotations (in degrees) the wheel needs 
+   * to rotate by to move forward by 'distance'
    */
   private static int convertDistance(double radius, double distance) {
     // Wheel rotation in degrees = 360 * distance/circumference
-    return (int) ((180.0 * distance) / (Math.PI * radius));
+	int rotations = (int) ((180.0 * distance) / (Math.PI * radius));
+    return rotations;
   }
 
   /**
    * Method to convert the angle by which the robot needs to rotate into wheel rotations
-   * @param radius is the radius of the wheel
-   * @param width is the width of the robot (i.e.: the distance between the two wheels)
-   * @param angle is the angle by which the robot needs to rotate
-   * @return the amount of rotations (in degrees) the wheel needs to rotate by to rotate the robot by 'angle'
+   * @param radius		a double which is the radius of the wheel
+   * @param width 		a double which is the width of the robot (i.e.: the distance between the two wheels)
+   * @param angle 		a double which is the angle by which the robot needs to rotate
+   * @return rotations	an int which is the amount of rotations (in degrees) the wheel 
+   * needs to rotate by to rotate the robot by 'angle'
    */
   private static int convertAngle(double radius, double width, double angle) {
     // Distance each wheel needs to travel = circumference * angle/360 
     // (ie: each wheel needs to move by arc length of robot rotation)
-    return convertDistance(radius, Math.PI * width * angle / 360.0);
+	int rotations = convertDistance(radius, Math.PI * width * angle / 360.0);
+    return rotations;
   }
   
-  
+  /**
+   * Method that makes the robot to rotate Clockwise for an indefinite amount of time
+   */
   public void justrotateClockwise(){ // tells the robot to keep rotating
       leftMotor.setSpeed(rotateSpeed);
       rightMotor.setSpeed(rotateSpeed);

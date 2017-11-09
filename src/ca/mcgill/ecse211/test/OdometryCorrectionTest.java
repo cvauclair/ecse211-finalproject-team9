@@ -22,6 +22,7 @@ public class OdometryCorrectionTest extends Robot {
   }
 
   public void run(){
+    super();
     LightSensor lightSensor = new LightSensor("S2", "Red");
     LineDetector lineDetector = new LineDetector(lightSensor, 50, 8);
 

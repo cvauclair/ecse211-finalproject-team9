@@ -12,7 +12,6 @@ import lejos.utility.TimerListener;
 
 /**
  * This class is used to correct an Odometer instance
- * @author allison
  *
  */
 public class OdometryCorrection implements TimerListener{
@@ -25,13 +24,13 @@ public class OdometryCorrection implements TimerListener{
   private double lineTreshold; //in cm = ~ 4.88 cm
 
   /**
-   * This class runs in parallel to the system and corrects the robot's odometer every time the robot
+   * This class runs in parallel to the system and corrects the robot's odometer instance every time the robot
    * crosses a line.
    * 
-   * @param odometer is the robot's Odometer
-   * @param lineDetector is a LineDetector instance
-   * @param tileS is the size of a wooden tile
-   * @param dist2W is the distance between the wheel axis and the light sensor
+   * @param odometer 	an Odometer instance which is the robot's odometer
+   * @param lineDetector	a LineDetector instance
+   * @param tileS		a double that is the size of a wooden tile
+   * @param dist2wheel 	a double that is the distance between the wheel axis and the light sensor
    */
   public OdometryCorrection(Odometer odometer, LineDetector lineDetector, double tileS, double dist2W){
     this.odometer = odometer;
@@ -42,7 +41,10 @@ public class OdometryCorrection implements TimerListener{
     this.y0 = 0;
     this.lineTreshold = (double) 5/this.tileSize;
   }
-
+  
+  /**
+   * This method implements the necessary logic to correct the value of an odometer instance every time a line is crossed
+   */
   public void timedOut(){
     // Correct Odometer value if line is detected
     if(lineDetector.checkLine()){
@@ -65,12 +67,12 @@ public class OdometryCorrection implements TimerListener{
     }
   }
 
-  /* EVERYTHING BELOW THIS LINE IS DEPRECATED */
-
-  // Helper method that returns when a line is crossed, n indicates number of values to keep for moving average
-  //Created by Christophe 
-
-  private static void detectLine(SampleProvider cs, float[] csData, int samplingFrequency, int threshold, int n){
+  /**
+   * @deprecated As of version 2.0, all line detection will be taken care of within the {@link #timedOut()} method
+   * Helper method that returns when a line is crossed, n indicates number of values to keep for moving average
+   *
+   */
+@Deprecated private static void detectLine(SampleProvider cs, float[] csData, int samplingFrequency, int threshold, int n){
     float[] csValues = new float[n];
     float movingAverage = 0;
     float lastMovingAverage = 0;
@@ -129,7 +131,6 @@ public class OdometryCorrection implements TimerListener{
       try {
         Thread.sleep(samplingFrequency);
       } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
