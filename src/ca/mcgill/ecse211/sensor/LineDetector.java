@@ -20,7 +20,7 @@ public class LineDetector implements TimerListener{
   private boolean arrayFilled;
   private boolean lineDetected;
   private Object lock;
-  
+
   /**
    * Constructor for the Line detector object
    * @param colorSensor 		a LightSensor instance
@@ -40,7 +40,7 @@ public class LineDetector implements TimerListener{
     this.lineDetected = true;
     this.lock = new Object();
   }
-  
+
   /**
    * Method that checks if a line was crossed (note that this method will always return false the
    * first 'numberOfSamples' times it is called as the method will wait to get this amount of data
@@ -58,44 +58,47 @@ public class LineDetector implements TimerListener{
   public void reset(){
     this.setLineDetected(false);
   }
-  
+
   @Override
   public void timedOut() {
     // Don't poll if line is detected
     if(this.getLineDetected()){
       return;
     }
-    
+
     // Shift values and add new sample value
     for(int i = this.numberOfSamples-1; i > 0; i--){
-        this.colorSensorValues[i] = this.colorSensorValues[i-1];
+      this.colorSensorValues[i] = this.colorSensorValues[i-1];
     }
     this.colorSensorValues[0] = colorSensor.getSample() * 1000;
-    
+
     // Increment counter
     this.counter++;
-    
+
     // Compute moving average and derivative only if first n values have been measured
     if(this.counter >= this.numberOfSamples){ 
       // If first time moving average is computed
       if(this.lastMovingAverage == 0){
-          this.lastMovingAverage = this.colorSensorValues[0];
+        this.lastMovingAverage = this.colorSensorValues[0];
       }
 
       // Calculate the moving average
       this.currentMovingAverage = this.lastMovingAverage + (this.colorSensorValues[0] - this.colorSensorValues[this.numberOfSamples-1])/this.numberOfSamples;
-      
+
       // Calculate poor man's derivative
       this.derivative = this.currentMovingAverage - this.lastMovingAverage;
       this.lastMovingAverage = this.currentMovingAverage;
 
-      // Return true if line is detected
-      if(this.derivative > this.threshold){
-            this.lineDetected = true;
+      // Return true if line is detected (with dynamic threshold)
+      if(this.threshold < 0 && this.derivative < this.threshold){
+        this.lineDetected = true;
+      }
+      if(this.threshold > 0 && this.derivative > this.threshold){
+        this.lineDetected = true;
       }
     }
   }
-  
+
   public boolean getLineDetected(){
     boolean tmp;
     synchronized(lock){
@@ -103,7 +106,7 @@ public class LineDetector implements TimerListener{
     }
     return tmp;
   }
-  
+
   public void setLineDetected(boolean lineDetected){
     synchronized(lock){
       this.lineDetected = lineDetected;

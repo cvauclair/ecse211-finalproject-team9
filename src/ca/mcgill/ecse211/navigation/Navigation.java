@@ -27,6 +27,7 @@ public class Navigation {
     this.counter = 0;
     this.lock = new Object();
   }
+  
   /**
    * Method that starts the navigation sequence
    */
