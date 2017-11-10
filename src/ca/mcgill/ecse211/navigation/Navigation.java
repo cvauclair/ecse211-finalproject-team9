@@ -11,7 +11,7 @@ public class Navigation {
   private int counter;
   private boolean navigate = true;
   private Object lock;
-  
+
   /**
    * This creates and instance of Navigation class. 
    * @param driver 				a Driver instance that is the robot's driver object
@@ -29,12 +29,21 @@ public class Navigation {
    * Method that starts the navigation sequence
    */
   public void navigate(){
-    while(this.getCounter() < this.points.size() && this.navigate){
-      this.driver.travelTo(points.get(this.getCounter()).getX(),points.get(this.getCounter()).getY());
-      this.incrementCounter();
+    while(this.getCounter() < this.points.size()){
+      if(this.navigate){
+        driver.travelTo(points.get(this.getCounter()).getX(),points.get(this.getCounter()).getY());
+        this.incrementCounter();
+      }else{
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
     }
   }
-  
+
   /**
    * Method that adds a point to the array of points that the robot has to navigate to
    * @param x 	a float that is the x-coordinate
@@ -50,7 +59,7 @@ public class Navigation {
   public void addPoint(Point2D.Double point){
     this.points.add(point);
   }
-  
+
   /**
    * Method that set the counter that follows the points that have been navigated 
    * @param counter		an int that is a counter for points that have been navigated
@@ -60,7 +69,7 @@ public class Navigation {
       this.counter = counter;
     }
   }
-  
+
   /** 
    * Method that return the counter that follows the points that have been navigated
    * @return tmp		an int that is a counter for points that have been navigated

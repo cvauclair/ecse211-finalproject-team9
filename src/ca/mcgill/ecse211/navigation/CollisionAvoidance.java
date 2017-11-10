@@ -59,16 +59,18 @@ public class CollisionAvoidance implements TimerListener{
    */
   public void timedOut(){
     if(obstacleDetected()){
+      Sound.beep();
       oldTheta = odometer.getTheta();
 //      avoidObstacle();
       
       // Hard coded collision avoidance
       navigation.setNavigate(false);
+      navigation.decrementCounter();
       driver.stop();
       driver.turnBy(90, false);
-      driver.forward(16, false);
+      driver.forward(20, false);
       driver.turnBy(-90, false);
-      driver.forward(16, false);
+      driver.forward(20, false);
       navigation.setNavigate(true);
     }
   }
@@ -136,11 +138,10 @@ public class CollisionAvoidance implements TimerListener{
 	boolean isObstacle;
     if(this.getMovingAverage() < this.threshold && this.arrayFilled){
     	  isObstacle = true;
-      return isObstacle;
     }else{
     	  isObstacle = false;
-      return isObstacle;
     }
+    return isObstacle;
   }
   /**
    * Helper method to calculate the moving average
@@ -151,7 +152,8 @@ public class CollisionAvoidance implements TimerListener{
     for(int i = this.numberOfSamples-1; i > 0; i--){
         this.distances[i] = this.distances[i-1];
     }
-    this.distances[0] = Math.min(usSensor.getSample() * 1000, 100);
+    // Filter the new value
+    this.distances[0] = Math.min(usSensor.getSample() * 100, 100);
 
     // Update counter
     this.counter++;

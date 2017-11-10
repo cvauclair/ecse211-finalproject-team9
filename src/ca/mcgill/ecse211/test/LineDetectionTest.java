@@ -23,8 +23,11 @@ public class LineDetectionTest extends Robot{
   public void run(){
     super.run();
     
-    LightSensor lightSensor = new LightSensor("S4", "Red");
-    LineDetector lineDetector = new LineDetector(lightSensor, 50, 8);
+    LightSensor lightSensor1 = new LightSensor("S4", "Red");
+    LineDetector lineDetector1 = new LineDetector(lightSensor1, 50, 8);
+    
+    LightSensor lightSensor2 = new LightSensor("S2", "Red");
+    LineDetector lineDetector2 = new LineDetector(lightSensor2, 50, 8);
     
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
@@ -36,8 +39,11 @@ public class LineDetectionTest extends Robot{
     driver.forward(3 * SQUARE_WIDTH, true);
     
     while(true){
-      if(lineDetector.checkLine()){
+      if(lineDetector1.checkLine()){
         Sound.beep();
+      }
+      if(lineDetector2.checkLine()){
+        Sound.twoBeeps();
       }
       try {
         Thread.sleep(50);

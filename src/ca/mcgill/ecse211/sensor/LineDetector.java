@@ -1,12 +1,14 @@
 package ca.mcgill.ecse211.sensor;
 
+import lejos.utility.TimerListener;
+
 /*
  * Created by Christophe Vauclair on 27/10/2017
  */
 /**
  * The line detector class is used to detect lines with the light sensor
  */
-public class LineDetector {
+public class LineDetector implements TimerListener{
   private LightSensor colorSensor;
   private int threshold;
   private float[] colorSensorValues;
@@ -16,6 +18,8 @@ public class LineDetector {
   private int numberOfSamples;
   private int counter;
   private boolean arrayFilled;
+  private boolean lineDetected;
+  private Object lock;
   
   /**
    * Constructor for the Line detector object
@@ -33,6 +37,8 @@ public class LineDetector {
     this.numberOfSamples = n;
     this.counter = 0;
     this.arrayFilled = false;
+    this.lineDetected = true;
+    this.lock = new Object();
   }
   
   /**
@@ -77,5 +83,54 @@ public class LineDetector {
     }
     
     return wasCrossed;
+  }
+
+  @Override
+  public void timedOut() {
+//    float sample = colorSensor.getSample();
+//    System.out.println(sample * 1000);
+    
+    // Shift values and add new sample value
+    for(int i = this.numberOfSamples-1; i > 0; i--){
+        this.colorSensorValues[i] = this.colorSensorValues[i-1];
+    }
+    this.colorSensorValues[0] = colorSensor.getSample() * 1000;
+    
+    // Increment counter
+    this.counter++;
+    
+    // Compute moving average and derivative only if first n values have been measured
+    if(this.counter >= this.numberOfSamples){ 
+      // If first time moving average is computed
+      if(this.lastMovingAverage == 0){
+          this.lastMovingAverage = this.colorSensorValues[0];
+      }
+
+      // Calculate the moving average
+      this.currentMovingAverage = this.lastMovingAverage + (this.colorSensorValues[0] - this.colorSensorValues[this.numberOfSamples-1])/this.numberOfSamples;
+      
+      // Calculate poor man's derivative
+      this.derivative = this.currentMovingAverage - this.lastMovingAverage;
+      this.lastMovingAverage = this.currentMovingAverage;
+
+      // Return true if line is detected
+      if(this.derivative > this.threshold){
+            this.lineDetected = true;
+      }
+    }
+  }
+  
+  public boolean getLineDetected(){
+    boolean tmp;
+    synchronized(lock){
+      tmp = this.lineDetected;
+    }
+    return tmp;
+  }
+  
+  public void setLineDetected(boolean lineDetected){
+    synchronized(lock){
+      this.lineDetected = lineDetected;
+    }
   }
 }
