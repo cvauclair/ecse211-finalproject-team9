@@ -29,7 +29,7 @@ public class LineDetectionTest extends Robot{
     Timer lineDetect1 = new Timer(50, lineDetector1);
     
     LightSensor lightSensor2 = new LightSensor("S2", "Red");
-    LineDetector lineDetector2 = new LineDetector(lightSensor2, 40, 8);
+    LineDetector lineDetector2 = new LineDetector(lightSensor2, 20, 8);
     Timer lineDetect2 = new Timer(50, lineDetector2);
     
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));

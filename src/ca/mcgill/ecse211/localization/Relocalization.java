@@ -83,7 +83,7 @@ public class Relocalization {
 				   	excessangle= odometer.getTheta();
 				    break;
 			    }
-			   // wait(400);
+			    wait(200);
 			}
 		}//end of while running loop
 		
