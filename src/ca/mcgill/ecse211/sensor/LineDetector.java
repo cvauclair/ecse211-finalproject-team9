@@ -48,76 +48,7 @@ public class LineDetector implements TimerListener{
    * @return wasCrossed		a boolean that is true if a line was crossed, false otherwise
    */
   public boolean checkLine(){
-    // Get new sample
-	boolean wasCrossed = false;
-    float sample = colorSensor.getSample();
-    System.out.println(sample * 1000);
-    
-    // Shift values and add new sample value
-    for(int i = this.numberOfSamples-1; i > 0; i--){
-        this.colorSensorValues[i] = this.colorSensorValues[i-1];
-    }
-    this.colorSensorValues[0] = sample * 1000;
-    
-    // Increment counter
-    this.counter++;
-    
-    // Compute moving average and derivative only if first n values have been measured
-    if(this.counter >= this.numberOfSamples){ 
-      // If first time moving average is computed
-      if(this.lastMovingAverage == 0){
-          this.lastMovingAverage = this.colorSensorValues[0];
-      }
-
-      // Calculate the moving average
-      this.currentMovingAverage = this.lastMovingAverage + (this.colorSensorValues[0] - this.colorSensorValues[this.numberOfSamples-1])/this.numberOfSamples;
-      
-      // Calculate poor man's derivative
-      this.derivative = this.currentMovingAverage - this.lastMovingAverage;
-      this.lastMovingAverage = this.currentMovingAverage;
-
-      // Return true if line is detected
-      if(this.derivative > this.threshold){
-    	  	wasCrossed = true;
-      }
-    }
-    
-    return wasCrossed;
-  }
-
-  @Override
-  public void timedOut() {
-//    float sample = colorSensor.getSample();
-//    System.out.println(sample * 1000);
-    
-    // Shift values and add new sample value
-    for(int i = this.numberOfSamples-1; i > 0; i--){
-        this.colorSensorValues[i] = this.colorSensorValues[i-1];
-    }
-    this.colorSensorValues[0] = colorSensor.getSample() * 1000;
-    
-    // Increment counter
-    this.counter++;
-    
-    // Compute moving average and derivative only if first n values have been measured
-    if(this.counter >= this.numberOfSamples){ 
-      // If first time moving average is computed
-      if(this.lastMovingAverage == 0){
-          this.lastMovingAverage = this.colorSensorValues[0];
-      }
-
-      // Calculate the moving average
-      this.currentMovingAverage = this.lastMovingAverage + (this.colorSensorValues[0] - this.colorSensorValues[this.numberOfSamples-1])/this.numberOfSamples;
-      
-      // Calculate poor man's derivative
-      this.derivative = this.currentMovingAverage - this.lastMovingAverage;
-      this.lastMovingAverage = this.currentMovingAverage;
-
-      // Return true if line is detected
-      if(this.derivative > this.threshold){
-            this.lineDetected = true;
-      }
-    }
+    return this.getLineDetected();
   }
   
   public boolean getLineDetected(){
