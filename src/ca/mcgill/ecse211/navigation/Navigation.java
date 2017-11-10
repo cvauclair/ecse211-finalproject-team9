@@ -3,7 +3,9 @@ package ca.mcgill.ecse211.navigation;
 import java.util.LinkedList;
 import java.util.List;
 import java.awt.geom.Point2D;
-
+/**
+ * This class is used to keep track of the coordinates that have to be visited by the robot 
+ */
 public class Navigation {
   private static Driver driver;
   private static CollisionAvoidance collisionAvoidance;

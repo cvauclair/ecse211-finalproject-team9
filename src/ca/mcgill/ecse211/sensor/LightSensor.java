@@ -20,7 +20,8 @@ public class LightSensor extends Sensor{
   
   /**
    * Constructor that creates a light sensor object
-   * @param port 	a String corresponding to the port used to connect the sensor
+   * @param port
+   *             a String corresponding to the port used to connect the sensor
    * @param mode 	a string that specifies which mode will be used to read the values fetched from the sensor
    */
   public LightSensor(String port, String mode) {
