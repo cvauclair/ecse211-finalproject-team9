@@ -92,8 +92,7 @@ public class LineDetector implements TimerListener{
       // Return true if line is detected (with dynamic threshold)
       if(this.threshold < 0 && this.derivative < this.threshold){
         this.lineDetected = true;
-      }
-      if(this.threshold > 0 && this.derivative > this.threshold){
+      }else if(this.threshold > 0 && this.derivative > this.threshold){
         this.lineDetected = true;
       }
     }
