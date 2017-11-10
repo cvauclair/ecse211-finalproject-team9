@@ -13,9 +13,9 @@ import lejos.hardware.Button;
  * See ObjectDetectionCalibration for example.
  */
 public class Robot {
-  private final static double BASE_WIDTH = 12.5;
-  private final static double WHEEL_RADIUS = 2.1;
-  private final static double SQUARE_WIDTH = 30.48;
+  protected final static double BASE_WIDTH = 12.5;
+  protected final static double WHEEL_RADIUS = 2.1;
+  protected final static double SQUARE_WIDTH = 30.48;
 
   /**
    * Creates an instance of Robot. The Robot class has a special feature that allows the program to terminate when

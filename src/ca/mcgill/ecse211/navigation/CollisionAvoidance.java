@@ -60,7 +60,16 @@ public class CollisionAvoidance implements TimerListener{
   public void timedOut(){
     if(obstacleDetected()){
       oldTheta = odometer.getTheta();
-      avoidObstacle();
+//      avoidObstacle();
+      
+      // Hard coded collision avoidance
+      navigation.setNavigate(false);
+      driver.stop();
+      driver.turnBy(90, false);
+      driver.forward(16, false);
+      driver.turnBy(-90, false);
+      driver.forward(16, false);
+      navigation.setNavigate(true);
     }
   }
 
@@ -138,8 +147,18 @@ public class CollisionAvoidance implements TimerListener{
    * @return currentMovingAverage	a float that is the calculated moving average
    */
   private float getMovingAverage(){
-    this.distances[this.counter] = Math.min(usSensor.getSample() * 100, 100);
+    // Shift values and add new sample value
+    for(int i = this.numberOfSamples-1; i > 0; i--){
+        this.distances[i] = this.distances[i-1];
+    }
+    this.distances[0] = Math.min(usSensor.getSample() * 1000, 100);
 
+    // Update counter
+    this.counter++;
+    if(this.counter >= this.numberOfSamples){
+      this.arrayFilled = true;
+    }
+    
     // Compute moving average and derivative only if first n values have been measured
     if(this.arrayFilled){ 
       // If first time moving average is computed
@@ -148,16 +167,8 @@ public class CollisionAvoidance implements TimerListener{
       }
 
       // Calculate the new moving average
-      this.currentMovingAverage = this.lastMovingAverage 
-          + (this.distances[(this.counter+1 == this.numberOfSamples ? 0 : this.counter+1)] 
-              - this.distances[this.counter])/this.numberOfSamples;
-    }
-
-    // Update counter
-    this.counter++;
-    if(this.counter == this.numberOfSamples){
-      this.counter = 0;
-      this.arrayFilled = true;
+      this.currentMovingAverage = this.lastMovingAverage + (this.distances[0] - this.distances[this.numberOfSamples-1])/this.numberOfSamples;
+      
     }
 
     this.lastMovingAverage = this.currentMovingAverage;

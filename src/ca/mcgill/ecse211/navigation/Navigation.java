@@ -33,7 +33,7 @@ public class Navigation {
   public void navigate(){
     while(this.getCounter() < this.points.size() && this.navigate){
       this.driver.travelTo(points.get(this.getCounter()).getX(),points.get(this.getCounter()).getY());
-      this.decrementCounter();
+      this.incrementCounter();
     }
   }
   
@@ -42,7 +42,7 @@ public class Navigation {
    * @param x 	a float that is the x-coordinate
    * @param y 	a float that is the y-coordinate
    */
-  public void addPoint(float x, float y){
+  public void addPoint(double x, double y){
     this.points.add(new Point2D.Double(x, y));
   }
   /**
