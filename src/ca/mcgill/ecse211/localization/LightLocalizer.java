@@ -3,7 +3,10 @@ package ca.mcgill.ecse211.localization;
 import ca.mcgill.ecse211.navigation.Driver;
 import ca.mcgill.ecse211.odometry.Odometer;
 import lejos.robotics.SampleProvider;
-
+/**
+ * This class starts the initial localization process with the help of 
+ * a light sensor
+ */
 public class LightLocalizer {
   private Odometer odometer;
   private Driver driver;

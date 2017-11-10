@@ -1,6 +1,7 @@
 package ca.mcgill.ecse211.odometry;
 
 import ca.mcgill.ecse211.sensor.LineDetector;
+import lejos.hardware.Sound;
 
 /**
  * Created by Allison Mejia on 20/10/2017
@@ -11,7 +12,10 @@ import lejos.robotics.SampleProvider;
 import lejos.utility.TimerListener;
 
 /**
- * This class is used to correct an Odometer instance
+ * This class is used to correct an Odometer instance with the help of a LineDetector instance. 
+ * It has the necessary logic to detect whether it has crossed a vertical or horizontal line. 
+ * Since this class can only correct either x or y, no correction is provided when a corner of 
+ * a tile is crossed.
  *
  */
 public class OdometryCorrection implements TimerListener{
@@ -49,19 +53,24 @@ public class OdometryCorrection implements TimerListener{
     // Correct Odometer value if line is detected
     if(lineDetector.checkLine()){
       //range [0,12]
-      this.x0 = (double) ( (odometer.getX()-dist2wheel)  / tileSize);
-      this.y0 = (double) ( (odometer.getY()-dist2wheel) / tileSize);
+      double filterInitial = 3.0;
+      double xOdometer = odometer.getX();
+      double yOdometer = odometer.getY();
+      this.x0 = (double) ( (xOdometer-dist2wheel)  / tileSize);
+      this.y0 = (double) ( (yOdometer-dist2wheel) / tileSize);
 
       if( this.x0 % 1.0 <= lineTreshold && this.y0 % 1.0 <=this.lineTreshold ){
         // Do nothing, we crossed a corner
 
       }
-      else if( this.x0 % 1.0 <= lineTreshold){
+      else if( this.x0 % 1.0 <= lineTreshold && xOdometer > filterInitial){
         // We crossed a vertical line
+    	Sound.beep(); //for debug purposes
         odometer.setX(((this.x0 - (this.x0 % 1.0)) * tileSize) + dist2wheel );
       }
-      else if( this.y0 % 1.0 <=lineTreshold){
+      else if( this.y0 % 1.0 <=lineTreshold && yOdometer > filterInitial){
         // We crossed a horizontal line
+    	Sound.twoBeeps(); //for debug purposes
         odometer.setY(((y0- (y0 % 1.0)) * tileSize) + dist2wheel );
       }
     }
