@@ -32,7 +32,7 @@ public class Driver {
     this.baseWidth = baseWidth;
     this.sizeOfRobot = 12; //12cm default value
     this.forwardSpeed = 250;    // Default value
-    this.rotateSpeed = 150;     // Default value
+    this.rotateSpeed = 120;     // Default value
   }
   
   /**

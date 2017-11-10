@@ -70,7 +70,7 @@ public class Relocalization {
 		driver.turnTo(initialAngle);
 		
 		running = true;
-		
+		lineDetector.reset();
 		while(running){
 			driver.justrotateClockwise();
 			if(lineDetector.checkLine()){
@@ -83,7 +83,7 @@ public class Relocalization {
 				   	excessangle= odometer.getTheta();
 				    break;
 			    }
-			    wait(400);
+			   // wait(400);
 			}
 		}//end of while running loop
 		

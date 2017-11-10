@@ -53,6 +53,7 @@ public class OdometryCorrection implements TimerListener{
     // Correct Odometer value if line is detected
     if(lineDetector.checkLine()){
       //range [0,12]
+      Sound.beep();
       double filterInitial = 3.0;
       double xOdometer = odometer.getX();
       double yOdometer = odometer.getY();
@@ -65,7 +66,7 @@ public class OdometryCorrection implements TimerListener{
       }
       else if( this.x0 % 1.0 <= lineTreshold && xOdometer > filterInitial){
         // We crossed a vertical line
-    	Sound.beep(); //for debug purposes
+    	Sound.twoBeeps(); //for debug purposes
         odometer.setX(((this.x0 - (this.x0 % 1.0)) * tileSize) + dist2wheel );
       }
       else if( this.y0 % 1.0 <=lineTreshold && yOdometer > filterInitial){
