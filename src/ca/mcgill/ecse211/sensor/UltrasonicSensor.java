@@ -13,7 +13,8 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
  *This class is used to make an instance of a Ultrasonic sensor. It extends the Sensor class
  */
 public class UltrasonicSensor extends Sensor{
-	
+  
+  
   /**
    * Constructor that creates a Ultrasonic sensor object 
    * @param port 	a String corresponding to the port used to connect the sensor
@@ -25,4 +26,5 @@ public class UltrasonicSensor extends Sensor{
     this.sampleProvider = this.sensor.getMode(mode);
     this.sensorData = new float[this.sampleProvider.sampleSize()];
   }
+  
 }
