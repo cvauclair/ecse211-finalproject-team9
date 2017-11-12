@@ -78,11 +78,15 @@ public class OdometryCorrection implements TimerListener{
       
       if((thetaOdometer >= 80 && thetaOdometer <=100)|| (thetaOdometer >=260 && thetaOdometer <= 280)){
     	  Sound.twoBeeps(); //for debug purposes
-          odometer.setX((x0 - (x0 % 1.0)) * tileSize );
+          //odometer.setX((x0 - (x0 % 1.0)) * tileSize );
+          double roundX = Math.round(x0);
+          odometer.setX(roundX  * tileSize);
       }
       else if((thetaOdometer >= 350 || thetaOdometer <=10)|| (thetaOdometer >=170 && thetaOdometer <= 190)){
     	  Sound.beep(); //for debug purposes
-          odometer.setY((y0- (y0 % 1.0) * tileSize) );
+          //odometer.setY((y0- (y0 % 1.0) * tileSize) );
+    	  double roundY = Math.round(y0);
+    	  odometer.setY(roundY * tileSize);
       }
     }
   }
