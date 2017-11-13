@@ -31,7 +31,7 @@ public class LocalizationTest extends Robot{
     
     UltrasonicSensor usSensor = new UltrasonicSensor("S1", "Distance");
     LightSensor lightSensor = new LightSensor("S2", "Red");
-    LineDetector lineDetector = new LineDetector(lightSensor, 50, 8);
+    LineDetector lineDetector = new LineDetector(lightSensor, -20, 8);
     
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
@@ -40,23 +40,25 @@ public class LocalizationTest extends Robot{
     OdometryCorrection odometryCorrection = new OdometryCorrection(odometer,lineDetector,SQUARE_WIDTH,0);
     
     Driver driver = new Driver(odometer, leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
+
+    UltrasonicLocalizer usLocalizer = new UltrasonicLocalizer(odometer, driver, usSensor);
+    LightLocalizer lightLocalizer = new LightLocalizer(odometer, driver, lineDetector);
         
     Timer lineDetectorTimer = new Timer(50,lineDetector);
     lineDetectorTimer.start();
-        
-    UltrasonicLocalizer usLocalizer = new UltrasonicLocalizer(odometer, driver, usSensor);
-    LightLocalizer lightLocalizer = new LightLocalizer(odometer, driver, lineDetector);
-    
-    usLocalizer.fallingEdge(0);
-    lightLocalizer.localize(0, 0);
     
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
     
-    Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
-    odometryCorrectionTimer.start();
+    usLocalizer.localize(0);
+    lightLocalizer.localize(0, 0);
     
-    driver.travelTo(1, 1);
+//    Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
+//    odometryCorrectionTimer.start();
+    
+    driver.setForwardSpeed(200);
+    driver.setRotateSpeed(150);
+    driver.travelTo(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
     driver.turnTo(90);
   }
 }

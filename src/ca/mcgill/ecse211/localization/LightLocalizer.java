@@ -46,7 +46,7 @@ public class LightLocalizer {
     lineLocalization(LineOrientation.Horizontal);
     
     // Get away from the last line so the robot does not detect it again
-    driver.forward(2,false);
+    driver.forward(4,false);
     
     // Turn robot so that the next line the robot crosses will be a vertical line
     driver.turnBy(45,false);
@@ -69,19 +69,21 @@ public class LightLocalizer {
    */
   private void lineLocalization(LineOrientation lineOrientation){    
     // Set robot to driver forward 
-    this.driver.forward();
+    driver.forward();
     
     // Wait to detect line
-    while(lineDetector.checkLine()){};
+    lineDetector.reset();
+    while(!lineDetector.checkLine()){};
+    System.out.println("Line detected");
     
     // Stop robot
-    this.driver.stop();
+    driver.stop();
     
     // Correct the odometer's Y or X value depending on whether the crossed line is vertical or horizontal
     if(lineOrientation == LineOrientation.Horizontal){
-      this.odometer.setY(0);
+      odometer.setY(0);
     }else if(lineOrientation == LineOrientation.Vertical){
-      this.odometer.setX(0);
+      odometer.setX(0);
     }
   }
   

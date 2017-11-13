@@ -55,15 +55,15 @@ public class NavigationTest extends Robot{
 
     odometryDisplay.start();
     
-//    navigation.addPoint(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
-//    navigation.addPoint(0 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
-//    navigation.addPoint(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
-//    navigation.addPoint(2 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
-//    navigation.navigate();
+    navigation.addPoint(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
+    navigation.addPoint(0 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
+    navigation.addPoint(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
+    navigation.addPoint(2 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
+    navigation.navigate();
 
-    driver.travelTo(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
-    driver.travelTo(0 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
-    driver.travelTo(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
-    driver.travelTo(2 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
+//    driver.travelTo(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
+//    driver.travelTo(0 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
+//    driver.travelTo(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
+//    driver.travelTo(2 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
   }
 }

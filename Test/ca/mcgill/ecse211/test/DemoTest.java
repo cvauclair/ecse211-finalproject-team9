@@ -40,14 +40,22 @@ public class DemoTest extends Robot{
     
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
+    EV3MediumRegulatedMotor usSensorMotor = new EV3MediumRegulatedMotor(LocalEV3.get().getPort("B"));
     
     Odometer odometer = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
     OdometryCorrection odometryCorrection = new OdometryCorrection(odometer,lineDetector,SQUARE_WIDTH,0);
     
     Driver driver = new Driver(odometer, leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
+
+    CollisionAvoidance collisionAvoidance = new CollisionAvoidance(driver,odometer,usSensor,usSensorMotor,3,35);
+    Navigation navigation = new Navigation(driver, collisionAvoidance);
     
+
     //Timer collisionAvoidanceTimer = new Timer(50, collisionAvoidance);
-    //collisionAvoidanceTimer.start();
+
+//    Timer collisionAvoidanceTimer = new Timer(50, collisionAvoidance);
+//    collisionAvoidanceTimer.start();
+
     
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
