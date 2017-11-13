@@ -34,7 +34,7 @@ public class Navigation {
   public void navigate(){
     while(this.getCounter() < this.points.size()){
       if(this.navigate){
-        driver.travelTo(points.get(this.getCounter()).getX(),points.get(this.getCounter()).getY());
+        driver.travelTo(points.get(this.getCounter()).getX(), points.get(this.getCounter()).getY());
         this.incrementCounter();
       }
       try {

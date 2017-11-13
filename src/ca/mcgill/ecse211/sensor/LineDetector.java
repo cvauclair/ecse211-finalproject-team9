@@ -37,7 +37,7 @@ public class LineDetector implements TimerListener{
     this.numberOfSamples = n;
     this.counter = 0;
     this.arrayFilled = false;
-    this.lineDetected = true;
+    this.lineDetected = false;
     this.lock = new Object();
   }
 

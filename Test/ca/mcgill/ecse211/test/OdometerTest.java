@@ -7,6 +7,7 @@ import ca.mcgill.ecse211.odometry.OdometryDisplay;
 import ca.mcgill.ecse211.robot.Robot;
 import ca.mcgill.ecse211.sensor.LightSensor;
 import ca.mcgill.ecse211.sensor.LineDetector;
+import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.utility.Timer;
@@ -21,8 +22,8 @@ public class OdometerTest extends Robot {
   }
 
   public void run(){
+    super.run();
     LightSensor lightSensor = new LightSensor("S2", "Red");
-    LineDetector lineDetector = new LineDetector(lightSensor, 50, 8);
 
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));

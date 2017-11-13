@@ -125,6 +125,8 @@ public class Driver {
     deltaT = theta - currentTheta;
     if(deltaT > 180){
       deltaT = deltaT-360;
+    }else if(deltaT < -180){
+      deltaT = deltaT+360;
     }
     
     this.turnBy(deltaT,false);
