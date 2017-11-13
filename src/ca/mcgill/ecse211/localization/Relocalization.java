@@ -72,7 +72,7 @@ public class Relocalization {
 		running = true;
 		lineDetector.reset();
 		while(running){
-			driver.justrotateClockwise();
+			driver.rotateClockwise();
 			if(lineDetector.checkLine()){
 				Sound.beep();
 				angles[angle_index]= odometer.getTheta();    // fetching angle values to the robot
