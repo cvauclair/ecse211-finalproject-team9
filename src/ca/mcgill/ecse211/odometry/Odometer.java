@@ -61,9 +61,13 @@ public class Odometer implements TimerListener {
     this.newTheta = 0;
     this.leftMotorTachoCount = 0;
     this.rightMotorTachoCount = 0;
-    this.lastLeftMotorTachoCount = 0;
-    this.lastRightMotorTachoCount = 0;
-
+    
+    leftMotor.resetTachoCount();
+    rightMotor.resetTachoCount();
+    
+    this.lastLeftMotorTachoCount = this.leftMotor.getTachoCount();
+    this.lastRightMotorTachoCount = this.rightMotor.getTachoCount();
+    
     this.x = 0;
     this.y = 0;
     this.theta = 0.0;
@@ -75,24 +79,14 @@ public class Odometer implements TimerListener {
    * This method updates the Odometer's values by reading the tachometer values of the motors and comparing them to 
    * the last measurements.
    */
-  public void timedOut() {
-    // Initial values
-    if(this.lastLeftMotorTachoCount == 0){
-      leftMotor.resetTachoCount();
-      this.lastLeftMotorTachoCount = this.leftMotor.getTachoCount();
-    }
-    if(this.lastRightMotorTachoCount == 0){
-      rightMotor.resetTachoCount();
-      this.lastRightMotorTachoCount = this.rightMotor.getTachoCount();
-    }
-    
+  public void timedOut() {    
     // Update motor tacho counts
     this.leftMotorTachoCount = this.leftMotor.getTachoCount();
     this.rightMotorTachoCount = this.rightMotor.getTachoCount();
 
     // Calculate distances travelled by right and left wheels
-    this.distL = 3.14159 * wheelRadius * (this.leftMotorTachoCount - this.lastLeftMotorTachoCount)/180;
-    this.distR = 3.14159 * wheelRadius * (this.rightMotorTachoCount - this.lastRightMotorTachoCount)/180;
+    this.distL = Math.PI * wheelRadius * (this.leftMotorTachoCount - this.lastLeftMotorTachoCount)/180;
+    this.distR = Math.PI * wheelRadius * (this.rightMotorTachoCount - this.lastRightMotorTachoCount)/180;
 
     // Update last moto tacho counts
     this.lastLeftMotorTachoCount = this.leftMotorTachoCount;
@@ -102,7 +96,7 @@ public class Odometer implements TimerListener {
     this.deltaD = 0.5 * (this.distL + this.distR);
 
     // Calculate orientation of robot and convert it to degrees
-    this.deltaT = (180/Math.PI) * (this.distL-this.distR)/wheelBase; // Calculate variation of theta and convert it to degrees
+    this.deltaT = Math.toDegrees((this.distL-this.distR)/wheelBase); // Calculate variation of theta and convert it to degrees
 
     // Calculate the new value of theta
     this.newTheta = this.getTheta() + this.deltaT;

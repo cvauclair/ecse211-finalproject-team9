@@ -37,7 +37,7 @@ public class LineDetector implements TimerListener{
     this.numberOfSamples = n;
     this.counter = 0;
     this.arrayFilled = false;
-    this.lineDetected = true;
+    this.lineDetected = false;
     this.lock = new Object();
   }
 
@@ -92,7 +92,8 @@ public class LineDetector implements TimerListener{
       // Return true if line is detected (with dynamic threshold)
       if(this.threshold < 0 && this.derivative < this.threshold){
         this.lineDetected = true;
-      }else if(this.threshold > 0 && this.derivative > this.threshold){
+      }
+      if(this.threshold > 0 && this.derivative > this.threshold){
         this.lineDetected = true;
       }
     }

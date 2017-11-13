@@ -52,6 +52,7 @@ public class OdometryCorrection implements TimerListener{
   public void timedOut(){
     // Correct Odometer value if line is detected
     if(lineDetector.checkLine()){
+//      Sound.beep();
       //range [0,12]
       //double filterInitial = 3.0;
       double xOdometer = odometer.getX();

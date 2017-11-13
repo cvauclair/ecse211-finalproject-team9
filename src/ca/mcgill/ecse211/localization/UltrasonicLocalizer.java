@@ -2,6 +2,7 @@ package ca.mcgill.ecse211.localization;
 
 import ca.mcgill.ecse211.navigation.Driver;
 import ca.mcgill.ecse211.odometry.Odometer;
+import ca.mcgill.ecse211.sensor.UltrasonicSensor;
 import lejos.robotics.SampleProvider;
 
 /**
@@ -9,10 +10,9 @@ import lejos.robotics.SampleProvider;
  *
  */
 public class UltrasonicLocalizer {
-  private Odometer odometer;
-  private Driver driver;
-  private SampleProvider us;
-  private float[] usData;
+  private static Odometer odometer;
+  private static Driver driver;
+  private static UltrasonicSensor usSensor;
   
   private static final int ANGLE_INTERVAL = 8;    // Angle intervals at which samples should be taken
   private static final int EDGE_VALUE = 30;
@@ -25,11 +25,10 @@ public class UltrasonicLocalizer {
    * @param us			a SampleProvider for ultrasonic sensor
    * @param usData		a float array to store the data fetched from the sensor
    */
-  public UltrasonicLocalizer(Odometer odometer, Driver driver, SampleProvider us, float[] usData){
+  public UltrasonicLocalizer(Odometer odometer, Driver driver, UltrasonicSensor usSensor){
     this.odometer = odometer;
     this.driver = driver;
-    this.us = us;
-    this.usData = usData;
+    this.usSensor = usSensor;
   }
   
   /**
@@ -119,18 +118,19 @@ public class UltrasonicLocalizer {
     
     // Start turning, do not wait for the motors to finish
     if(clockwise){
-      this.driver.turnBy(360,true);  
+      driver.turnBy(360,true);  
     }else{
-      this.driver.turnBy(-360,true);
+      driver.turnBy(-360,true);
     }
     
     while(true){
       // Take the average of four measurements to reduce uncertainty
-      currentValue = averageSensorValue(us,usData,4);
+      currentValue = usSensor.getSample() * 100;
+      if(currentValue > 100) continue;
       if(currentValue < EDGE_VALUE + NOISE_MARGIN){
         if(!inNoiseMargin){
           // If the current data value was previously outside the noise margin, set the entering angle
-          enteringAngle = this.odometer.getTheta();
+          enteringAngle = odometer.getTheta();
         }
         inNoiseMargin = true;
       }else{
@@ -140,13 +140,13 @@ public class UltrasonicLocalizer {
       
       if(inNoiseMargin && currentValue < EDGE_VALUE - NOISE_MARGIN){
         // If current data has passed through the noise margin, set the exiting point and exit the loop
-        exitingAngle = this.odometer.getTheta();
+        exitingAngle = odometer.getTheta();
         break;
       }
     }
     
     // Stop rotating
-    this.driver.stop();
+    driver.stop();
     double angle = (enteringAngle + exitingAngle)/2.0;
     return angle;
   }
@@ -164,19 +164,20 @@ public class UltrasonicLocalizer {
     
     // Start turning, do not wait for the motors to finish
     if(clockwise){
-      this.driver.turnBy(360,true);  
+      driver.turnBy(360,true);  
     }else{
-      this.driver.turnBy(-360,true);
+      driver.turnBy(-360,true);
     }
     
     // Detect the rising edge
     while(true){
       // Take the average of four measurements to reduce uncertainty
-      currentValue = averageSensorValue(us,usData,4);
+      currentValue = usSensor.getSample() * 100;
+      if(currentValue > 100) continue;
       if(currentValue > EDGE_VALUE - NOISE_MARGIN){
         if(!inNoiseMargin){
           // If the current data value was previously outside the noise margin, set the entering angle
-          enteringAngle = this.odometer.getTheta();
+          enteringAngle = odometer.getTheta();
         }
         inNoiseMargin = true;
       }else{
@@ -186,13 +187,13 @@ public class UltrasonicLocalizer {
       
       if(inNoiseMargin && currentValue > EDGE_VALUE + NOISE_MARGIN){
         // If current data has passed through the noise margin, set the exiting point and exit the loop
-        exitingAngle = this.odometer.getTheta();
+        exitingAngle = odometer.getTheta();
         break;
       }
     }
     
     // Stop rotating
-    this.driver.stop();
+    driver.stop();
     double angle = (enteringAngle + exitingAngle)/2.0;
     return angle;
   }
