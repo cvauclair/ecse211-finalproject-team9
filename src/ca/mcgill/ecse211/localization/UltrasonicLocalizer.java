@@ -32,7 +32,12 @@ public class UltrasonicLocalizer {
     this.driver = driver;
     this.usSensor = usSensor;
   }
-
+  
+  /**
+   * This method determines which localization method has to be used based on the
+   * orientation of the robot
+   * @param initialOrientation  int 
+   */
   public void localize(int initialOrientation){
     // Get valid sample
     //    float sample = usSensor.getSample() * 100;

@@ -36,7 +36,7 @@ public class RelocalizationTest extends Robot{
 		 final TextLCD t = LocalEV3.get().getTextLCD();
 		 
 		 LightSensor lightSensor1 = new LightSensor("S4", "Red");
-		 LineDetector lineDetector1 = new LineDetector(lightSensor1, -50, 8);
+		 LineDetector lineDetector1 = new LineDetector(lightSensor1, -47, 8);
 		 Timer lineDetect1 = new Timer(50, lineDetector1);
 		 
 		 EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
@@ -54,7 +54,7 @@ public class RelocalizationTest extends Robot{
 		 odoTimer.start();
 		 display.start();
 		// driver.travelTo(0 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
-		
+		driver.travelTo(1*SQUARE_WIDTH, 1*SQUARE_WIDTH);
 		 try {
 	          Thread.sleep(1000);
 	      } catch (InterruptedException e) {
@@ -62,6 +62,7 @@ public class RelocalizationTest extends Robot{
 	          e.printStackTrace();
 	      }
 		 relocalize.doReLocalization();
+		 driver.travelTo(1*SQUARE_WIDTH, 1*SQUARE_WIDTH);
 		 driver.turnTo(90);
 		// driver.travelTo(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);    
 	}

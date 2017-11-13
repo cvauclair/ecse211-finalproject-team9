@@ -4,7 +4,8 @@ import ca.mcgill.ecse211.odometry.Odometer;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /**
- * This class is used to move the robot and includes various methods to make controlling the wheel motors easier
+ * This class is used to move the robot and includes various methods to make controlling the wheel motors easier.
+ * By default, the forward and rotational speed are set to 250 and 120 respectively.
  */
 public class Driver {
   private Odometer odometer;
