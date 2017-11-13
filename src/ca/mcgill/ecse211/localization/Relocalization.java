@@ -78,8 +78,15 @@ public class Relocalization {
 			driver.rotateClockwise();
 			if(lineDetector.checkLine()){
 				Sound.beep();
-				angles[angle_index]= odometer.getTheta();    // fetching angle values to the robot
-			    angle_index ++;
+				double newangle = odometer.getTheta();
+				if(angle_index == 0){
+					angles[angle_index]= newangle;
+					angle_index++;
+				}
+				else if(Math.abs(newangle - angles[angle_index -1] )> 45){
+					angles[angle_index]= newangle;    // fetching angle values to the robot
+					angle_index ++;
+				}
 			    if(angle_index == 4){
 			    	driver.stop();
 			    	wait(2000);
@@ -100,7 +107,7 @@ public class Relocalization {
 		double ytheta= angles[1]-angles[3]; 
 		double xtheta= angles[0]-angles[2];
 		double extracorrection= excessangle- angles[3];
-		double Xo= position(xtheta) + (xTile * tileSize);
+		double Xo= position(xtheta) + (xTile * tileSize) -1.0;
 		double Yo= position(ytheta) + (yTile * tileSize);
 		double thetaO= (angles[1]-angles[3])/2 -angles[2]+ extracorrection;  //or angle 1 - angle 3
         double correcttheta = odometer.getTheta()+ thetaO ;

@@ -12,7 +12,8 @@ import lejos.utility.TimerListener;
  */
 
 /**
- * This class includes all the logic to locate objects and test them to see if they are flags
+ * This class includes all the logic to locate objects by collecting values form
+ * the ultrasonic sensor and test them to see if they are flags.
  * @author christophe
  *
  */

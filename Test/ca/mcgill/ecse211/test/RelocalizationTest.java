@@ -36,7 +36,8 @@ public class RelocalizationTest extends Robot{
 		 final TextLCD t = LocalEV3.get().getTextLCD();
 		 
 		 LightSensor lightSensor1 = new LightSensor("S4", "Red");
-		 LineDetector lineDetector1 = new LineDetector(lightSensor1, -47, 8);
+		 LineDetector lineDetector1 = new LineDetector(lightSensor1, -47, 8); 
+		 //-47 for dark board, -52 for light board
 		 Timer lineDetect1 = new Timer(50, lineDetector1);
 		 
 		 EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
@@ -63,7 +64,8 @@ public class RelocalizationTest extends Robot{
 	      }
 		 relocalize.doReLocalization();
 		 driver.travelTo(1*SQUARE_WIDTH, 1*SQUARE_WIDTH);
-		 driver.turnTo(90);
+		 driver.turnTo(88);
+		 odometer.setTheta(90.0);
 		// driver.travelTo(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);    
 	}
 
