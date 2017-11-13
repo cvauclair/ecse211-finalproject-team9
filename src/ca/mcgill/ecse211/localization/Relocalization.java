@@ -6,7 +6,10 @@ import ca.mcgill.ecse211.sensor.LineDetector;
 import lejos.hardware.Sound;
 
 /**
- * This class Relocalizes a Robot 
+ * This class relocalizes a robot at any point of the game board by collecting the 4 angles of 
+ * the odometer for when the robot detects a line. This requires that the robot is close enough 
+ * to a tile corner in order to get the 4 lines. Simple trigonometry is used to correct the 
+ * values of the robot's odometer.
  * 
  */
 public class Relocalization {

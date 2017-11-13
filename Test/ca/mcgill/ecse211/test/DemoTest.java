@@ -46,8 +46,8 @@ public class DemoTest extends Robot{
     
     Driver driver = new Driver(odometer, leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
     
-    Timer collisionAvoidanceTimer = new Timer(50, collisionAvoidance);
-    collisionAvoidanceTimer.start();
+    //Timer collisionAvoidanceTimer = new Timer(50, collisionAvoidance);
+    //collisionAvoidanceTimer.start();
     
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
@@ -55,8 +55,8 @@ public class DemoTest extends Robot{
     Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
     odometryCorrectionTimer.start();
 
-    navigation.addPoint(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
-    navigation.navigate();
+    //navigation.addPoint(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
+   // navigation.navigate();
 
   }
 }

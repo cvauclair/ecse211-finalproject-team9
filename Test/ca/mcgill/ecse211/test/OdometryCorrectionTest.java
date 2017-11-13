@@ -49,9 +49,9 @@ public class OdometryCorrectionTest extends Robot {
     
     odometryDisplay.start();
     
-    driver.travelTo(0 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
-    driver.travelTo(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
-    driver.travelTo(1 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
+    driver.travelTo(0 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
+    driver.travelTo(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
+    driver.travelTo(2 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
     driver.travelTo(0 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
   }
 }
