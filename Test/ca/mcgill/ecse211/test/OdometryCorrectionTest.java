@@ -22,9 +22,10 @@ public class OdometryCorrectionTest extends Robot {
   }
 
   public void run(){
-    super();
+	super.run();
     LightSensor lightSensor = new LightSensor("S2", "Red");
-    LineDetector lineDetector = new LineDetector(lightSensor, 50, 8);
+    LineDetector lineDetector = new LineDetector(lightSensor, -20, 8);
+    Timer lineDetect = new Timer(50, lineDetector);
 
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
@@ -40,6 +41,8 @@ public class OdometryCorrectionTest extends Robot {
 
     Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
     odometryCorrectionTimer.start();
+    
+    lineDetect.start();
 
     odometryDisplay.start();
     
