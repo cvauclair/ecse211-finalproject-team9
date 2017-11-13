@@ -64,7 +64,8 @@ public class RelocalizationTest extends Robot{
 	      }
 		 relocalize.doReLocalization();
 		 driver.travelTo(1*SQUARE_WIDTH, 1*SQUARE_WIDTH);
-		 driver.turnTo(89);
+		 driver.turnTo(88);
+		 odometer.setTheta(90.0);
 		// driver.travelTo(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);    
 	}
 
