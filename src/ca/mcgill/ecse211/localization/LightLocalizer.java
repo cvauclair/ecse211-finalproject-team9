@@ -7,7 +7,10 @@ import ca.mcgill.ecse211.sensor.LineDetector;
 import lejos.robotics.SampleProvider;
 /**
  * This class starts the initial localization process with the help of 
- * a light sensor
+ * a light sensor using a soft-hard-coded technique. The robot will first
+ * keep moving forward to find the first horizontal line and set the odometer's Y
+ * value to 0. It will turn to 45 degrees and move forward until it fins the vertical
+ * line and set the odometer's x value to 0.
  */
 public class LightLocalizer {
   private static Odometer odometer;

@@ -6,7 +6,9 @@ import ca.mcgill.ecse211.sensor.UltrasonicSensor;
 import lejos.robotics.SampleProvider;
 
 /**
- * This class executes inital localization with the help of the Ultrasonic sensor
+ * This class executes initial localization with the help of the Ultrasonic sensor.
+ * Two methods are provided to localize with the ultrasonic sensor: falling and rising 
+ * edge. 
  *
  */
 public class UltrasonicLocalizer {
@@ -30,7 +32,12 @@ public class UltrasonicLocalizer {
     this.driver = driver;
     this.usSensor = usSensor;
   }
-
+  
+  /**
+   * This method determines which localization method has to be used based on the
+   * orientation of the robot
+   * @param initialOrientation  int 
+   */
   public void localize(int initialOrientation){
     // Get valid sample
     //    float sample = usSensor.getSample() * 100;

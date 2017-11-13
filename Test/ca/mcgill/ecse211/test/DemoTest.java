@@ -62,6 +62,7 @@ public class DemoTest extends Robot{
     
 //    Timer collisionAvoidanceTimer = new Timer(50, collisionAvoidance);
 //    collisionAvoidanceTimer.start();
+
     
     Timer lineDetectorTimer = new Timer(50,lineDetector);
     lineDetectorTimer.start();
