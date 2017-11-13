@@ -20,7 +20,7 @@ import lejos.utility.Timer;
 
 public class ZiplineControlTest extends Robot{
   public static void main(String args[]){
-    (new DemoTest()).run();
+    (new ZiplineControlTest()).run();
   }
 
   public ZiplineControlTest(){

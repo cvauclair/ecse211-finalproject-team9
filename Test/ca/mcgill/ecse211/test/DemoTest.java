@@ -20,10 +20,10 @@ import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.utility.Timer;
 
 public class DemoTest extends Robot{
-  public static final int ziplineX0 = 3;
-  public static final int ziplineY0 = 3;
-  public static final int ziplineXc = 4;
-  public static final int ziplineYc = 3;
+  public static final int ziplineX0 = 0;
+  public static final int ziplineY0 = 6;
+  public static final double ziplineXc = 1;
+  public static final double ziplineYc = 6;
   
   public static void main(String args[]){
     (new DemoTest()).run();
@@ -38,7 +38,10 @@ public class DemoTest extends Robot{
     
     UltrasonicSensor usSensor = new UltrasonicSensor("S1", "Distance");
     LightSensor lightSensor = new LightSensor("S2", "Red");
-    LineDetector lineDetector = new LineDetector(lightSensor, 50, 8);
+    LightSensor backLightSensor = new LightSensor("S4", "Red");
+    
+    LineDetector lineDetector = new LineDetector(lightSensor, -20, 8);
+    LineDetector backLineDetector = new LineDetector(backLightSensor, -47, 8);
     
     EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
     EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
@@ -53,7 +56,7 @@ public class DemoTest extends Robot{
     CollisionAvoidance collisionAvoidance = new CollisionAvoidance(driver,odometer,usSensor,usSensorMotor,3,35);
     Navigation navigation = new Navigation(driver, collisionAvoidance);
     
-    Relocalization relocalization = new Relocalization(odometer, lineDetector, driver, SQUARE_WIDTH);
+    Relocalization relocalization = new Relocalization(odometer, backLineDetector, driver, SQUARE_WIDTH);
 
     UltrasonicLocalizer usLocalizer = new UltrasonicLocalizer(odometer, driver, usSensor);
     LightLocalizer lightLocalizer = new LightLocalizer(odometer, driver, lineDetector);
@@ -66,6 +69,9 @@ public class DemoTest extends Robot{
     
     Timer lineDetectorTimer = new Timer(50,lineDetector);
     lineDetectorTimer.start();
+
+    Timer backLineDetectorTimer = new Timer(50,backLineDetector);
+    backLineDetectorTimer.start();
     
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
@@ -74,12 +80,15 @@ public class DemoTest extends Robot{
 //  odometryCorrectionTimer.start();
     
     usLocalizer.localize(0);
-    lightLocalizer.localize(0, 0);
+    lightLocalizer.localize(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
+    
+    driver.setForwardSpeed(200);
     
     driver.travelTo(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
-    driver.travelTo(ziplineXc * SQUARE_WIDTH, ziplineYc * SQUARE_WIDTH);
     
-    relocalization.doReLocalization();
+//    relocalization.doReLocalization();
+    
+    driver.travelTo(ziplineXc * SQUARE_WIDTH, ziplineYc * SQUARE_WIDTH);
     
     ziplineControl.traverseZipline();
   }
