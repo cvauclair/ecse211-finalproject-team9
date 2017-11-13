@@ -104,14 +104,14 @@ public class Relocalization {
 		double xTile = round(xOdo);
 		double yTile = round(yOdo);
 		// calculating distance to 0,0 and fetching theta and distance value to navigation lab
-		double ytheta= angles[1]-angles[3]; 
-		double xtheta= angles[0]-angles[2];
+		double ytheta= angles[3]-angles[1]; 
+		double xtheta= angles[2]-angles[0];
 		double extracorrection= excessangle- angles[3];
 		double Xo= position(xtheta) + (xTile * tileSize) -1.0;
 		double Yo= position(ytheta) + (yTile * tileSize);
 		double thetaO= (angles[1]-angles[3])/2 -angles[2]+ extracorrection;  //or angle 1 - angle 3
         double correcttheta = odometer.getTheta()+ thetaO ;
-        double thetaFinal =angleCorrection(correcttheta ) + 180;
+        double thetaFinal =angleCorrection(correcttheta ) ;
         odometer.setPosition(new double[] {Xo,  Yo, thetaFinal},
         		new boolean[]{true, true, true});
 
@@ -137,9 +137,9 @@ public class Relocalization {
 	 * @return correction 	a double that needs to be provided to the angle to correct it
 	 */
 	private static double angleCorrection(double angle){  
-	    if (angle > 180) {
+	    if (angle > 360) {
 	      return angle - 360;
-	    } else if (angle < -180) {
+	    } else if (angle < 0) {
 	      return angle + 360;
 	    } else {
 	      return angle;
