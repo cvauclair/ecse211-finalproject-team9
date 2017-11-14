@@ -114,8 +114,6 @@ public class Relocalization {
         double thetaFinal =angleCorrection(correcttheta ) ;
         odometer.setPosition(new double[] {Xo,  odometer.getY(), thetaFinal},
         		new boolean[]{true, true, true});
-
-		
 	}
 	
 	/**
@@ -144,7 +142,6 @@ public class Relocalization {
 	    } else {
 	      return angle;
 	    }
-	    
 	}
 	
 	/**
