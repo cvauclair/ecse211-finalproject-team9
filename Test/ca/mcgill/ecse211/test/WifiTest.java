@@ -7,7 +7,7 @@ import lejos.hardware.Button;
 
 public class WifiTest extends Robot{
   // ** Set these as appropriate for your team and current situation **
-  private static final String SERVER_IP = "192.168.2.3";
+  private static final String SERVER_IP = "192.168.2.49";
   private static final int TEAM_NUMBER = 1;
 
   // Enable/disable printing of debug info from the WiFi class
@@ -16,7 +16,7 @@ public class WifiTest extends Robot{
 
   
   public static void main(String args[]){
-    
+    (new WifiTest()).run();
   }
   
   public WifiTest(){
