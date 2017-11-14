@@ -45,15 +45,27 @@ public class LightLocalizer {
     // Correct the robot's odometer's Y position by finding a horizontal line
     lineLocalization(LineOrientation.Horizontal);
     
-    // Get away from the last line so the robot does not detect it again
-    driver.forward(4,false);
-    
+    double oldX = odometer.getX();
+    double oldY = odometer.getY();
+
     // Turn robot so that the next line the robot crosses will be a vertical line
     driver.turnBy(45,false);
+
+    // Get away from the last line so the robot does not detect it again
+    driver.forward(4,false);
     
     // Correct the robot's odometer's X position by finding a vertical line
     lineLocalization(LineOrientation.Vertical);
     
+    double newX = odometer.getX();
+    double newY = odometer.getY();
+
+    // Theta correction
+    double newTheta = odometer.getTheta()-45+Math.atan(Math.abs(newY-oldY)/Math.abs(newX-oldX));
+    if(newTheta > 359.9) newTheta -= 359.9;
+    if(newTheta < 0) newTheta += 359.9;
+    odometer.setTheta(newTheta);
+
     // Once the odometer's position is correctly set, travel to (x0,y0) and orient the robot correctly
     driver.travelTo(0,0);
     driver.turnTo(0);

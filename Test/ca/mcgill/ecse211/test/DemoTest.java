@@ -86,7 +86,8 @@ public class DemoTest extends Robot{
     
     driver.travelTo(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
     
-//    relocalization.doReLocalization();
+    relocalization.doReLocalization();
+    driver.turnTo(0);
     
     driver.travelTo(ziplineXc * SQUARE_WIDTH, ziplineYc * SQUARE_WIDTH);
     
