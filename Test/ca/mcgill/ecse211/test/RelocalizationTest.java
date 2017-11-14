@@ -55,7 +55,7 @@ public class RelocalizationTest extends Robot{
 		 odoTimer.start();
 		 display.start();
 		// driver.travelTo(0 * SQUARE_WIDTH, 0 * SQUARE_WIDTH);
-		driver.travelTo(1*SQUARE_WIDTH, 1*SQUARE_WIDTH);
+		driver.travelTo(0*SQUARE_WIDTH, 2*SQUARE_WIDTH);
 		 try {
 	          Thread.sleep(1000);
 	      } catch (InterruptedException e) {
@@ -63,8 +63,11 @@ public class RelocalizationTest extends Robot{
 	          e.printStackTrace();
 	      }
 		 relocalize.doReLocalization();
-		 driver.travelTo(1*SQUARE_WIDTH, 1*SQUARE_WIDTH);
-		 driver.travelTo(2*SQUARE_WIDTH, 1*SQUARE_WIDTH);
+		 driver.travelTo(0*SQUARE_WIDTH, 2*SQUARE_WIDTH);
+		 //double angle = odometer.getTheta();
+		// driver.turnBy(10, true);
+		// odometer.setTheta(angle);
+		 driver.travelTo(1*SQUARE_WIDTH, 2*SQUARE_WIDTH);
 		 
 		// driver.turnTo(-88);
 		// odometer.setTheta(90.0);
