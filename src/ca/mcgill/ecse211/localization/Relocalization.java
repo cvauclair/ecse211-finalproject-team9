@@ -107,12 +107,12 @@ public class Relocalization {
 		double ytheta= angles[3]-angles[1]; 
 		double xtheta= angles[2]-angles[0];
 		double extracorrection= excessangle- angles[3];
-		double Xo= position(xtheta) + (xTile * tileSize) + 1.5;
-		double Yo= position(ytheta) + (yTile * tileSize) - 0.5;
+		double Xo= position(xtheta) + (xTile * tileSize) + 2.0;
+		double Yo= position(ytheta) + (yTile * tileSize) ;
 		double thetaO= (angles[1]-angles[3])/2 -angles[2]+ extracorrection;  //or angle 1 - angle 3
         double correcttheta = odometer.getTheta()+ thetaO ;
         double thetaFinal =angleCorrection(correcttheta ) ;
-        odometer.setPosition(new double[] {Xo,  Yo, thetaFinal},
+        odometer.setPosition(new double[] {Xo,  odometer.getY(), thetaFinal},
         		new boolean[]{true, true, true});
 
 		
