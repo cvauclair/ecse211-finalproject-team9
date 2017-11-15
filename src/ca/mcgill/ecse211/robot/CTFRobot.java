@@ -1,5 +1,9 @@
 package ca.mcgill.ecse211.robot;
 
+import java.util.Map;
+
+import ca.mcgill.ecse211.wifi.WifiConnection;
+
 /*
  * Created by Christophe Vauclair on 27/10/2017
  */
