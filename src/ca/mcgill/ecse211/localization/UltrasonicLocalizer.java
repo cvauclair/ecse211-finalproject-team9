@@ -8,7 +8,10 @@ import lejos.robotics.SampleProvider;
 /**
  * This class executes initial localization with the help of the Ultrasonic sensor.
  * Two methods are provided to localize with the ultrasonic sensor: falling and rising 
- * edge. 
+ * edge. The robot should turn on itself until it sees a wall. Based on the method used,
+ * The robot will be able to (Poor man's) localize the corner with respect to the robot's
+ * current position. With the help of the corner's position, the robot can then 
+ * know its angle.
  *
  */
 public class UltrasonicLocalizer {

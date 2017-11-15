@@ -6,7 +6,9 @@ import lejos.utility.TimerListener;
  * Created by Christophe Vauclair on 27/10/2017
  */
 /**
- * The line detector class is used to detect lines with the light sensor
+ * The line detector class is used to detect lines with the light sensor. 
+ * It is the main class being used when it is required to detect a line when
+ * it is needed for odometery correct. 
  */
 public class LineDetector implements TimerListener{
   private LightSensor colorSensor;

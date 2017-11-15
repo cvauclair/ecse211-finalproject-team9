@@ -7,7 +7,8 @@ import lejos.robotics.SampleProvider;
  * Created by Christophe Vauclair on 27/10/2017
  */
 /**
- * This class creates an instance of a Lejos Sensor
+ * This class creates an instance of a Lejos Sensor.
+ * Parent class to all sensors (Light and Ultrasonic)
  */
 public class Sensor {
   SensorModes sensor;

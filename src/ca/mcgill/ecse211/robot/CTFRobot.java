@@ -5,7 +5,8 @@ package ca.mcgill.ecse211.robot;
  */
 /**
  * This class creates and instance of a robot that is able to play 
- * capture the flag
+ * capture the flag. It contains one thread that should contain all the 
+ * logic for successfully doing the competition.
  *
  */
 public class CTFRobot extends Robot{

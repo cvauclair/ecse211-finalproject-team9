@@ -8,7 +8,7 @@ import lejos.hardware.sensor.EV3ColorSensor;
  * Created by Christophe Vauclair on 27/10/2017
  */
 /**
- * This class is used to make an instance of a light sensor. It extends the Sensor class
+ * This class is used to make an instance of a EV3 light sensor. It extends the Sensor class
  *
  */
 public class LightSensor extends Sensor{
