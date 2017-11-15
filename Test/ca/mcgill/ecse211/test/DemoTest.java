@@ -24,11 +24,14 @@ import lejos.utility.Timer;
 public class DemoTest extends Robot{
   private int corner = 0;
   private int ziplineX0 = 0;
-  private int ziplineY0 = 6;
-  private int ziplineXc = 1;
-  private int ziplineYc = 6;
+  private int ziplineY0 = 0;
+  private int ziplineXc = 0;
+  private int ziplineYc = 0;
+  private int flagZoneX = 0;
+  private int flagZoneY = 0;
 
   // ** Set these as appropriate for your team and current situation **
+//  private static final String SERVER_IP = "192.168.2.3";
   private static final String SERVER_IP = "192.168.2.3";
   private static final int TEAM_NUMBER = 9;
 
@@ -100,7 +103,7 @@ public class DemoTest extends Robot{
   }
 
   public void run(){
-    super.run();
+//    super.run();
 
     UltrasonicSensor usSensor = new UltrasonicSensor("S1", "Distance");
     LightSensor lightSensor = new LightSensor("S2", "Red");
@@ -145,18 +148,67 @@ public class DemoTest extends Robot{
     //  Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
     //  odometryCorrectionTimer.start();
 
-    usLocalizer.localize(0);
-    lightLocalizer.localize(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
+    switch(corner){
+      case 0:
+        // Robot starts in bottom left corner
+        usLocalizer.localize(0);
+        
+        // Start light localizer
+        lightLocalizer.localize(1*SQUARE_WIDTH,1*SQUARE_WIDTH);
+        
+        odometer.setTheta(0);
+        break;
+      case 1:
+        // Robot starts in bottom left corner
+        usLocalizer.localize(0);
+        
+        // Start light localizer
+        lightLocalizer.localize(7*SQUARE_WIDTH,1*SQUARE_WIDTH);
+        
+        odometer.setTheta(270);
+        break;
+      case 2:
+        // Robot starts in bottom left corner
+        usLocalizer.localize(0);
+        
+        // Start light localizer
+        lightLocalizer.localize(7*SQUARE_WIDTH,7*SQUARE_WIDTH);
+        
+        odometer.setTheta(180);
+        break;
+      case 3:
+        // Robot starts in bottom left corner
+        usLocalizer.localize(0);
+        
+        // Start light localizer
+        lightLocalizer.localize(1*SQUARE_WIDTH,7*SQUARE_WIDTH);
+        
+        odometer.setTheta(90);
+        break;
+      default:
+        break;
+    }
+
+    
+//    usLocalizer.localize(0);
+//    lightLocalizer.localize(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
 
     driver.setForwardSpeed(200);
 
     driver.travelTo(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
-
-    relocalization.doReLocalization();
-    driver.turnTo(0);
+//    driver.forward(-10, false);
+//    driver.turnBy(-90, false);
+//    driver.forward(SQUARE_WIDTH/3,false);
+//    driver.turnBy(90, false);
+//    lightLocalizer.localize(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
+    
+//    relocalization.doReLocalization();
+//    driver.turnTo(0);
 
     driver.travelTo(ziplineXc * SQUARE_WIDTH, ziplineYc * SQUARE_WIDTH);
 
     ziplineControl.traverseZipline();
+    
+//    relocalization.doReLocalization();
   }
 }
