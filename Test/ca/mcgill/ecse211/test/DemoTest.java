@@ -22,11 +22,11 @@ import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.utility.Timer;
 
 public class DemoTest extends Robot{
-  private int corner = 1;
-  private int ziplineX0 = 3;
+  private int corner = 0;
+  private int ziplineX0 = 2;
   private int ziplineY0 = 1;
   private int ziplineXc = 3;
-  private int ziplineYc = 2;
+  private int ziplineYc = 1;
   private int flagZoneX = 0;
   private int flagZoneY = 0;
 
@@ -121,7 +121,7 @@ public class DemoTest extends Robot{
 
     Odometer odometer = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
     OdometryCorrection odometryCorrection = new OdometryCorrection(odometer,lineDetector,SQUARE_WIDTH,0);
-
+    OdometryDisplay odoDisplay = new OdometryDisplay(odometer, LocalEV3.get().getTextLCD());
     Driver driver = new Driver(odometer, leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
 
     CollisionAvoidance collisionAvoidance = new CollisionAvoidance(driver,odometer,usSensor,usSensorMotor,3,35);
@@ -146,6 +146,8 @@ public class DemoTest extends Robot{
 
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
+    
+    odoDisplay.start();
 
     //  Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
     //  odometryCorrectionTimer.start();
@@ -194,8 +196,9 @@ public class DemoTest extends Robot{
     
 //    usLocalizer.localize(0);
 //    lightLocalizer.localize(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
-
+    
     driver.setForwardSpeed(200);
+    
 
     driver.travelTo(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
 //    driver.forward(-10, false);

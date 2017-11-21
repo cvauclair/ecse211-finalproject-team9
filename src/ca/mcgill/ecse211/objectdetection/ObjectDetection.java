@@ -23,14 +23,7 @@ public class ObjectDetection implements TimerListener{
   private UltrasonicSensor usSensor;
   private LightSensor lightSensor;
   private double[] data;
-  private double angleLeft;
-  private double angle;
-  private float currentDistance;
-  private float previousDistance;
-  private double fallingEdgeOrientation;
-  private double risingEdgeOrientation;
-  private boolean fallingEdgeDetected;
-  private boolean risingEdgeDetected;
+  private double startAngle;
   /**
    * Creates an ObjectDetection instance
    * @param driver 		a Driver instance that is the robot's driver object
@@ -50,45 +43,18 @@ public class ObjectDetection implements TimerListener{
    * tested. It is to be called after the robot has crossed into enemy territory.
    */
   public void findFlag(){
-    this.angleLeft = 360;
-    this.angle = this.odometer.getTheta();
+    this.startAngle = this.odometer.getTheta();
     this.driver.rotateClockwise();
-    
-    while(this.angleLeft > 0){
-      this.currentDistance = this.usSensor.getSample() * 100;
-      if(this.currentDistance > 1000){
-        this.currentDistance  = this.previousDistance;
-      }
-      
-      if(this.currentDistance - this.previousDistance < -20){
-        this.fallingEdgeOrientation = this.odometer.getTheta();
-        this.fallingEdgeDetected = true;
-      }
-      if(this.currentDistance - this.previousDistance > 20 && this.fallingEdgeDetected){
-        this.risingEdgeOrientation = this.odometer.getTheta();
-        this.fallingEdgeDetected = false;
-        this.testObject();
-      }
-    }
-    this.driver.stop();
+    /*while(this.odometer.getTheta()){
+	
+    }*/
   }
   
   /**
-   * Method that checks if the robot is currently facing a flag
+   * Method that takes a distance measurement and adds it to the array
    */
   public void timedOut(){
-    this.currentDistance = this.usSensor.getSample() * 100;
-    if(this.currentDistance > 1000){
-      this.currentDistance  = this.previousDistance;
-    }
-    
-    if(this.currentDistance - this.previousDistance < -20){
-      this.fallingEdgeOrientation = this.odometer.getTheta();
-    }
-    if(this.currentDistance - this.previousDistance > 20){
-      this.risingEdgeOrientation = this.odometer.getTheta();
-      this.testObject();
-    }
+    System.out.println(this.usSensor.getSample()*100 + ',' + odometer.getTheta());
   }
   
   /**

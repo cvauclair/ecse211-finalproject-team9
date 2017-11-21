@@ -4,6 +4,7 @@ import ca.mcgill.ecse211.navigation.Driver;
 import ca.mcgill.ecse211.odometry.Odometer;
 import ca.mcgill.ecse211.sensor.LightSensor;
 import ca.mcgill.ecse211.sensor.LineDetector;
+import lejos.hardware.Button;
 import lejos.robotics.SampleProvider;
 /**
  * This class starts the initial localization process with the help of 
@@ -84,7 +85,7 @@ public class LightLocalizer {
 //    if(newTheta < 0) newTheta += 359.9;
 //    odometer.setTheta(newTheta);
     odometer.setTheta(Math.toDegrees(Math.atan(Math.abs(newY-oldY)/Math.abs(newX-oldX))));
-    
+    Button.waitForAnyPress();
     // Once the odometer's position is correctly set, travel to (x0,y0) and orient the robot correctly
     driver.travelTo(0,0);
     driver.turnTo(0);
