@@ -58,7 +58,7 @@ public class CollisionAvoidance implements TimerListener{
    * This method is called by a timer and checks whether or not an object must be avoided
    */
   public void timedOut(){
-    if(obstacleDetected()){
+    if(obstacleDetected() && this.enabled){
       Sound.beep();
       oldTheta = odometer.getTheta();
 //      avoidObstacle();
