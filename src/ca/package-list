@@ -4,5 +4,6 @@ ca.mcgill.ecse211.objectdetection
 ca.mcgill.ecse211.odometry
 ca.mcgill.ecse211.robot
 ca.mcgill.ecse211.sensor
+ca.mcgill.ecse211.test
 ca.mcgill.ecse211.wifi
 ca.mcgill.ecse211.zipline

@@ -8,7 +8,10 @@ import lejos.utility.TimerListener;
  */
 
 /**
- * This class represents an Odometer that keeps track of the position of a robot
+ * This class represents an Odometer that keeps track of the position of a robot.
+ * It uses the robot's tachometer to keep track of the wheels rotation
+ * and uses this data to calculate the current distance achieved by the robot
+ * and the angle at which it is going.
  *
  */
 public class Odometer implements TimerListener {
