@@ -19,10 +19,7 @@ import lejos.utility.Timer;
  * Created by Christophe Vauclair on 17/10/2017
  */
 
-public class ObjectDetectionCalibration extends Robot{
-  private final static double BASE_WIDTH = 9.5;
-  private final static double WHEEL_RADIUS = 2.1;
-
+public class ObjectDetectionTest extends Robot{
   private static final EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A")); 
   private static final EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 
@@ -35,11 +32,10 @@ public class ObjectDetectionCalibration extends Robot{
   private ObjectDetection objectDetection;
   
   public static void main(String[] args){
-    ObjectDetectionCalibration objectDetectionCalibration = new ObjectDetectionCalibration();
-    objectDetectionCalibration.run();
+    (new ObjectDetectionTest()).run();
   }
 
-  public ObjectDetectionCalibration(){
+  public ObjectDetectionTest(){
     super();
     this.odometer = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
     this.driver = new Driver(odometer,leftMotor,rightMotor,WHEEL_RADIUS, BASE_WIDTH);
@@ -53,16 +49,19 @@ public class ObjectDetectionCalibration extends Robot{
   }
   
   public void run(){
-//    Timer objectDetectionTimer = new Timer(50, objectDetection);
+    Timer objectDetectionTimer = new Timer(50, objectDetection);
     Timer odometerTimer = new Timer(25, odometer);
-//    
-//    odometerTimer.start();
+    
+    odometerTimer.start();
 
     driver.setRotateSpeed(100);
 
     Button.waitForAnyPress();
 
-    objectDetection.findFlag();
+    objectDetectionTimer.start();
+    driver.turnBy(90, false);
+    driver.turnBy(-180, false);
+    driver.turnBy(90, false);
 
     System.exit(0);
   }
