@@ -53,16 +53,19 @@ public class ObjectDetectionCalibration extends Robot{
   }
   
   public void run(){
-//    Timer objectDetectionTimer = new Timer(50, objectDetection);
+    Timer objectDetectionTimer = new Timer(50, objectDetection);
     Timer odometerTimer = new Timer(25, odometer);
-//    
-//    odometerTimer.start();
+    
+    odometerTimer.start();
 
     driver.setRotateSpeed(100);
 
     Button.waitForAnyPress();
 
-    objectDetection.findFlag();
+    objectDetectionTimer.start();
+    driver.turnBy(90, false);
+    driver.turnBy(-180, false);
+    driver.turnBy(90, false);
 
     System.exit(0);
   }
