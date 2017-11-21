@@ -22,11 +22,11 @@ import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.utility.Timer;
 
 public class DemoTest extends Robot{
-  private int corner = 0;
-  private int ziplineX0 = 0;
-  private int ziplineY0 = 0;
-  private int ziplineXc = 0;
-  private int ziplineYc = 0;
+  private int corner = 1;
+  private int ziplineX0 = 3;
+  private int ziplineY0 = 1;
+  private int ziplineXc = 3;
+  private int ziplineYc = 2;
   private int flagZoneX = 0;
   private int flagZoneY = 0;
 
@@ -45,10 +45,11 @@ public class DemoTest extends Robot{
   public DemoTest(){
     super();
 
-    WifiConnection conn = new WifiConnection(SERVER_IP, TEAM_NUMBER, ENABLE_DEBUG_WIFI_PRINT);
+    
+//    WifiConnection conn = new WifiConnection(SERVER_IP, TEAM_NUMBER, ENABLE_DEBUG_WIFI_PRINT);
 
     // Connect to server and get the data, catching any errors that might occur
-    try {
+//    try {
       /*
        * getData() will connect to the server and wait until the user/TA presses the "Start" button
        * in the GUI on their laptop with the data filled in. Once it's waiting, you can kill it by
@@ -60,7 +61,7 @@ public class DemoTest extends Robot{
        * will receive a message saying an invalid team number was specified and getData() will throw
        * an exception letting you know.
        */
-      Map data = conn.getData();
+//      Map data = conn.getData();
 
       // Example 1: Print out all received data
 //      System.out.println("Map:\n" + data);
@@ -70,20 +71,20 @@ public class DemoTest extends Robot{
 //      System.out.println("Red Team: " + redTeam);
 
       // Read team specific data
-      if(((Long) data.get("RedTeam")).intValue() == TEAM_NUMBER){
-        corner = ((Long) data.get("RedCorner")).intValue();
-        ziplineX0 = ((Long) data.get("ZO_R_x")).intValue();
-        ziplineY0 = ((Long) data.get("ZO_R_y")).intValue();
-        ziplineXc = ((Long) data.get("ZC_R_x")).intValue();
-        ziplineYc = ((Long) data.get("ZC_R_y")).intValue();
-      }else if(((Long) data.get("GreenTeam")).intValue() == TEAM_NUMBER){
-        corner = ((Long) data.get("GreenCorner")).intValue();
-        ziplineX0 = ((Long) data.get("ZO_G_x")).intValue();
-        ziplineY0 = ((Long) data.get("ZO_G_y")).intValue();
-        ziplineXc = ((Long) data.get("ZC_G_x")).intValue();
-        ziplineYc = ((Long) data.get("ZC_G_y")).intValue();        
-      }
-      
+//      if(((Long) data.get("RedTeam")).intValue() == TEAM_NUMBER){
+//        corner = ((Long) data.get("RedCorner")).intValue();
+//        ziplineX0 = ((Long) data.get("ZO_R_x")).intValue();
+//        ziplineY0 = ((Long) data.get("ZO_R_y")).intValue();
+//        ziplineXc = ((Long) data.get("ZC_R_x")).intValue();
+//        ziplineYc = ((Long) data.get("ZC_R_y")).intValue();
+//      }else if(((Long) data.get("GreenTeam")).intValue() == TEAM_NUMBER){
+//        corner = ((Long) data.get("GreenCorner")).intValue();
+//        ziplineX0 = ((Long) data.get("ZO_G_x")).intValue();
+//        ziplineY0 = ((Long) data.get("ZO_G_y")).intValue();
+//        ziplineXc = ((Long) data.get("ZC_G_x")).intValue();
+//        ziplineYc = ((Long) data.get("ZC_G_y")).intValue();        
+//      }
+//      
 //      int og = ((Long) data.get("OG")).intValue();
 //      System.out.println("Green opponent flag: " + og);
 
@@ -95,15 +96,16 @@ public class DemoTest extends Robot{
 //      else {
 //        System.out.println("Shallow water LL zone X >= 5");
 //      }
-
-    } catch (Exception e) {
-      System.err.println("Error: " + e.getMessage());
-    }
+//
+//    } catch (Exception e) {
+//      System.err.println("Error: " + e.getMessage());
+//    }
+//    */
 
   }
 
   public void run(){
-//    super.run();
+    super.run();
 
     UltrasonicSensor usSensor = new UltrasonicSensor("S1", "Distance");
     LightSensor lightSensor = new LightSensor("S2", "Red");

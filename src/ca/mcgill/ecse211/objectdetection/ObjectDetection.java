@@ -23,7 +23,7 @@ public class ObjectDetection implements TimerListener{
   private UltrasonicSensor usSensor;
   private LightSensor lightSensor;
   private double[] data;
-  
+  private double startAngle;
   /**
    * Creates an ObjectDetection instance
    * @param driver 		a Driver instance that is the robot's driver object
@@ -43,7 +43,11 @@ public class ObjectDetection implements TimerListener{
    * tested. It is to be called after the robot has crossed into enemy territory.
    */
   public void findFlag(){
-    
+    this.startAngle = this.odometer.getTheta();
+    this.driver.rotateClockwise();
+    while(this.odometer.getTheta()){
+	
+    }
   }
   
   /**
