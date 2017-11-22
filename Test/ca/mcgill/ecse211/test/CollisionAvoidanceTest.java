@@ -53,8 +53,8 @@ public class CollisionAvoidanceTest extends Robot{
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
     
-    Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
-    odometryCorrectionTimer.start();
+//    Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
+//    odometryCorrectionTimer.start();
 
     odometryDisplay.start();
     
