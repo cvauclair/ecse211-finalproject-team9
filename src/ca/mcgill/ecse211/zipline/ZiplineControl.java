@@ -14,16 +14,16 @@ public class ZiplineControl {
   
   public void traverseZipline(){
     // Driver a bit forward to help the pulley get on zipline
-    driver.setForwardSpeed(150);
+    driver.setForwardSpeed(200);
     driver.forward();
     
     // Note: rotations are negative because motor is built the wrong way
     // Rotate slowly for the first third of the rotations 
-    pulleyMotor.setSpeed(80);
+    pulleyMotor.setSpeed(80); //80
     pulleyMotor.rotate(-2160);
     
     // Rotate quicker for the second third of the rotations
-    pulleyMotor.setSpeed(120);
+    pulleyMotor.setSpeed(120); //120
     pulleyMotor.rotate(-2160);
     
     // Rotate slowly for the last third of the rotations
@@ -32,6 +32,6 @@ public class ZiplineControl {
 
     // Move a bit forward to move away from zipline
     driver.forward(2,false);
-    driver.setForwardSpeed(120);
+    driver.setForwardSpeed(80); //120
   }
 }

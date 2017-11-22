@@ -35,17 +35,14 @@ public class OdometryCorrectionTest extends Robot {
     OdometryDisplay odometryDisplay = new OdometryDisplay(odometer, LocalEV3.get().getTextLCD());
     
     Driver driver = new Driver(odometer, leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
-
+    
+    lineDetect.start();
+    
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
 
     Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
     odometryCorrectionTimer.start();
-    
-    lineDetect.start();
-
-    Timer lineDetectorTimer = new Timer(80,lineDetector);
-    lineDetectorTimer.start();
     
     odometryDisplay.start();
     

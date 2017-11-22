@@ -55,11 +55,8 @@ public class OdometryCorrection implements TimerListener{
 //      Sound.beep();
       //range [0,12]
       //double filterInitial = 3.0;
-      double xOdometer = odometer.getX();
-      double yOdometer = odometer.getY();
       double thetaOdometer = odometer.getTheta();
-      this.x0 = (double) ( xOdometer  / tileSize);
-      this.y0 = (double) ( yOdometer / tileSize);
+      
 
       /*if( this.x0 % 1.0 <= lineTreshold && this.y0 % 1.0 <=this.lineTreshold ){
         // Do nothing, we crossed a corner
@@ -77,18 +74,25 @@ public class OdometryCorrection implements TimerListener{
       }
       */
       
-      if((thetaOdometer >= 80 && thetaOdometer <=100)|| (thetaOdometer >=260 && thetaOdometer <= 280)){
+      if((thetaOdometer >= 80 && thetaOdometer <170)|| (thetaOdometer >=260 && thetaOdometer < 359)){
     	  Sound.twoBeeps(); //for debug purposes
           //odometer.setX((x0 - (x0 % 1.0)) * tileSize );
-          double roundX = Math.round(x0);
+    	  double xOdometer = odometer.getX();
+    	  this.x0 = (double) ( xOdometer  / tileSize);
+          double roundX = Math.round(this.x0);
           odometer.setX(roundX  * tileSize);
+          System.out.println("thetaOdo = "+ thetaOdometer+" Xodo = "+roundX+"\n");
       }
-      else if((thetaOdometer >= 350 || thetaOdometer <=10)|| (thetaOdometer >=170 && thetaOdometer <= 190)){
+      if(thetaOdometer < 80 || (thetaOdometer >=160 && thetaOdometer < 260)){
     	  Sound.beep(); //for debug purposes
           //odometer.setY((y0- (y0 % 1.0) * tileSize) );
-    	  double roundY = Math.round(y0);
+    	  double yOdometer = odometer.getY();
+    	  this.y0 = (double) ( yOdometer / tileSize);
+    	  double roundY = Math.round(this.y0);
     	  odometer.setY(roundY * tileSize);
+    	  System.out.println("thetaOdo = "+ thetaOdometer+" Yodo = "+roundY+"\n");
       }
+      lineDetector.reset();
     }
   }
 

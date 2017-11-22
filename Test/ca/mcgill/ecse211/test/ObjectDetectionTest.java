@@ -40,28 +40,23 @@ public class ObjectDetectionTest extends Robot{
     this.odometer = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
     this.driver = new Driver(odometer,leftMotor,rightMotor,WHEEL_RADIUS, BASE_WIDTH);
     
-    this.usSensor = new UltrasonicSensor("S1", "distance");
+    this.usSensor = new UltrasonicSensor("S1", "Distance");
 
-    this.lightSensor = new LightSensor("S2", "red");
+    this.lightSensor = new LightSensor("S2", "Red");
 
     this.objectDetection = new ObjectDetection(driver,odometer,usSensor,lightSensor);
 
   }
   
   public void run(){
-    Timer objectDetectionTimer = new Timer(50, objectDetection);
+	super.run();
     Timer odometerTimer = new Timer(25, odometer);
     
     odometerTimer.start();
 
     driver.setRotateSpeed(100);
 
-    Button.waitForAnyPress();
-
-    objectDetectionTimer.start();
-    driver.turnBy(90, false);
-    driver.turnBy(-180, false);
-    driver.turnBy(90, false);
+    this.objectDetection.findFlag();
 
     System.exit(0);
   }

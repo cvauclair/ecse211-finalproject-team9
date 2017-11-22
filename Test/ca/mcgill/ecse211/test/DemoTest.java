@@ -16,17 +16,18 @@ import ca.mcgill.ecse211.sensor.LineDetector;
 import ca.mcgill.ecse211.sensor.UltrasonicSensor;
 import ca.mcgill.ecse211.wifi.WifiConnection;
 import ca.mcgill.ecse211.zipline.ZiplineControl;
+import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.utility.Timer;
 
 public class DemoTest extends Robot{
-  private int corner = 0;
-  private int ziplineX0 = 2;
-  private int ziplineY0 = 1;
-  private int ziplineXc = 3;
-  private int ziplineYc = 1;
+  private int corner = 1;
+  private int ziplineX0 = 7;
+  private int ziplineY0 = 3;
+  private int ziplineXc = 6;
+  private int ziplineYc = 3;
   private int flagZoneX = 0;
   private int flagZoneY = 0;
 
@@ -213,6 +214,24 @@ public class DemoTest extends Robot{
     driver.travelTo(ziplineXc * SQUARE_WIDTH, ziplineYc * SQUARE_WIDTH);
 
     ziplineControl.traverseZipline();
+    
+    odometer.setX(SQUARE_WIDTH * 2);
+    odometer.setY(SQUARE_WIDTH * 3);
+    
+    //if both sensors are aligned on a line
+    if(lineDetector.checkLine() && backLineDetector.checkLine()){
+    	Sound.beep();
+    	driver.turnBy(-30, false);
+    	while(!lineDetector.checkLine()){
+    		driver.forward();
+    	}
+    	driver.stop();
+    	relocalization.doReLocalization();
+    }
+    else{
+    	driver.forward(0.5 *SQUARE_WIDTH, true);
+    	relocalization.doReLocalization();
+    }
     
 //    relocalization.doReLocalization();
   }

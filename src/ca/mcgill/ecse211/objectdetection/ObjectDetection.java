@@ -23,9 +23,7 @@ public class ObjectDetection implements TimerListener{
   private UltrasonicSensor usSensor;
   private LightSensor lightSensor;
   private double[] data;
-<<<<<<< HEAD
-  private double startAngle;
-=======
+
   private double angleLeft;
   private double startingAngle;
   private float currentDistance;
@@ -37,7 +35,7 @@ public class ObjectDetection implements TimerListener{
   private double xVal;
   private double yVal;
   private double deltaD;
->>>>>>> e85c2283021aaaf39213d772cce6041394b1148e
+
   /**
    * Creates an ObjectDetection instance
    * @param driver 		a Driver instance that is the robot's driver object
@@ -89,7 +87,7 @@ public class ObjectDetection implements TimerListener{
       }
     }
     this.driver.stop();
->>>>>>> e85c2283021aaaf39213d772cce6041394b1148e
+
   }
   
   /**
