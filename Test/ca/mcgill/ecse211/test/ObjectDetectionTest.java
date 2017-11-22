@@ -49,12 +49,15 @@ public class ObjectDetectionTest extends Robot{
   }
   
   public void run(){
-	super.run();
+
+    super.run();
+//    Timer objectDetectionTimer = new Timer(50, objectDetection);
     Timer odometerTimer = new Timer(25, odometer);
     
     odometerTimer.start();
 
     driver.setRotateSpeed(100);
+
 
     this.objectDetection.findFlag();
 
