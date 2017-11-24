@@ -23,6 +23,7 @@ public class ObjectDetection implements TimerListener{
   private UltrasonicSensor usSensor;
   private LightSensor lightSensor;
   private double[] data;
+
   private double angleLeft;
   private double startingAngle;
   private float currentDistance;
@@ -34,6 +35,7 @@ public class ObjectDetection implements TimerListener{
   private double xVal;
   private double yVal;
   private double deltaD;
+
   /**
    * Creates an ObjectDetection instance
    * @param driver 		a Driver instance that is the robot's driver object
@@ -89,21 +91,10 @@ public class ObjectDetection implements TimerListener{
   }
   
   /**
-   * Method that checks if the robot is currently facing a flag
+   * Method that takes a distance measurement and adds it to the array
    */
   public void timedOut(){
-    this.currentDistance = this.usSensor.getSample() * 100;
-    if(this.currentDistance > 1000){
-      this.currentDistance  = this.previousDistance;
-    }
-    
-    if(this.currentDistance - this.previousDistance < -20){
-      this.fallingEdgeOrientation = this.odometer.getTheta();
-    }
-    if(this.currentDistance - this.previousDistance > 20){
-      this.risingEdgeOrientation = this.odometer.getTheta();
-      this.testObject();
-    }
+    System.out.println(this.usSensor.getSample()*100 + ',' + odometer.getTheta());
   }
   
   /**

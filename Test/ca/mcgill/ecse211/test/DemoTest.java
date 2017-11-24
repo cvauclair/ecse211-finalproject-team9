@@ -17,6 +17,7 @@ import ca.mcgill.ecse211.sensor.UltrasonicSensor;
 import ca.mcgill.ecse211.wifi.WifiConnection;
 import ca.mcgill.ecse211.zipline.ZiplineControl;
 import lejos.hardware.Button;
+import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
@@ -148,6 +149,8 @@ public class DemoTest extends Robot{
 
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
+    
+    odoDisplay.start();
 
     odometryDisplay.start();
     
@@ -198,14 +201,11 @@ public class DemoTest extends Robot{
     
 //    usLocalizer.localize(0);
 //    lightLocalizer.localize(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
-
-    Button.waitForAnyPress();
-    driver.setForwardSpeed(200);
-    driver.setRotateSpeed(150);
-//    driver.travelTo(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
-//    driver.turnTo(90);
     
-//    driver.travelTo(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
+    driver.setForwardSpeed(200);
+    
+
+    driver.travelTo(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
 //    driver.forward(-10, false);
 //    driver.turnBy(-90, false);
 //    driver.forward(SQUARE_WIDTH/3,false);
@@ -218,6 +218,24 @@ public class DemoTest extends Robot{
     driver.travelTo(ziplineXc * SQUARE_WIDTH, ziplineYc * SQUARE_WIDTH);
 
     ziplineControl.traverseZipline();
+    
+    odometer.setX(SQUARE_WIDTH * 2);
+    odometer.setY(SQUARE_WIDTH * 3);
+    
+    //if both sensors are aligned on a line
+    if(lineDetector.checkLine() && backLineDetector.checkLine()){
+    	Sound.beep();
+    	driver.turnBy(-30, false);
+    	while(!lineDetector.checkLine()){
+    		driver.forward();
+    	}
+    	driver.stop();
+    	relocalization.doReLocalization();
+    }
+    else{
+    	driver.forward(0.5 *SQUARE_WIDTH, true);
+    	relocalization.doReLocalization();
+    }
     
 //    relocalization.doReLocalization();
   }

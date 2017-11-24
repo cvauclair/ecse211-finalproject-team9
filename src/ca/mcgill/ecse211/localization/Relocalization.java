@@ -18,7 +18,8 @@ public class Relocalization {
 	private LineDetector lineDetector;
 	
 	//Physical measurements of robot
-	private static double sizeofRobot = 12.0;
+	private static double correction = 1.5;
+	private static double sizeofRobot = 11.3; //12.0, 11.3
 	//implementing arrays
 	private static double[] angles;
 	public static double[] obtainAngle;
@@ -107,12 +108,12 @@ public class Relocalization {
 		double ytheta= angles[3]-angles[1]; 
 		double xtheta= angles[2]-angles[0];
 		double extracorrection= excessangle- angles[3];
-		double Xo= position(xtheta) + (xTile * tileSize) + 2.0;
+		double Xo= position(xtheta) + (xTile * tileSize) + correction;
 		double Yo= position(ytheta) + (yTile * tileSize) ;
 		double thetaO= (angles[1]-angles[3])/2 -angles[2]+ extracorrection;  //or angle 1 - angle 3
         double correcttheta = odometer.getTheta()+ thetaO ;
         double thetaFinal =angleCorrection(correcttheta ) ;
-        odometer.setPosition(new double[] {Xo,  odometer.getY(), thetaFinal},
+        odometer.setPosition(new double[] {Xo,  Yo, thetaFinal},
         		new boolean[]{true, true, true});
 	}
 	
