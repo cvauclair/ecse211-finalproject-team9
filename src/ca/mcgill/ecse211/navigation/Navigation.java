@@ -44,6 +44,7 @@ public class Navigation {
         e.printStackTrace();
       }
     }
+    this.points.clear();
   }
 
   /**

@@ -16,17 +16,18 @@ import ca.mcgill.ecse211.sensor.LineDetector;
 import ca.mcgill.ecse211.sensor.UltrasonicSensor;
 import ca.mcgill.ecse211.wifi.WifiConnection;
 import ca.mcgill.ecse211.zipline.ZiplineControl;
+import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.utility.Timer;
 
 public class DemoTest extends Robot{
-  private int corner = 1;
+  private int corner = 3;
   private int ziplineX0 = 3;
-  private int ziplineY0 = 1;
+  private int ziplineY0 = 7;
   private int ziplineXc = 3;
-  private int ziplineYc = 2;
+  private int ziplineYc = 6;
   private int flagZoneX = 0;
   private int flagZoneY = 0;
 
@@ -121,6 +122,7 @@ public class DemoTest extends Robot{
 
     Odometer odometer = new Odometer(leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
     OdometryCorrection odometryCorrection = new OdometryCorrection(odometer,lineDetector,SQUARE_WIDTH,0);
+    OdometryDisplay odometryDisplay = new OdometryDisplay(odometer, LocalEV3.get().getTextLCD());
 
     Driver driver = new Driver(odometer, leftMotor, rightMotor, WHEEL_RADIUS, BASE_WIDTH);
 
@@ -130,9 +132,9 @@ public class DemoTest extends Robot{
     Relocalization relocalization = new Relocalization(odometer, backLineDetector, driver, SQUARE_WIDTH);
 
     UltrasonicLocalizer usLocalizer = new UltrasonicLocalizer(odometer, driver, usSensor);
-    LightLocalizer lightLocalizer = new LightLocalizer(odometer, driver, lineDetector);
+    LightLocalizer lightLocalizer = new LightLocalizer(odometer, driver, lineDetector, backLineDetector);
 
-    ZiplineControl ziplineControl = new ZiplineControl(ziplineMotor, driver);
+    ZiplineControl ziplineControl = new ZiplineControl(ziplineMotor, driver, odometer);
 
     //    Timer collisionAvoidanceTimer = new Timer(50, collisionAvoidance);
     //    collisionAvoidanceTimer.start();
@@ -147,6 +149,8 @@ public class DemoTest extends Robot{
     Timer odometerTimer = new Timer(50, odometer);
     odometerTimer.start();
 
+    odometryDisplay.start();
+    
     //  Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
     //  odometryCorrectionTimer.start();
 
@@ -195,14 +199,18 @@ public class DemoTest extends Robot{
 //    usLocalizer.localize(0);
 //    lightLocalizer.localize(1 * SQUARE_WIDTH, 1 * SQUARE_WIDTH);
 
+    Button.waitForAnyPress();
     driver.setForwardSpeed(200);
-
-    driver.travelTo(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
+    driver.setRotateSpeed(150);
+//    driver.travelTo(2 * SQUARE_WIDTH, 2 * SQUARE_WIDTH);
+//    driver.turnTo(90);
+    
+//    driver.travelTo(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
 //    driver.forward(-10, false);
 //    driver.turnBy(-90, false);
 //    driver.forward(SQUARE_WIDTH/3,false);
 //    driver.turnBy(90, false);
-//    lightLocalizer.localize(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
+    lightLocalizer.localize(ziplineX0 * SQUARE_WIDTH, ziplineY0 * SQUARE_WIDTH);
     
 //    relocalization.doReLocalization();
 //    driver.turnTo(0);

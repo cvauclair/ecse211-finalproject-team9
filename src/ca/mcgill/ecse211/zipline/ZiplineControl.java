@@ -1,15 +1,18 @@
 package ca.mcgill.ecse211.zipline;
 
 import ca.mcgill.ecse211.navigation.Driver;
+import ca.mcgill.ecse211.odometry.Odometer;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 public class ZiplineControl {
   private static EV3LargeRegulatedMotor pulleyMotor;
   private static Driver driver;
+  private Odometer odometer;
   
-  public ZiplineControl(EV3LargeRegulatedMotor pulleyMotor, Driver driver){
+  public ZiplineControl(EV3LargeRegulatedMotor pulleyMotor, Driver driver, Odometer odometer){
     this.pulleyMotor = pulleyMotor;
     this.driver = driver;
+    this.odometer = odometer;
   }
   
   public void traverseZipline(){

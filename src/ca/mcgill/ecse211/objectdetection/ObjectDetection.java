@@ -52,38 +52,40 @@ public class ObjectDetection implements TimerListener{
    * This method executes the flag finding logic and will return when the flag is found or all located objects have been 
    * tested. It is to be called after the robot has crossed into enemy territory.
    */
-  public void findFlag(){
+  public void findFlag(int flagColor){
     this.passedZero = false;
     this.startingAngle = this.odometer.getTheta();
-    this.driver.rotateClockwise();
+    this.driver.turnBy(400,false);
     
-    while(!(this.odometer.getTheta() > this.startingAngle && this.passedZero)){
-      this.currentDistance = this.usSensor.getSample() * 100;
-      if(this.currentDistance > 1000){
-        this.currentDistance  = this.previousDistance;
-      }
-      
-      if(this.currentDistance - this.previousDistance < -20){
-        this.fallingEdgeOrientation = this.odometer.getTheta();
-        this.fallingEdgeDetected = true;
-      }
-      if(this.currentDistance - this.previousDistance > 20 && this.fallingEdgeDetected){
-        this.driver.stop();
-        
-        this.risingEdgeOrientation = this.odometer.getTheta();
-        this.fallingEdgeDetected = false;
-        
-        this.driver.turnBy(-(this.risingEdgeOrientation - this.fallingEdgeOrientation)/2, false);
-        
-        this.testObject();
-        this.driver.rotateClockwise();
-      }
-      
-      if(this.odometer.getTheta() < this.startingAngle){
-        this.passedZero = true;
-      }
-    }
-    this.driver.stop();
+//    while(!(this.odometer.getTheta() > this.startingAngle && this.passedZero)){
+//      this.currentDistance = this.usSensor.getSample() * 100;
+//      if(this.currentDistance > 1000){
+//        this.currentDistance  = this.previousDistance;
+//      }
+//      
+//      if(this.currentDistance - this.previousDistance < -20){
+//        this.fallingEdgeOrientation = this.odometer.getTheta();
+//        this.fallingEdgeDetected = true;
+//      }
+//      if(this.currentDistance - this.previousDistance > 20 && this.fallingEdgeDetected){
+//        this.driver.stop();
+//        
+//        this.risingEdgeOrientation = this.odometer.getTheta();
+//        this.fallingEdgeDetected = false;
+//        
+//        this.driver.turnBy(-(this.risingEdgeOrientation - this.fallingEdgeOrientation)/2, false);
+//        
+//        this.testObject();
+//        this.driver.rotateClockwise();
+//      }
+//      
+//      if(this.odometer.getTheta() < this.startingAngle){
+//        this.passedZero = true;
+//      }
+//    }
+//    this.driver.stop();
+    
+    
   }
   
   /**

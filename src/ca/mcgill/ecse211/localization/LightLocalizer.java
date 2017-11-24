@@ -4,6 +4,7 @@ import ca.mcgill.ecse211.navigation.Driver;
 import ca.mcgill.ecse211.odometry.Odometer;
 import ca.mcgill.ecse211.sensor.LightSensor;
 import ca.mcgill.ecse211.sensor.LineDetector;
+import lejos.hardware.Sound;
 import lejos.robotics.SampleProvider;
 /**
  * This class starts the initial localization process with the help of 
@@ -13,9 +14,10 @@ import lejos.robotics.SampleProvider;
  * line and set the odometer's x value to 0.
  */
 public class LightLocalizer {
-  private static Odometer odometer;
-  private static Driver driver;
-  private static LineDetector lineDetector;
+  private Odometer odometer;
+  private Driver driver;
+  private LineDetector frontLineDetector;
+  private LineDetector backLineDetector;
 
   enum LineOrientation {Horizontal, Vertical};
 
@@ -26,10 +28,11 @@ public class LightLocalizer {
    * @param cs  			a SampleProvider for color sensor
    * @param csData  		a float array to store values received from sensor
    */
-  public LightLocalizer(Odometer odometer, Driver driver, LineDetector lineDetector){
+  public LightLocalizer(Odometer odometer, Driver driver, LineDetector frontLineDetector, LineDetector backLineDetector){
     this.odometer = odometer;
     this.driver = driver;
-    this.lineDetector = lineDetector;
+    this.frontLineDetector = frontLineDetector;
+    this.backLineDetector = backLineDetector;
   }
 
   /**
@@ -44,34 +47,48 @@ public class LightLocalizer {
 
     // Correct the robot's odometer's Y position by finding a horizontal line
 //    lineLocalization(LineOrientation.Horizontal);
-    driver.forward();
-    
-    lineDetector.reset();
-    while(!lineDetector.checkLine()){};
+    driver.forward();   
+    this.frontLineDetector.reset();
+    while(!this.frontLineDetector.checkLine()){};
     driver.stop();
+    Sound.beep();
+    driver.forward(1,false);
     odometer.setY(0);
     
-    double oldX = odometer.getX();
-    double oldY = odometer.getY();
+    // Angle adjust
+    this.driver.rotateClockwise();
+    this.backLineDetector.reset();
+    while(!this.backLineDetector.checkLine()){};
+    this.driver.stop();    
+    Sound.beep();
+    this.odometer.setTheta(90);
     
-    
-    // Turn robot so that the next line the robot crosses will be a vertical line
-    driver.turnBy(45,false);
-
-    // Get away from the last line so the robot does not detect it again
-    driver.forward(4,false);
-    driver.forward();
+//    // Turn robot so that the next line the robot crosses will be a vertical line
+//    driver.turnBy(45,false);
+//
+//    // Get away from the last line so the robot does not detect it again
+//    driver.forward(4,false);
+//    driver.forward();
 
     // Correct the robot's odometer's X position by finding a vertical line
 //    lineLocalization(LineOrientation.Vertical);
-    lineDetector.reset();
-    while(!lineDetector.checkLine()){};
-    driver.stop();
-    
-    double newX = odometer.getX();
-    double newY = odometer.getY();
+    this.driver.turnBy(45, false);
+    this.driver.forward(4,false);
+    this.driver.forward();    
 
+    this.frontLineDetector.reset();
+    while(!this.frontLineDetector.checkLine()){};
+    driver.stop();
+    Sound.beep();
+    driver.forward(1,false);
     odometer.setX(0);
+    
+    this.driver.rotateCounterClockwise();
+    this.backLineDetector.reset();
+    while(!this.backLineDetector.checkLine()){};
+    this.driver.stop();    
+    Sound.beep();
+    this.odometer.setTheta(0);
     
 //    System.out.println("oldX: " + oldX);
 //    System.out.println("oldY: " + oldY);
@@ -83,7 +100,7 @@ public class LightLocalizer {
 //    if(newTheta > 359.9) newTheta -= 359.9;
 //    if(newTheta < 0) newTheta += 359.9;
 //    odometer.setTheta(newTheta);
-    odometer.setTheta(Math.toDegrees(Math.atan(Math.abs(newY-oldY)/Math.abs(newX-oldX))));
+//    odometer.setTheta(Math.toDegrees(Math.atan(Math.abs(newY-oldY)/Math.abs(newX-oldX))));
     
     // Once the odometer's position is correctly set, travel to (x0,y0) and orient the robot correctly
     driver.travelTo(0,0);
@@ -103,8 +120,8 @@ public class LightLocalizer {
     driver.forward();
 
     // Wait to detect line
-    lineDetector.reset();
-    while(!lineDetector.checkLine()){};
+    this.frontLineDetector.reset();
+    while(!this.frontLineDetector.checkLine()){};
     System.out.println("Line detected");
 
     // Stop robot

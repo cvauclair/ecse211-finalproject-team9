@@ -50,10 +50,10 @@ public class UltrasonicLocalizer {
     float sample = Math.min(usSensor.getSample() * 100, 100);
 
     if(sample < EDGE_VALUE){
-      System.out.println("Rising edge chosen (" + sample + ")");
+//      System.out.println("Rising edge chosen (" + sample + ")");
       this.risingEdge(initialOrientation);
     }else{
-      System.out.println("Falling edge chosen (" + sample + ")");
+//      System.out.println("Falling edge chosen (" + sample + ")");
       this.fallingEdge(initialOrientation);
     }
   }
