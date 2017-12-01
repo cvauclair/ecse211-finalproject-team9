@@ -4,7 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.awt.geom.Point2D;
 /**
- * This class is used to keep track of the coordinates that have to be visited by the robot 
+ * This class is used to keep track of the coordinates that have to be visited by the robot. 
+ * First, those coordinates are entered and put into a list. The Navigation class then 
+ * goes through the list and instructs the Driver to travel to all these points.
  */
 public class Navigation {
   private static Driver driver;
@@ -45,6 +47,7 @@ public class Navigation {
       }
     }
     this.points.clear();
+    this.counter = 0;
   }
 
   /**

@@ -6,7 +6,8 @@ package ca.mcgill.ecse211.odometry;
 
 import lejos.hardware.lcd.TextLCD;
 /**
- * This class displays the values of the Odometer instance. It runs on a thread.
+ * This class displays the values of the Odometer instance on the EV3's lcd display screen. 
+ * It runs on a separate thread.
  */
 public class OdometryDisplay extends Thread {
   private static final long DISPLAY_PERIOD = 250;

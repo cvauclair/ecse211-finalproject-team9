@@ -10,8 +10,14 @@ import lejos.robotics.SampleProvider;
  * This class starts the initial localization process with the help of 
  * a light sensor using a soft-hard-coded technique. The robot will first
  * keep moving forward to find the first horizontal line and set the odometer's Y
- * value to 0. It will turn to 45 degrees and move forward until it fins the vertical
- * line and set the odometer's x value to 0.
+ * value to 0. It will then rotate clockwise until the back line detector detects 
+ * the same line that the front one detected. At this point, the robot is facing 
+ * the 90 degrees direction and the odometer's value is corrected. The robot then 
+ * turns by 45 degrees clockwise and starts moving until its front line detector sees 
+ * a line (which at that point will be the vertical line and sets the odometer's x value to 0.
+ * The robot then executes a similar maneuver to when it detected the horizontal line, using 
+ * its back sensor to make the robot face the 0 degrees orientation. Finally, the robot is
+ * moved to (0,0).
  */
 public class LightLocalizer {
   private Odometer odometer;
@@ -46,7 +52,6 @@ public class LightLocalizer {
     driver.setForwardSpeed(150);
 
     // Correct the robot's odometer's Y position by finding a horizontal line
-//    lineLocalization(LineOrientation.Horizontal);
     driver.forward();   
     this.frontLineDetector.reset();
     while(!this.frontLineDetector.checkLine()){};
@@ -63,15 +68,7 @@ public class LightLocalizer {
     Sound.beep();
     this.odometer.setTheta(90);
     
-//    // Turn robot so that the next line the robot crosses will be a vertical line
-//    driver.turnBy(45,false);
-//
-//    // Get away from the last line so the robot does not detect it again
-//    driver.forward(4,false);
-//    driver.forward();
-
     // Correct the robot's odometer's X position by finding a vertical line
-//    lineLocalization(LineOrientation.Vertical);
     this.driver.turnBy(45, false);
     this.driver.forward(4,false);
     this.driver.forward();    
@@ -90,60 +87,10 @@ public class LightLocalizer {
     Sound.beep();
     this.odometer.setTheta(0);
     
-//    System.out.println("oldX: " + oldX);
-//    System.out.println("oldY: " + oldY);
-//    System.out.println("newX: " + newX);
-//    System.out.println("newY: " + newY);
-    
-    // Theta correction
-//    double newTheta = odometer.getTheta() - 45 + Math.toDegrees(Math.atan(Math.abs(newY-oldY)/Math.abs(newX-oldX)));
-//    if(newTheta > 359.9) newTheta -= 359.9;
-//    if(newTheta < 0) newTheta += 359.9;
-//    odometer.setTheta(newTheta);
-//    odometer.setTheta(Math.toDegrees(Math.atan(Math.abs(newY-oldY)/Math.abs(newX-oldX))));
-    
     // Once the odometer's position is correctly set, travel to (x0,y0) and orient the robot correctly
     driver.travelTo(0,0);
     driver.turnTo(0);
     odometer.setX(x0);
     odometer.setY(y0);
-  }
-
-  /**
-   * Method that sets the odometer's Y position by detecting a horizontal line (horizontalLine = true) or
-   * its X position by detecting a vertical line (horizontalLine = false). The odometer's Y value (or 
-   * X value depending on horizaontalLine) is set to initialValue
-   * @param lineOrientation 		a LineOrientation instance that is either Horizontal or Vertical
-   */
-  private void lineLocalization(LineOrientation lineOrientation){    
-    // Set robot to driver forward 
-    driver.forward();
-
-    // Wait to detect line
-    this.frontLineDetector.reset();
-    while(!this.frontLineDetector.checkLine()){};
-    System.out.println("Line detected");
-
-    // Stop robot
-    driver.stop();
-
-    // Correct the odometer's Y or X value depending on whether the crossed line is vertical or horizontal
-    if(lineOrientation == LineOrientation.Horizontal){
-      odometer.setY(0);
-    }else if(lineOrientation == LineOrientation.Vertical){
-      odometer.setX(0);
-    }
-  }
-
-  /**
-   * Helper method that returns when a line is crossed
-   * @param cs 					a SampleProvider for color sensor
-   * @param csData 				a float array to store values detected by color sensor
-   * @param samplingFrequency 	an int that represents the frequency at which the sensor polls the values
-   * @param threshold 			an int used as limit (if limit is reached, the line is detected)
-   * @param n 					an int that represents values to keep for moving average
-   */
-  private static void detectLine(LineDetector lineDetector){
-    while(lineDetector.checkLine()){}
   }
 }

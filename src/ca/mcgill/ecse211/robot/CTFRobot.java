@@ -27,40 +27,39 @@ import lejos.utility.Timer;
  */
 /**
  * This class creates and instance of a robot that is able to play 
- * capture the flag. It contains one thread that should contain all the 
- * logic for successfully doing the competition.
- *
+ * capture the flag. It contains all the logic for successfully completing the competition.
  */
 public class CTFRobot extends Robot{
   boolean bridgeFirst = false;
-  
-  private int corner= 1;
+
+  // Round parameters with default values (actual parameters are to be set via the wifi connection)
+  private int corner = 0;
   private int startingPoint[] = {0,0};
   private int startingAngle = 0;
-  
+
   private int greenLLx = 0;   // Green zone lower left corner x value
   private int greenLLy = 0;   // Green zone lower left corner y value
-  
+
   private int greenURx = 0;   // Green zone upper right corner x value
   private int greenURy = 0;   // Green zone upper right corner y value
 
   private int searchZoneLL[] = {0,0};
   private int searchZoneUR[] = {0,0};
-  
+
   private int zipline0Red[] = {0,0};
   private int ziplineCRed[] = {0,0};
 
-  private int zipline0Green[] = {3,4};
-  private int ziplineCGreen[] = {3,5};
-    
-  private int hCrossingLL[] = {8,9};
-  private int hCrossingUR[] = {11,10};
-  private int vCrossingLL[] = {10,5};
-  private int vCrossingUR[] = {11,10};
-  
+  private int zipline0Green[] = {0,0};
+  private int ziplineCGreen[] = {0,0};
+
+  private int hCrossingLL[] = {0,0};
+  private int hCrossingUR[] = {0,0};
+  private int vCrossingLL[] = {0,0};
+  private int vCrossingUR[] = {0,0};
+
   private int flag_color = 0;  // Opponent's flag color
-  
-  private static final String SERVER_IP = "192.168.2.49";
+
+  private static final String SERVER_IP = "192.168.2.3";
   private static final int TEAM_NUMBER = 9;
 
   private static final boolean ENABLE_DEBUG_WIFI_PRINT = true;
@@ -92,53 +91,53 @@ public class CTFRobot extends Robot{
       Map data = conn.getData();
 
       // Read team specific data
-    if(((Long) data.get("RedTeam")).intValue() == TEAM_NUMBER){
-      this.bridgeFirst = true;
-      this.corner = ((Long) data.get("RedCorner")).intValue();
-      
-      this.searchZoneLL[0] = ((Long) data.get("SG_LL_x")).intValue();
-      this.searchZoneLL[1] = ((Long) data.get("SG_LL_y")).intValue();
-      this.searchZoneUR[0] = ((Long) data.get("SG_UR_x")).intValue();
-      this.searchZoneUR[1] = ((Long) data.get("SG_UR_y")).intValue();
-      
-      this.flag_color = ((Long) data.get("OR")).intValue();
-      
-    }else if(((Long) data.get("GreenTeam")).intValue() == TEAM_NUMBER){
-      this.bridgeFirst = false;
-      
-      this.corner = ((Long) data.get("GreenCorner")).intValue();
-          
-      this.searchZoneLL[0] = ((Long) data.get("SR_LL_x")).intValue();
-      this.searchZoneLL[1] = ((Long) data.get("SR_LL_y")).intValue();
-      this.searchZoneUR[0] = ((Long) data.get("SR_UR_x")).intValue();
-      this.searchZoneUR[1] = ((Long) data.get("SR_UR_y")).intValue();
-      
-      this.flag_color = ((Long) data.get("OR")).intValue();
-    }
-    // Get zipline points in red zone
-    this.zipline0Red[0] = ((Long) data.get("ZO_R_x")).intValue();
-    this.zipline0Red[1] = ((Long) data.get("ZO_R_y")).intValue();
-    this.ziplineCRed[0] = ((Long) data.get("ZC_R_x")).intValue();
-    this.ziplineCRed[1] = ((Long) data.get("ZC_R_y")).intValue();
-    
-    // Get zipline points in green zone
-    this.zipline0Green[0] = ((Long) data.get("ZO_G_x")).intValue();
-    this.zipline0Green[1] = ((Long) data.get("ZO_G_y")).intValue();
-    this.ziplineCGreen[0] = ((Long) data.get("ZC_G_x")).intValue();
-    this.ziplineCGreen[1] = ((Long) data.get("ZC_G_y")).intValue();
-    
-    // Get horizontal crossing data
-    this.hCrossingLL[0] = ((Long) data.get("SH_LL_x")).intValue();
-    this.hCrossingLL[1] = ((Long) data.get("SH_LL_y")).intValue();
-    this.hCrossingUR[0] = ((Long) data.get("SH_UR_x")).intValue();
-    this.hCrossingUR[1] = ((Long) data.get("SH_UR_y")).intValue();
-    
-    // Get vertical crossing data
-    this.vCrossingLL[0] = ((Long) data.get("SV_LL_x")).intValue();
-    this.vCrossingLL[1] = ((Long) data.get("SV_LL_y")).intValue();
-    this.vCrossingUR[0] = ((Long) data.get("SV_UR_x")).intValue();
-    this.vCrossingUR[1] = ((Long) data.get("SV_UR_y")).intValue();
-        
+      if(((Long) data.get("RedTeam")).intValue() == TEAM_NUMBER){
+        this.bridgeFirst = true;
+        this.corner = ((Long) data.get("RedCorner")).intValue();
+
+        this.searchZoneLL[0] = ((Long) data.get("SG_LL_x")).intValue();
+        this.searchZoneLL[1] = ((Long) data.get("SG_LL_y")).intValue();
+        this.searchZoneUR[0] = ((Long) data.get("SG_UR_x")).intValue();
+        this.searchZoneUR[1] = ((Long) data.get("SG_UR_y")).intValue();
+
+        this.flag_color = ((Long) data.get("OR")).intValue();
+
+      }else if(((Long) data.get("GreenTeam")).intValue() == TEAM_NUMBER){
+        this.bridgeFirst = false;
+
+        this.corner = ((Long) data.get("GreenCorner")).intValue();
+
+        this.searchZoneLL[0] = ((Long) data.get("SR_LL_x")).intValue();
+        this.searchZoneLL[1] = ((Long) data.get("SR_LL_y")).intValue();
+        this.searchZoneUR[0] = ((Long) data.get("SR_UR_x")).intValue();
+        this.searchZoneUR[1] = ((Long) data.get("SR_UR_y")).intValue();
+
+        this.flag_color = ((Long) data.get("OR")).intValue();
+      }
+      // Get zipline points in red zone
+      this.zipline0Red[0] = ((Long) data.get("ZO_R_x")).intValue();
+      this.zipline0Red[1] = ((Long) data.get("ZO_R_y")).intValue();
+      this.ziplineCRed[0] = ((Long) data.get("ZC_R_x")).intValue();
+      this.ziplineCRed[1] = ((Long) data.get("ZC_R_y")).intValue();
+
+      // Get zipline points in green zone
+      this.zipline0Green[0] = ((Long) data.get("ZO_G_x")).intValue();
+      this.zipline0Green[1] = ((Long) data.get("ZO_G_y")).intValue();
+      this.ziplineCGreen[0] = ((Long) data.get("ZC_G_x")).intValue();
+      this.ziplineCGreen[1] = ((Long) data.get("ZC_G_y")).intValue();
+
+      // Get horizontal crossing data
+      this.hCrossingLL[0] = ((Long) data.get("SH_LL_x")).intValue();
+      this.hCrossingLL[1] = ((Long) data.get("SH_LL_y")).intValue();
+      this.hCrossingUR[0] = ((Long) data.get("SH_UR_x")).intValue();
+      this.hCrossingUR[1] = ((Long) data.get("SH_UR_y")).intValue();
+
+      // Get vertical crossing data
+      this.vCrossingLL[0] = ((Long) data.get("SV_LL_x")).intValue();
+      this.vCrossingLL[1] = ((Long) data.get("SV_LL_y")).intValue();
+      this.vCrossingUR[0] = ((Long) data.get("SV_UR_x")).intValue();
+      this.vCrossingUR[1] = ((Long) data.get("SV_UR_y")).intValue();
+
     } catch (Exception e) {
       System.err.println("Error: " + e.getMessage());
     }
@@ -148,8 +147,6 @@ public class CTFRobot extends Robot{
    * Method that starts the game Capture-the-flag
    */
   public void run(){
-    super.run();
-
     UltrasonicSensor usSensor = new UltrasonicSensor("S1", "Distance");
     LightSensor lightSensor = new LightSensor("S2", "Red");
     LightSensor backLightSensor = new LightSensor("S4", "Red");
@@ -179,10 +176,9 @@ public class CTFRobot extends Robot{
     ZiplineControl ziplineControl = new ZiplineControl(ziplineMotor, driver, odometer);
 
     ObjectDetection objectDetection = new ObjectDetection(driver,odometer,usSensor,lightSensor);
-    
-    //    Timer collisionAvoidanceTimer = new Timer(50, collisionAvoidance);
-    //    collisionAvoidanceTimer.start();
 
+    Timer collisionAvoidanceTimer = new Timer(50, collisionAvoidance);
+    collisionAvoidanceTimer.start();
 
     Timer lineDetectorTimer = new Timer(50,lineDetector);
     lineDetectorTimer.start();
@@ -195,8 +191,8 @@ public class CTFRobot extends Robot{
 
     odometryDisplay.start();
 
-    //  Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
-    //  odometryCorrectionTimer.start();
+    Timer odometryCorrectionTimer = new Timer(50, odometryCorrection);
+    odometryCorrectionTimer.start();
 
     switch(corner){
       case 0:
@@ -236,35 +232,45 @@ public class CTFRobot extends Robot{
     driver.setRotateSpeed(150);
 
     if(bridgeFirst){
+      // Navigate to and cross the bridge, then navigate to search zone
       navigation.addPoint(this.hCrossingLL[0] * SQUARE_WIDTH, (this.hCrossingLL[1] + 0.5) * SQUARE_WIDTH);
       navigation.addPoint((this.hCrossingUR[0] - 0.5) * SQUARE_WIDTH, (this.hCrossingUR[1] - 0.5) * SQUARE_WIDTH);
       navigation.addPoint((this.vCrossingLL[0] + 0.5) * SQUARE_WIDTH, (this.hCrossingLL[1]-1) * SQUARE_WIDTH);
       navigation.navigate();
 
       // Go to search zone
-//      objectDetection.findFlag(flag_color);
-      
+      navigation.addPoint(this.searchZoneLL[1] * SQUARE_WIDTH, this.searchZoneUR[0] * SQUARE_WIDTH);
+      navigation.navigate();
+
+      objectDetection.findFlag(flag_color);
+
       navigation.addPoint(this.zipline0Green[0] * SQUARE_WIDTH, this.zipline0Green[1] * SQUARE_WIDTH);
       navigation.addPoint(this.ziplineCGreen[0] * SQUARE_WIDTH, this.ziplineCGreen[1] * SQUARE_WIDTH);
       navigation.navigate();
       ziplineControl.traverseZipline();
-//      relocalization.doReLocalization();
+      //      relocalization.doReLocalization();
     }else{
+      // Navigate to zipline
       navigation.addPoint(this.zipline0Green[0] * SQUARE_WIDTH, this.zipline0Green[1] * SQUARE_WIDTH);
       navigation.addPoint(this.ziplineCGreen[0] * SQUARE_WIDTH, this.ziplineCGreen[1] * SQUARE_WIDTH);
       navigation.navigate();
+      
       ziplineControl.traverseZipline();
-//      relocalization.doReLocalization();
+      
+      relocalization.doReLocalization();
+      
       // Go to search zone
+      navigation.addPoint(this.searchZoneLL[1] * SQUARE_WIDTH, this.searchZoneUR[0] * SQUARE_WIDTH);
+      navigation.navigate();
       
       objectDetection.findFlag(flag_color);
-      
+
       navigation.addPoint(this.hCrossingLL[0] * SQUARE_WIDTH, (this.hCrossingLL[1] + 0.5) * SQUARE_WIDTH);
       navigation.addPoint((this.hCrossingUR[0] - 0.5) * SQUARE_WIDTH, (this.hCrossingUR[1] - 0.5) * SQUARE_WIDTH);
       navigation.addPoint((this.vCrossingLL[0] + 0.5) * SQUARE_WIDTH, (this.hCrossingLL[1]-1) * SQUARE_WIDTH);
       navigation.navigate();
     }
-    
+
     navigation.addPoint(this.startingPoint[0] * SQUARE_WIDTH, this.startingPoint[1] * SQUARE_WIDTH);
     navigation.navigate();
   }

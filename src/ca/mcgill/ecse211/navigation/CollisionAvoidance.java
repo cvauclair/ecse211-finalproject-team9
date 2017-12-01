@@ -34,7 +34,7 @@ public class CollisionAvoidance implements TimerListener{
   private static final int propConst = 10;
 
   /**
-   * This creates an instance of CollisionAvoidance
+   * This creates an instance of CollisionAvoidance 
    * 
    * @param driver 		a Driver instance that is the robot's driver object
    * @param usSensor 	a UltrasonicSensor instance

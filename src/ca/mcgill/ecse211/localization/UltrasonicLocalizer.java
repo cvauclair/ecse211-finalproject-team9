@@ -244,22 +244,4 @@ public class UltrasonicLocalizer {
     double angle = (enteringAngle + exitingAngle)/2.0;
     return angle;
   }
-
-  /**
-   * Helper method that reads the values of a sensor n times and computes the average
-   * @param sensor 	a SampleProvider
-   * @param data 	a float array for sensor values
-   * @param n 		an integer
-   * @return total 	a float which is the average sensor value
-   */
-  private static float averageSensorValue(SampleProvider sensor, float[] data, int n){
-    float total = 0;
-    for(int i = 0; i < n; i++){
-      sensor.fetchSample(data,0);
-      // Cap the values at 200 to not get ridiculously large values
-      total += (data[0]*100 > 200 ? 200 : data[0]*100);
-    }
-    total = total/n;
-    return total;
-  }
 }
